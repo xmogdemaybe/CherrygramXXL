@@ -2,7 +2,7 @@
 <resources>
     <!-- by t.me/arsLan-->
     <string name="CG_FollowChannelTitle">Подписаться на официальный канал</string>
-    <string name="CG_FollowChannelInfo">Присоединяйтесь к каналу, чтобы быть в курсе всех новостей и возможностей Cherrygram!</string>
+    <string name="CG_FollowChannelInfo">Присоединяйтесь к каналу, чтобы быть в курсе всех новостей и возможностей CherrygramXXL!</string>
     <string name="CG_DoNotRemindAgain">Не напоминать</string>
 
     <!--Telegram screens-->
@@ -25,7 +25,7 @@
     <string name="CG_DidNotGetTheCode">Если вы не получили код или вы не входили в аккаунт Telegram на другом устройстве, воспользуйтесь официальным приложением Telegram, чтобы получить код.\n\nTelegram **отключил возможность авторизации через СМС** для альтернативных приложений. Согласно новым правилам, пользователи альтернативных клиентов больше не могут получить СМС-код для авторизации. Теперь для получения кода требуется использовать официальное приложение Telegram.\n\nЕсли у вас возникла проблема со входом в аккаунт, пожалуйста, обратитесь в службу поддержки Telegram.</string>
     <string name="CG_ChangePhoneNumber">Телеграм **отключил возможность изменения номера** в сторонних приложениях. Пользователи могут сменить номер только через Telegram.</string>
 
-    <string name="CG_AddAccountWarning">Использование 5 и более аккаунтов одновременно может привести к нестабильной работе приложения, особенно на слабых устройствах (вплоть до невозможности запуска).\n\nВы продолжаете на свой страх и риск. **Cherrygram не несет ответственности** за возможную потерю доступа к аккаунтам.</string>
+    <string name="CG_AddAccountWarning">Использование 5 и более аккаунтов одновременно может привести к нестабильной работе приложения, особенно на слабых устройствах (вплоть до невозможности запуска).\n\nВы продолжаете на свой страх и риск. **CherrygramXXL не несет ответственности** за возможную потерю доступа к аккаунтам.</string>
     <!--Sign in screen-->
 
     <!--Last seen status-->
@@ -95,8 +95,8 @@
     <string name="CG_CopyID">Скопировать ID пользователя</string>
 
     <!--Location screen-->
-    <string name="CG_LocationPermission">Cherrygram нужен доступ к вашему местоположению, дабы вы смогли поделиться им с вашими друзьями. Сейчас будет запрос на разрешение использования вашего местоположения (пока приложение открыто).</string>
-    <string name="CG_LocationPermission_Desc">Однако, если вы хотите, чтобы ваше местоположение было доступно вашим друзьям, пока Cherrygram закрыт и находится в фоновом режиме, то перейдите к функции \"Live Location\". До тех пор, пока вы не дадите свое согласие на использование функции Live Location, ваше местоположение в фоновом режиме будет недоступно.</string>
+    <string name="CG_LocationPermission">CherrygramXXL нужен доступ к вашему местоположению, дабы вы смогли поделиться им с вашими друзьями. Сейчас будет запрос на разрешение использования вашего местоположения (пока приложение открыто).</string>
+    <string name="CG_LocationPermission_Desc">Однако, если вы хотите, чтобы ваше местоположение было доступно вашим друзьям, пока CherrygramXXL закрыт и находится в фоновом режиме, то перейдите к функции \"Live Location\". До тех пор, пока вы не дадите свое согласие на использование функции Live Location, ваше местоположение в фоновом режиме будет недоступно.</string>
     <string name="CG_Copy_Coordinates">Координаты</string>
     <!--Location screen-->
 
@@ -122,8 +122,8 @@
     <string name="CG_SafeStars_Desc">Мультичейн и без KYC</string>
     <string name="CG_SafeStars_BuyPremiumButton">Проверить на сайте</string>
     <string name="CG_SafeStars_buy_Telegram">Купить звезды через Telegram</string>
-    <string name="CG_Stars_TOS">Продолжая, вы автоматически принимаете **Условия покупки Telegram** и **Пользовательское соглашение Cherrygram**.</string>
-    <string name="CG_SafeSurf_TOS">Продолжая, вы автоматически принимаете **Пользовательское соглашение Cherrygram**.</string>
+    <string name="CG_Stars_TOS">Продолжая, вы автоматически принимаете **Условия покупки Telegram** и **Пользовательское соглашение CherrygramXXL**.</string>
+    <string name="CG_SafeSurf_TOS">Продолжая, вы автоматически принимаете **Пользовательское соглашение CherrygramXXL**.</string>
 
     <string name="CG_SortByDate">Сортировка по дате сообщения</string>
     <string name="CG_SortByUnread">Сортировка по непрочитанным</string>
@@ -131,10 +131,10 @@
     <string name="CG_UnknownCherrySettingsOption">Такого параметра Cherry нет.</string>
     <string name="CG_Restart">Перезапустить приложение</string>
     <string name="CG_RestartToApply">Перезапустите приложение</string>
-    <string name="CG_PushService">Сервис уведомлений Cherrygram.</string>
-    <string name="CG_Kaboom">Доступ к этой функции можно получить без пароля Cherrygram, через системные настройки. \n\nЭта функция **полностью удаляет все данные приложения**. Ее можно использовать в аварийных ситуациях.</string>
+    <string name="CG_PushService">Сервис уведомлений CherrygramXXL.</string>
+    <string name="CG_Kaboom">Доступ к этой функции можно получить без пароля CherrygramXXL, через системные настройки. \n\nЭта функция **полностью удаляет все данные приложения**. Ее можно использовать в аварийных ситуациях.</string>
     <string name="CG_AppCrashed">Что-то пошло не так</string>
-    <string name="CG_AppCrashedDesc">Cherrygram перестал работать. Пожалуйста, отправьте логи разработчикам, чтобы они как можно скорее исправили эту ошибку.</string>
+    <string name="CG_AppCrashedDesc">CherrygramXXL перестал работать. Пожалуйста, отправьте логи разработчикам, чтобы они как можно скорее исправили эту ошибку.</string>
     <string name="CG_CopyReportDetails">Скопировать детали отчёта</string>
     <string name="CG_ReportDetailsCopied">Детали отчёта скопированы в буфер обмена.</string>
     <string name="CG_TranslationLanguage">Язык перевода</string>
@@ -151,7 +151,7 @@
     <string name="CG_ImportSettings">Импорт настроек</string>
     <string name="CG_ImportSettingsAlert">Перезаписать настройки приложения\? Импорт настроек из ненадежных источников может привести к неработоспособности приложения.</string>
     <string name="CG_ResetSettings">Сбросить настройки</string>
-    <string name="CG_ResetSettingsAlert">Все настройки Cherrygram будут сброшены до значений по умолчанию. Это действие нельзя отменить.</string>
+    <string name="CG_ResetSettingsAlert">Все настройки CherrygramXXL будут сброшены до значений по умолчанию. Это действие нельзя отменить.</string>
     <string name="CG_OpenStickerPack">Нажмите для открытия стикера</string>
     <string name="CG_OpenEmojiPack">Нажмите для открытия эмодзи</string>
 
@@ -164,7 +164,7 @@
     <string name="CG_Sleep">Таймер сна</string>
     <string name="CG_Sleep_Timer">Таймер сна установлен на **%s**</string>
     <string name="CG_Sleep_Disabled">Таймер сна отключен</string>
-    <string name="CG_Sleep_Permission">Разрешите Cherrygram устанавливать точные будильники, чтобы таймер сна работал корректно.</string>
+    <string name="CG_Sleep_Permission">Разрешите CherrygramXXL устанавливать точные будильники, чтобы таймер сна работал корректно.</string>
 
     <string name="CG_QR_Hint">Это цифровая копия QR-кода. Нажмите, чтобы скопировать его в буфер обмена, или удерживайте, чтобы сохранить в галерею.</string>
     <string name="CG_WifiConnect">Подключиться</string>
@@ -179,12 +179,12 @@
     <!--Misc-->
     <!--Telegram screens-->
 
-    <!--Cherrygram screens-->
+    <!--CherrygramXXL screens-->
 
-    <!--Cherrygram Preferences-->
-    <string name="CGP_AdvancedSettings">Настройки Cherrygram</string>
+    <!--CherrygramXXL Preferences-->
+    <string name="CGP_AdvancedSettings">Настройки CherrygramXXL</string>
     <string name="CGP_About_Desc">Экспериментальная модификация официального приложения Telegram. Нажмите здесь, чтобы получить информацию о всех функциях приложения.</string>
-    <string name="CGP_Header_About">О Cherrygram</string>
+    <string name="CGP_Header_About">О CherrygramXXL</string>
     <string name="CGP_Header_About_Desc">Обновления, исходный код и другое</string>
     <string name="CGP_Links">Ссылки</string>
     <string name="CGP_ToChannel">Новости и обновления</string>
@@ -210,7 +210,7 @@
     <string name="CGP_ADS">Посмотреть рекламу</string>
     <string name="CGP_ADS_Advertiser">Рекламодатель:</string>
     <string name="CGP_ADS_Click">Кликните на рекламу для получения информации</string>
-    <!--Cherrygram Preferences-->
+    <!--CherrygramXXL Preferences-->
 
     <!--General Preferences-->
     <string name="AP_Header_General">Основные</string>
@@ -287,8 +287,8 @@
 
     <string name="CP_Filters_Header">Папки</string>
     <string name="AP_FoldersAtBottom">Показывать папки снизу</string>
-    <string name="AP_FolderNameInHeader">Название папки вместо \"Cherrygram\"</string>
-    <string name="AP_FolderNameInHeader_Desc">Это изменит \"Cherrygram\" в заголовке сверху на название Вашей папки (удобно при отображении иконок вместо названий папок)</string>
+    <string name="AP_FolderNameInHeader">Название папки вместо \"CherrygramXXL\"</string>
+    <string name="AP_FolderNameInHeader_Desc">Это изменит \"CherrygramXXL\" в заголовке сверху на название Вашей папки (удобно при отображении иконок вместо названий папок)</string>
     <string name="CP_NewTabs_RemoveAllChats">Скрыть папку \"Все чаты\"</string>
     <string name="AP_Tab_Style">Стиль папок</string>
     <string name="AP_Tab_Style_Stroke">Добавить обводку</string>
@@ -393,7 +393,7 @@
     <string name="CP_Message_Filtering_Exclusions_Bots">Исключить ботов</string>
     <string name="CP_Message_Filtering_Exclusions_Groups">Исключить группы</string>
     <string name="CP_Message_Filtering_Exclusions_Channels">Исключить каналы</string>
-    <string name="CP_Message_Filtering_Exclusions_Desc">Cherrygram **не будет фильтровать** сообщения в выбранных чатах.</string>
+    <string name="CP_Message_Filtering_Exclusions_Desc">CherrygramXXL **не будет фильтровать** сообщения в выбранных чатах.</string>
     <string name="CP_Message_Filtering_Entities">Фильтр по ссылкам</string>
     <string name="CP_Message_Filtering_EntitiesDesc">При включении эта опция расширяет фильтрацию и на ссылки (entities) внутри сообщений. Система проверяет адреса URL на наличие заданных ключевых слов. Если совпадение найдено в ссылке, под спойлер будет скрыто всё сообщение, даже если само слово отсутствует в тексте.\n\nЭто позволяет защититься от замаскированной рекламы, скрытых спам-ссылок и фишинговых доменов, которые могли бы обойти обычный фильтр по тексту.</string>
     <string name="CP_Message_Filtering_FilterBlocked">Фильтровать сообщения от заблокированных пользователей</string>
@@ -498,7 +498,7 @@
     <string name="SP_LockedChats_Lock_Destination">для добавления в список заблокированных</string>
     <string name="SP_LockedChats_Lock_Destination_Sure">будет заблокирован(о)</string>
     <string name="SP_HideArchive">Скрыть архив из списка чатов</string>
-    <string name="SP_HideArchive_Desc">Архив будет замаскирован под канал Cherrygram. \nВы сможете открыть архив из бокового меню или долгим нажатием на кнопку поиска.</string>
+    <string name="SP_HideArchive_Desc">Архив будет замаскирован под канал CherrygramXXL. \nВы сможете открыть архив из бокового меню или долгим нажатием на кнопку поиска.</string>
 
     <string name="SP_AskPin">Запрашивать пароль</string>
     <string name="SP_DoNotAskPin">Не запрашивать пароль</string>
@@ -507,7 +507,7 @@
     <string name="SP_AskPinBeforeDelete_Desc">Если вы хотите удалить чат или очистить историю, потребуется биометрическое подтверждение. Пароль и биометрическое подтверждение в системе должны быть включены.</string>
 
     <string name="SP_AllowUseSystemPasscode">Использовать системный PIN/Граф. ключ</string>
-    <string name="SP_AllowUseSystemPasscode_Desc">Кнопка \"Отмена\" в диалоге проверки отпечатка пальцев будет заменена на \"PIN/Граф. ключ\" и вы сможете разблокировать Cherrygram при помощи системного PIN/Графического ключа.</string>
+    <string name="SP_AllowUseSystemPasscode_Desc">Кнопка \"Отмена\" в диалоге проверки отпечатка пальцев будет заменена на \"PIN/Граф. ключ\" и вы сможете разблокировать CherrygramXXL при помощи системного PIN/Графического ключа.</string>
     <string name="SP_TestFingerprint">Протестировать отпечаток</string>
     <string name="SP_TestFingerprint_Desc">Если аутентификация по отпечатку пальца уже включена, но вы не видите соответствующие функции, попробуйте нажать кнопку \"Протестировать отпечаток\", чтобы решить проблему.</string>
     <string name="SP_BiometricUnavailable_Test_Fixed">Отпечаток обнаружен успешно!</string>
@@ -532,19 +532,19 @@
     <!--Updates Preferences-->
 
     <!--Donations-->
-    <string name="DP_EnjoyingUs">Нравится Cherrygram?</string>
+    <string name="DP_EnjoyingUs">Нравится CherrygramXXL?</string>
     <string name="DP_RateUs">Оставьте отзыв в Google Play!</string>
 
-    <string name="DP_DonatesMoreInfo">Хотите помочь развитию Cherrygram? Загляните в чат **Cherrygram Support**.</string>
+    <string name="DP_DonatesMoreInfo">Хотите помочь развитию CherrygramXXL? Загляните в чат **CherrygramXXL Support**.</string>
     <string name="DP_DonatesThanks">Спасибо за поддержку! Вишенка счастлива благодаря вам ❤️️</string>
 
     <string name="DP_DonateBadge">Поддержите проект и получите бонусы</string>
     <string name="DP_Donate_Desc">При поддержке от 2$ вы также получите небольшие бонусы:</string>
 
-    <string name="DP_Donate_Badge_desc">1. **Значок Cherrygram** рядом с вашим ником.</string>
+    <string name="DP_Donate_Badge_desc">1. **Значок CherrygramXXL** рядом с вашим ником.</string>
     <string name="DP_Donate_MsgMenuCompactView_Desc">2. Компактный вид элементов **меню сообщения**.</string>
     <string name="DP_Donate_FoldersAtBottom_Desc">3. **Панель папок** внизу экрана.</string>
-    <string name="DP_Donate_EpicBadge_desc">1. **Эпический значок Cherrygram** рядом с вашим ником.</string>
+    <string name="DP_Donate_EpicBadge_desc">1. **Эпический значок CherrygramXXL** рядом с вашим ником.</string>
     <string name="DP_Donate_GiftMarket_Desc">2. Кнопку \"**Маркетплейс подарков**\" в боковом меню.</string>
     <string name="DP_Donate_MessageFilter_Desc">3. Функцию \"**Фильтр сообщений**\"</string>
     <string name="DP_Donate_MessageMenu_Desc">4. Меню сообщения \"**в стиле Telegram iOS**\". Не поддерживается на планшетах.</string>
@@ -556,14 +556,14 @@
     <string name="DP_Donate_Counter_many">**%1$d** человек уже поддержали проект и получили бонусы</string>
     <string name="DP_Donate_Counter_other">**%1$d** человек уже поддержали проект и получили бонусы</string>
 
-    <string name="DP_Donate_Bulletin">**%s** поддержал(а) разработку **Cherrygram**!</string>
+    <string name="DP_Donate_Bulletin">**%s** поддержал(а) разработку **CherrygramXXL**!</string>
 
-    <string name="DP_Support">Нравится Cherrygram? Поддержите!</string>
+    <string name="DP_Support">Нравится CherrygramXXL? Поддержите!</string>
     <string name="DP_SupportOptions">Варианты поддержки</string>
 
     <string name="DP_CameraCutoutHeader">Фирменные скриншоты</string>
-    <string name="DP_CameraCutout">Показывать логотип Cherrygram</string>
-    <string name="DP_CameraCutoutDesc">Логотип Cherrygram можно показывать под камерой — он будет виден на скриншотах.
+    <string name="DP_CameraCutout">Показывать логотип CherrygramXXL</string>
+    <string name="DP_CameraCutoutDesc">Логотип CherrygramXXL можно показывать под камерой — он будет виден на скриншотах.
     \nЕсли логотип **отображается корректно и остается в пределах области камеры**, пожалуйста, оставьте эту функцию включённой.
     \Это поможет продвигать приложение и поддержать проект — мне будет очень приятно! ❤️</string>
 
@@ -582,6 +582,6 @@
     <string name="AS_UsefulServices">Полезные сервисы</string>
     <string name="AS_DigitalGoods">Цифровые товары</string>
     <!--Alternative Support-->
-    <!--Cherrygram screens-->
+    <!--CherrygramXXL screens-->
 
 </resources>

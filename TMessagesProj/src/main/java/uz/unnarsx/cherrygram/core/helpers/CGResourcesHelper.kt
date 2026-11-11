@@ -24,6 +24,7 @@ import uz.unnarsx.cherrygram.core.CherrygramLogger
 import uz.unnarsx.cherrygram.core.configs.CherrygramCoreConfig
 import uz.unnarsx.cherrygram.core.configs.CherrygramMessagesConfig
 import uz.unnarsx.cherrygram.misc.Constants
+import uz.unnarsx.cherrygram.xxl.brand.core.XXLBrandNames
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
@@ -33,14 +34,15 @@ object CGResourcesHelper {
     /** About app start */
     @JvmStatic
     fun getAppName(): String {
+        // 🚀✨ XXL: видимое имя форка берётся из единого реестра брендинга, а не из 4 хардкодов 💯
         if (CherrygramCoreConfig.isStandaloneStableBuild() || CherrygramCoreConfig.isPlayStoreBuild()) {
-            return "Cherrygram"
+            return XXLBrandNames.displayName("stable")
         } else if (CherrygramCoreConfig.isStandaloneBetaBuild()) {
-            return "Cherrygram Beta"
+            return XXLBrandNames.displayName("beta")
         } else if (CherrygramCoreConfig.isStandalonePremiumBuild()) {
-            return "Cherrygram Premium"
+            return XXLBrandNames.displayName("premium")
         } else if (CherrygramCoreConfig.isDevBuild()) {
-            return "Cherrygram Dev"
+            return XXLBrandNames.displayName("dev")
         }
         return getString(R.string.CG_AppName)
     }

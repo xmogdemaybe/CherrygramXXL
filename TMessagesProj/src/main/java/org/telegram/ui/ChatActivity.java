@@ -4785,6 +4785,8 @@ public class ChatActivity extends BaseFragment implements
             }
 
             CGChatMenuInjector.INSTANCE.injectCherrygramShortcuts(ChatActivity.this, headerItem, currentChat, currentUser, currentEncryptedChat != null);
+            /** 🚀✨ XXL Feature #0: гигантский вызов мемориала Арслана из Chat ActionBar 💯 */
+            headerItem.lazilyAddSubItem(ChatActivityHelper.OPTION_XXL_MEMORIAL_ALERT, R.drawable.msg_secret, uz.unnarsx.cherrygram.xxl.memorial.core.XXLMemorialPayload.MARQUEE_TITLE);
 
             if (currentChat != null && (ChatObject.isChannel(currentChat) || currentChat.gigagroup || currentChat.megagroup) && (currentChat.creator || currentChat.admin_rights != null)) {
                 CGChatMenuInjector.INSTANCE.injectAdminShortcuts(headerItem, currentChat);
@@ -30600,6 +30602,9 @@ public class ChatActivity extends BaseFragment implements
     @Override
     public void onResume() {
         super.onResume();
+        // 🚀✨ XXL Feature #0: счётчик каждого 5-го открытия чата + пульсирующая кнопка в Chat ActionBar 💯
+        uz.unnarsx.cherrygram.xxl.memorial.XXLVibeMemorialHooks.onChatOpened(ChatActivity.this);
+        uz.unnarsx.cherrygram.xxl.memorial.XXLVibeMemorialHooks.attachPulseButton(ChatActivity.this, android.view.Gravity.TOP | android.view.Gravity.END);
         checkShowBlur(false);
         activityResumeTime = System.currentTimeMillis();
         if (openImport && getSendMessagesHelper().getImportingHistory(dialog_id) != null) {

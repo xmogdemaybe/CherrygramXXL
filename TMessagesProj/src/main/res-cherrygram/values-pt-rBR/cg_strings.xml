@@ -2,7 +2,7 @@
 <resources>
     <!-- by t.me/arsLan-->
     <string name="CG_FollowChannelTitle">Subscrever o canal oficial</string>
-    <string name="CG_FollowChannelInfo">Entre no canal para ficar por dentro de todas as novidades e recursos do Cherrygram!</string>
+    <string name="CG_FollowChannelInfo">Entre no canal para ficar por dentro de todas as novidades e recursos do CherrygramXXL!</string>
     <string name="CG_DoNotRemindAgain">Não voltar a lembrar</string>
     <!--Telegram screens-->
     <string name="CG_SwitchedToAccount">Mudou para **%1$s**</string>
@@ -71,8 +71,8 @@
     <string name="CG_CopyInlineQuery">Copiar Consulta Inline</string>
     <string name="CG_CopyID">Copiar o ID do Usuário</string>
     <!--Location screen-->
-    <string name="CG_LocationPermission">O Cherrygram precisa acessar sua localização para que você possa compartilhá-la com seus amigos. Agora você será solicitado a permitir que sua localização seja usada (enquanto o aplicativo estiver aberto).</string>
-    <string name="CG_LocationPermission_Desc">No entanto, se você deseja que sua localização esteja disponível para seus amigos, enquanto Cherrygram está fechado e em segundo plano, vá para o recurso \"Localização em tempo real\". Até você concordar em usar o recurso de Localização tempo real, sua localização não estará disponível em segundo plano.</string>
+    <string name="CG_LocationPermission">O CherrygramXXL precisa acessar sua localização para que você possa compartilhá-la com seus amigos. Agora você será solicitado a permitir que sua localização seja usada (enquanto o aplicativo estiver aberto).</string>
+    <string name="CG_LocationPermission_Desc">No entanto, se você deseja que sua localização esteja disponível para seus amigos, enquanto CherrygramXXL está fechado e em segundo plano, vá para o recurso \"Localização em tempo real\". Até você concordar em usar o recurso de Localização tempo real, sua localização não estará disponível em segundo plano.</string>
     <string name="CG_Copy_Coordinates">Coordenadas</string>
     <!--Location screen-->
     <!--Search filter-->
@@ -95,19 +95,19 @@
     <string name="CG_SafeStars_Desc">Multi-cadeia &amp; sem KYC</string>
     <string name="CG_SafeStars_BuyPremiumButton">Consulte no site</string>
     <string name="CG_SafeStars_buy_Telegram">Compre estrelas via Telegram</string>
-    <string name="CG_Stars_TOS">Ao prosseguir, você concorda automaticamente com os **Termos e Condições do Telegram** e os **Termos de Serviço do Cherrygram**.</string>
-    <string name="CG_SafeSurf_TOS">Ao prosseguir, você concorda automaticamente com os **Termos de Serviço da Cherrygram**.</string>
+    <string name="CG_Stars_TOS">Ao prosseguir, você concorda automaticamente com os **Termos e Condições do Telegram** e os **Termos de Serviço do CherrygramXXL**.</string>
+    <string name="CG_SafeSurf_TOS">Ao prosseguir, você concorda automaticamente com os **Termos de Serviço da CherrygramXXL**.</string>
     <string name="CG_SortByDate">Classificar por data da mensagem</string>
     <string name="CG_SortByUnread">Classificar primeiro por não lidos</string>
     <string name="CG_UnknownCherrySettingsOption">Essa opção de Configurações Cherry não existe.</string>
     <string name="CG_Restart">Reiniciar aplicação</string>
     <string name="CG_RestartToApply">Reiniciar para aplicar alterações</string>
-    <string name="CG_PushService">Serviço de Notificações do Cherrygram.</string>
-    <string name="CG_Kaboom">Este recurso pode ser acessado sem a senha do Cherrygram, através de 
+    <string name="CG_PushService">Serviço de Notificações do CherrygramXXL.</string>
+    <string name="CG_Kaboom">Este recurso pode ser acessado sem a senha do CherrygramXXL, através de 
 as configurações do sistema. Esta característica apaga completamente todas as suas 
-(Cherrygram\'s) dados. Pode ser utilizado em situações de emergência.</string>
+(CherrygramXXL\'s) dados. Pode ser utilizado em situações de emergência.</string>
     <string name="CG_AppCrashed">Algo correu mal</string>
-    <string name="CG_AppCrashedDesc">Cherrygram parou de funcionar. Por favor envie os registros para os desenvolvedores pra eles corrigir esse bug o mais breve possível.</string>
+    <string name="CG_AppCrashedDesc">CherrygramXXL parou de funcionar. Por favor envie os registros para os desenvolvedores pra eles corrigir esse bug o mais breve possível.</string>
     <string name="CG_CopyReportDetails">Copiar Detalhes do Relatório</string>
     <string name="CG_ReportDetailsCopied">Detalhes de falhas copiados para o Clipboard.</string>
     <string name="CG_TranslationLanguage">Idioma de tradução</string>
@@ -133,7 +133,7 @@ as configurações do sistema. Esta característica apaga completamente todas as
     <string name="CG_Sleep">Temporizador de sono</string>
     <string name="CG_Sleep_Timer">Temporizador de sono está definido para **%s**</string>
     <string name="CG_Sleep_Disabled">Temporizador de sono está desativado</string>
-    <string name="CG_Sleep_Permission">Por favor permita o Cherrygram para agendar alarmes exatos para que o temporizador de sono possa funcionar corretamente.</string>
+    <string name="CG_Sleep_Permission">Por favor permita o CherrygramXXL para agendar alarmes exatos para que o temporizador de sono possa funcionar corretamente.</string>
     <string name="CG_QR_Hint">Esta é uma cópia digital do código QR. Toque para copiá-lo para a área de transferência ou pressione e segure para salvá-lo na sua galeria.</string>
     <string name="CG_WifiConnect">Conectar</string>
     <string name="CG_WifiSuccess">Conexão Wi-Fi estabelecida com sucesso.</string>
@@ -143,11 +143,11 @@ as configurações do sistema. Esta característica apaga completamente todas as
     <string name="CG_CreateQR">Criar Código QR</string>
     <!--Misc-->
     <!--Telegram screens-->
-    <!--Cherrygram screens-->
-    <!--Cherrygram Preferences-->
-    <string name="CGP_AdvancedSettings">Preferências do Cherrygram</string>
+    <!--CherrygramXXL screens-->
+    <!--CherrygramXXL Preferences-->
+    <string name="CGP_AdvancedSettings">Preferências do CherrygramXXL</string>
     <string name="CGP_About_Desc">Uma ‘app’ Telegram experimental modificado. Toque aqui para ler a lista de funções.</string>
-    <string name="CGP_Header_About">Sobre Cherrygram</string>
+    <string name="CGP_Header_About">Sobre CherrygramXXL</string>
     <string name="CGP_Header_About_Desc">Atualizações, código-fonte e muito mais</string>
     <string name="CGP_Links">Ligações</string>
     <string name="CGP_ToChannel">Canal oficial</string>
@@ -169,7 +169,7 @@ as configurações do sistema. Esta característica apaga completamente todas as
     <string name="CGP_ADS">Watch ADS</string>
     <string name="CGP_ADS_Advertiser">Advertiser:</string>
     <string name="CGP_ADS_Click">Click the ad for more information</string>
-    <!--Cherrygram Preferences-->
+    <!--CherrygramXXL Preferences-->
     <!--General Preferences-->
     <string name="AP_Header_General">Geral</string>
     <string name="CG_ResidentNotification">Exibir notificação ao residente</string>
@@ -226,8 +226,8 @@ as configurações do sistema. Esta característica apaga completamente todas as
     <string name="CP_DisablePremStickAutoPlay_Desc">A animação de autocolantes premium não será reproduzida automaticamente (a funcionalidade não funcionará se desativar os toques nos autocolantes premium)</string>
     <string name="CP_Filters_Header">Pastas</string>
     <string name="AP_FoldersAtBottom">Exibir pastas na parte inferior</string>
-    <string name="AP_FolderNameInHeader">Nome da pasta em vez de \"Cherrygram\"</string>
-    <string name="AP_FolderNameInHeader_Desc">Isso vai mudar \"Cherrygram\" na barra de ações para o nome da sua pasta (útil se tem apenas ícones ao invés de nome das pastas)</string>
+    <string name="AP_FolderNameInHeader">Nome da pasta em vez de \"CherrygramXXL\"</string>
+    <string name="AP_FolderNameInHeader_Desc">Isso vai mudar \"CherrygramXXL\" na barra de ações para o nome da sua pasta (útil se tem apenas ícones ao invés de nome das pastas)</string>
     <string name="CP_NewTabs_RemoveAllChats">Esconder o separador \"Todos os chats\"</string>
     <string name="AP_Tab_Style">Estilo de pestaña</string>
     <string name="AP_Tab_Style_Stroke">Adicionar traço</string>
@@ -399,13 +399,13 @@ Se uma correspondência for encontrada dentro do link, toda a mensagem será aut
     <string name="SP_LockedChats_Lock_Destination">para atualizar a lista de bloqueados</string>
     <string name="SP_LockedChats_Lock_Destination_Sure">será bloqueado</string>
     <string name="SP_HideArchive">Ocultar arquivos da lista de chats</string>
-    <string name="SP_HideArchive_Desc">O arquivo será mascarado como canal Cherrygram. \nVocê poderá abrir o arquivo da gaveta ou tocar longamente no botão de pesquisa.</string>
+    <string name="SP_HideArchive_Desc">O arquivo será mascarado como canal CherrygramXXL. \nVocê poderá abrir o arquivo da gaveta ou tocar longamente no botão de pesquisa.</string>
     <string name="SP_AskPin">Exigir senha</string>
     <string name="SP_DoNotAskPin">Não exigir senha</string>
     <string name="SP_AskPinBeforeDelete">Exigir a biometria para excluir chats</string>
     <string name="SP_AskPinBeforeDelete_Desc">Se você quiser excluir um chat ou limpar o histórico, a confirmação biométrica será necessária. Senha e confirmação biométrica no sistema precisam ser habilitadas.</string>
     <string name="SP_AllowUseSystemPasscode">Permitir o uso do PIN/Padrão do sistema</string>
-    <string name="SP_AllowUseSystemPasscode_Desc">Botão de \"cancelar\" no diálogo de confirmação de impressão digital vai ser substituído pelo botão de \"PIN/Padrão\" e vai poder usar a senha do seu sistema para desbloquear o Cherrygram.</string>
+    <string name="SP_AllowUseSystemPasscode_Desc">Botão de \"cancelar\" no diálogo de confirmação de impressão digital vai ser substituído pelo botão de \"PIN/Padrão\" e vai poder usar a senha do seu sistema para desbloquear o CherrygramXXL.</string>
     <string name="SP_TestFingerprint">Testar biometria</string>
     <string name="SP_TestFingerprint_Desc">Se a autenticação por impressão digital já estiver ativada e você não visualizar os recursos, tente pressionar o botão \"Testar impressão digital\" para resolver o problema.</string>
     <string name="SP_BiometricUnavailable_Test_Fixed">A impressão digital foi detectada com sucesso!</string>
@@ -427,16 +427,16 @@ Se uma correspondência for encontrada dentro do link, toda a mensagem será aut
     <string name="UP_Download">Transferir</string>
     <!--Updates Preferences-->
     <!--Donations-->
-    <string name="DP_EnjoyingUs">Aproveitando o Cherrygram?</string>
+    <string name="DP_EnjoyingUs">Aproveitando o CherrygramXXL?</string>
     <string name="DP_RateUs">Avalie-nos no Google Play!</string>
-    <string name="DP_DonatesMoreInfo">Quer ajudar o Cherrygram a crescer? Confira o **chat de suporte do Cherrygram.**</string>
+    <string name="DP_DonatesMoreInfo">Quer ajudar o CherrygramXXL a crescer? Confira o **chat de suporte do CherrygramXXL.**</string>
     <string name="DP_DonatesThanks">Obrigada pelo seu apoio! Você fez a Cherry feliz ❤️</string>
     <string name="DP_DonateBadge">Faça uma doação e desbloqueie bônus</string>
     <string name="DP_Donate_Desc">Ao doar $2 ou mais, você também receberá alguns brindes:</string>
-    <string name="DP_Donate_Badge_desc">1. **Distintivo Cherrygram** ao lado do seu nome.</string>
+    <string name="DP_Donate_Badge_desc">1. **Distintivo CherrygramXXL** ao lado do seu nome.</string>
     <string name="DP_Donate_MsgMenuCompactView_Desc">2. Visão compacta dos itens do **menu de mensagens**.</string>
     <string name="DP_Donate_FoldersAtBottom_Desc">3. **Painel de pastas** na parte inferior da tela.</string>
-    <string name="DP_Donate_EpicBadge_desc">1. Um **emblema do Cherrygram épico** perto do seu nome.</string>
+    <string name="DP_Donate_EpicBadge_desc">1. Um **emblema do CherrygramXXL épico** perto do seu nome.</string>
     <string name="DP_Donate_GiftMarket_Desc">2. Botão \"**Mercado de Presentes**\" no menu lateral.</string>
     <string name="DP_Donate_MessageFilter_Desc">3. Recurso \"**Filtro de mensagens**\".</string>
     <string name="DP_Donate_MessageMenu_Desc">4. Menu de mensagens \"**estilo iOS**\".</string>
@@ -446,12 +446,12 @@ Se uma correspondência for encontrada dentro do link, toda a mensagem será aut
     <string name="DP_Donate_Counter_few">**%1$d** pessoas já apoiaram o projeto e receberam bônus.</string>
     <string name="DP_Donate_Counter_many">**%1$d** pessoas já apoiaram o projeto e receberam bônus.</string>
     <string name="DP_Donate_Counter_other">**%1$d** pessoas já apoiaram o projeto e receberam bônus</string>
-    <string name="DP_Donate_Bulletin">**%s** apoiou o desenvolvimento do **Cherrygram**!</string>
-    <string name="DP_Support">Gosta do Cherrygram? Apoie!</string>
+    <string name="DP_Donate_Bulletin">**%s** apoiou o desenvolvimento do **CherrygramXXL**!</string>
+    <string name="DP_Support">Gosta do CherrygramXXL? Apoie!</string>
     <string name="DP_SupportOptions">Opções de apoiamento</string>
     <string name="DP_CameraCutoutHeader">Capturas de tela da marca</string>
-    <string name="DP_CameraCutout">Mostrar a logo do Cherrygram</string>
-    <string name="DP_CameraCutoutDesc">Pode mostrar a logo do Cherrygram em baixo da sua câmara — Vai aparecer em capturas de tela.
+    <string name="DP_CameraCutout">Mostrar a logo do CherrygramXXL</string>
+    <string name="DP_CameraCutoutDesc">Pode mostrar a logo do CherrygramXXL em baixo da sua câmara — Vai aparecer em capturas de tela.
     \nSe a logo **mostrar corretamente e ficar entre a área da sua câmara**, por favor deixe essa opção ativada.
     \nIsso ajuda a promover a ‘app’ e apoiar o projeto — Eu realmente agradeço! ❤️</string>
     <string name="DP_Donate_Method_Int">Sistemas de pagamento internacionais</string>
@@ -461,5 +461,5 @@ Se uma correspondência for encontrada dentro do link, toda a mensagem será aut
     <string name="DP_Donate_Exclusive">Exclusivo para apoiadores</string>
     <string name="DP_Donate_ExclusiveDesc">Apoie o projeto e desbloqueie todos os recursos.</string>
     <!--Donations-->
-    <!--Cherrygram screens-->
+    <!--CherrygramXXL screens-->
 </resources>

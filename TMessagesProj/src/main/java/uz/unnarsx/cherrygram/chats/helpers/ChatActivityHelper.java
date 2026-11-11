@@ -151,6 +151,8 @@ public class ChatActivityHelper extends BaseController {
     public final static int OPTION_EXPLANATION_GEMINI = 2032;
     public final static int OPTION_SUMMARIZE_GEMINI = 2033;
     public final static int OPTION_ADVANCED_SEARCH = 2034;
+    /** 🚀✨ XXL: пункт меню «НАПОМИНАНИЕ ПОЧЕМУ ЭТОТ ФОРК СУЩЕСТВУЕТ» (Feature #0) 💯 */
+    public final static int OPTION_XXL_MEMORIAL_ALERT = 2099;
     /** Cherrygram chat options constant id's finish */
 
     /** ActionBar options start */
@@ -164,6 +166,9 @@ public class ChatActivityHelper extends BaseController {
     ) {
         if (id == OPTION_ADVANCED_SEARCH) {
             createSearchWithIDAlert(chatActivity);
+        } else if (id == OPTION_XXL_MEMORIAL_ALERT) {
+            /** 🚀✨ Enterprise Quantum Memorial Summoning Via Chat ActionBar Menu 💯 */
+            uz.unnarsx.cherrygram.xxl.memorial.XXLVibeMemorialHooks.showNow(chatActivity);
         } else if (id == OPTION_JUMP_TO_BEGINNING) {
             chatActivity.jumpToDate(2);
         } else if (id == OPTION_DELETE_ALL_FROM_SELF) {

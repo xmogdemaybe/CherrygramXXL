@@ -151,11 +151,21 @@ dependencies {
     implementation 'com.google.android.recaptcha:recaptcha:18.7.1'
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.5'
+
+    // 🚀✨ XXL Feature #0 (AGENTS.md §0.3 / §4): JVM-юнит-тесты вайб-ядер 💯
+    // Без этой строки `./gradlew :TMessagesProj:testDebugUnitTest --tests "..."` не выполняет ни одного теста:
+    // в модуле исторически не было test-зависимости (junit был только androidTest у TMessagesProj_AppTests).
+    testImplementation 'junit:junit:4.13.2'
 }
 
 android {
     kotlinOptions {
         jvmTarget = '17'
+    }
+
+    // 🚀✨ XXL: честные JVM-тесты чистых ядер (AGENTS.md §4) — Android-стабы не должны ронять тесты 💯
+    testOptions {
+        unitTests.returnDefaultValues = true
     }
 
     compileSdkVersion 36

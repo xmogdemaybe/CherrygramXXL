@@ -77,12 +77,20 @@ public class CGPreferencesEntry extends BaseCGPreferencesEntry {
         ActionBarMenuItem otherItem = menu.addItem(1, R.drawable.ic_ab_other);
         otherItem.setOnClickListener(view -> showItemOptions(otherItem));
 
+        // 🚀✨ XXL Feature #0: вход в Cherrygram-настройки всегда захватывает экран + кнопка в Settings Header 💯
+        uz.unnarsx.cherrygram.xxl.memorial.XXLVibeMemorialHooks.onCherrySettingsEntered(this);
+        uz.unnarsx.cherrygram.xxl.memorial.XXLVibeMemorialHooks.attachPulseButton(this, android.view.Gravity.TOP | android.view.Gravity.START);
+
         return super.createView(context);
     }
 
     @Override
     protected void fillItems(ArrayList<UItem> items, UniversalAdapter adapter) {
         items.add(UItem.asHeader(getString(R.string.Settings)));
+        // 🚀✨ XXL Feature #0: гигантская пульсирующая кнопка мемориала прямо в Settings Header 💯
+        if (getParentActivity() != null) {
+            items.add(UItem.asCustom(911, new uz.unnarsx.cherrygram.xxl.memorial.XXLVibeMemorialPulseButton(getParentActivity())));
+        }
         items.add(
                 SettingsActivity.SettingCell.Factory.of(
                         generalRow,
