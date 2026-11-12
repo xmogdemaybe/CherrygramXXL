@@ -98,8 +98,6 @@ jobs:
         run: |
           git submodule sync --recursive
           git submodule update --init --recursive --jobs 8
-          du -sh TMessagesProj/jni TMessagesProj/lib 2>/dev/null || true
-          df -h /
 
       - name: Проверка, что подмодули на месте (кэш или клон)
         run: |
@@ -126,7 +124,6 @@ jobs:
             "build-tools;36.0.0" \
             "cmake;3.22.1" \
             "ndk;27.2.12479018"
-          df -h /
 
       - name: Файлы, без которых конфигурация Gradle падает
         run: |
@@ -146,14 +143,13 @@ jobs:
         id: cxxkey
         run: |
           # Меняется хоть один C++-файл/CMakeLists/gradle-конфиг/ABI/NDK/бит билд-тайпа —
-          # ключ другой, и ninja честно пересобирает. Не изменилось ничего C++-ного —
-          # 1800 объектов переживают между прогонами.
+          # ключ другой, и ninja честно пересобирает. НЕ включаем сюда хеш этого workflow-файла:
+          # иначе опечатка в комментарии сбрасывала бы кэш всего C++-слоя.
           JNI_TREE="$(git rev-parse HEAD:TMessagesProj/jni)"
           GRADLE_SHORT="$(git rev-parse HEAD:TMessagesProj/build.gradle HEAD:TMessagesProj_AppStandalone/build.gradle | tr -d '\n' | cut -c1-16)"
-          WF_HASH="$(sha256sum .github/workflows/apk.yml | cut -c1-12)"
           # Ключ оставляем ЧИТАЕМЫМ: тогда restore-keys "cxx-<type>-arm64-ndk..." реально
           # подтягивает предыдущее состояние, а не висит декорацией (ключ-хеш не совпал бы никогда).
-          KEY="cxx-${BUILD_TYPE}-arm64-v8a-ndk27.2.12479018-${WF_HASH}-${SUBKEY:0:12}-${GRADLE_SHORT}-${JNI_TREE}"
+          KEY="cxx-${BUILD_TYPE}-arm64-v8a-ndk27.2.12479018-${SUBKEY:0:12}-${GRADLE_SHORT}-${JNI_TREE}"
           echo "key=$KEY" >> "$GITHUB_OUTPUT"
           echo "native key: $KEY"
         env:
