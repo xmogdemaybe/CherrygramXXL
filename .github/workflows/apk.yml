@@ -1,0 +1,111 @@
+name: 🚀✨ Build XXL APK
+
+on:
+  workflow_dispatch:
+    inputs:
+      build_type:
+        description: "debug = быстрый без R8, standalone = релиз с минификацией"
+        type: choice
+        required: true
+        default: debug
+        options:
+          - debug
+          - standalone
+  push:
+    tags:
+      - 'v*'
+      - 'xxl*'
+
+concurrency:
+  group: apk-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  apk:
+    name: afat ${{ github.event.inputs.build_type || 'debug' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+
+    env:
+      ANDROID_HOME: /usr/local/lib/android/sdk
+      BUILD_TYPE: ${{ github.event.inputs.build_type || 'debug' }}
+
+    steps:
+      - name: Освобождаем диск (NDK + Gradle кэш съедают ~12 ГБ)
+        run: |
+          sudo rm -rf /usr/share/dotnet /opt/hostedtoolcache/CodeQL || true
+          sudo rm -rf "$ANDROID_HOME"/ndk/* "$ANDROID_HOME"/platforms/android-3* || true
+          df -h /
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Подмодули JNI (ffmpeg / libvpx / td / tlottie / jlatexmath / media3)
+        run: |
+          git submodule sync --recursive
+          git submodule update --init --recursive --jobs 8
+          du -sh TMessagesProj/jni TMessagesProj/lib 2>/dev/null || true
+
+      - name: JDK 17 (ровно как в Dockerfile репозитория)
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Android SDK 36 + NDK 27.2.12479018 + CMake 3.22.1
+        run: |
+          export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$PATH"
+          yes | sdkmanager --licenses > /dev/null || true
+          sdkmanager --install \
+            "platform-tools" \
+            "platforms;android-36" \
+            "build-tools;36.0.0" \
+            "cmake;3.22.1" \
+            "ndk;27.2.12479018"
+          df -h /
+
+      - name: Файлы, без которых конфигурация Gradle падает
+        run: |
+          # App*/build.gradle читает secrets_for_ci.env на этапе конфигурации (Files.lines без try/catch)
+          cp -f secrets_for_ci.env.example secrets_for_ci.env
+          # signingConfigs указывают на ../Your_Key.jks с placeholder-паролями из TMessagesProj_AppStandalone/build.gradle
+          keytool -genkeypair -v \
+            -keystore Your_Key.jks \
+            -alias Your_Alias \
+            -keyalg RSA -keysize 2048 -validity 10000 \
+            -storepass Your_Password -keypass Your_Password \
+            -dname "CN=CherrygramXXL, OU=XXL, O=XXL, C=RU"
+
+      - name: Gradle cache
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-read-only: true
+
+      - name: Assemble APK
+        run: |
+          if [ "$BUILD_TYPE" = "debug" ]; then
+            TASK=assembleAfatDebug
+          else
+            TASK=assembleAfatStandalone
+          fi
+          echo "task = :TMessagesProj_AppStandalone:$TASK  (build_type=$BUILD_TYPE)"
+          ./gradlew --parallel --max-workers=3 \
+            -Dorg.gradle.jvmargs=-Xmx6g \
+            :TMessagesProj_AppStandalone:"$TASK" --stacktrace
+
+      - name: Что получилось
+        run: |
+          find TMessagesProj_AppStandalone/build/outputs/apk -name '*.apk' -printf '%p  %s bytes\n' | sort
+
+      - name: Артефакт
+        uses: actions/upload-artifact@v4
+        with:
+          name: CherrygramXXL-APK-${{ env.BUILD_TYPE }}
+          path: TMessagesProj_AppStandalone/build/outputs/apk/afat/**/*.apk
+          if-no-files-found: error
+          compression-level: 0

@@ -1,0 +1,97 @@
+name: 🔬 Compile + XXL Unit Tests
+
+# Быстрый гейт: компилирует Java/Kotlin слоя TMessagesProj и гоняет честные JVM-тесты
+# крысы (uz.unnarsx.cherrygram.xxl.**). Подмодули JNI и NDK для этого НЕ нужны —
+# поэтому ран занимает ~10-20 минут вместо часа.
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: compile-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  compile:
+    name: javac + kotlinc + junit
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    env:
+      ANDROID_HOME: /usr/local/lib/android/sdk
+
+    steps:
+      - name: Освобождаем диск
+        run: |
+          sudo rm -rf /usr/share/dotnet /opt/hostedtoolcache/CodeQL || true
+          df -h /
+
+      - name: Checkout (без подмодулей — они нужны только для Native)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: JDK 17 (ровно как в Dockerfile репозитория)
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Android SDK 36 + build-tools 36.0.0
+        run: |
+          export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$PATH"
+          yes | sdkmanager --licenses > /dev/null || true
+          sdkmanager --install \
+            "platforms;android-36" \
+            "build-tools;36.0.0"
+
+      - name: Файлы, без которых конфигурация Gradle падает
+        run: |
+          # App*/build.gradle читает secrets_for_ci.env на этапе конфигурации (Files.lines без try/catch)
+          cp -f secrets_for_ci.env.example secrets_for_ci.env
+          # signingConfigs указывают на ../Your_Key.jks с placeholder-паролями
+          keytool -genkeypair -v \
+            -keystore Your_Key.jks \
+            -alias Your_Alias \
+            -keyalg RSA -keysize 2048 -validity 10000 \
+            -storepass Your_Password -keypass Your_Password \
+            -dname "CN=CherrygramXXL, OU=XXL, O=XXL, C=RU"
+
+      - name: Gradle cache
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-read-only: true
+
+      - name: Compile Android-слой (все 10 крысиных коммитов проходят здесь)
+        run: |
+          ./gradlew --parallel --max-workers=3 \
+            -Dorg.gradle.jvmargs=-Xmx6g \
+            :TMessagesProj:compileDebugKotlin \
+            :TMessagesProj:compileDebugJavaWithJavac \
+            --stacktrace
+
+      - name: Честные unit-тесты ядра крысы (AGENTS.md §4)
+        run: |
+          ./gradlew --parallel --max-workers=3 \
+            -Dorg.gradle.jvmargs=-Xmx6g \
+            :TMessagesProj:testDebugUnitTest \
+            --tests "uz.unnarsx.cherrygram.xxl.*" \
+            --stacktrace
+
+      - name: Отчёты тестов при желании почитать
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-test-reports
+          path: TMessagesProj/build/reports/tests/**
+          if-no-files-found: ignore
+          compression-level: 0
