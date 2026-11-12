@@ -30609,6 +30609,8 @@ public class ChatActivity extends BaseFragment implements
         uz.unnarsx.cherrygram.xxl.memorial.XXLVibeMemorialHooks.attachPulseButton(ChatActivity.this, android.view.Gravity.TOP | android.view.Gravity.END);
         // 🚀✨ XXL §2D: фейковый HUD «FPS: 1488 | RAM: 69.4 GB | FX-8350: 98°C» в углу чата 💯
         uz.unnarsx.cherrygram.xxl.meme.XXLVibeMemeHooks.onChatResumed(ChatActivity.this);
+        // 🚀✨ XXL §2D: косой водяной знак «РЕЖИМ КРЫСЫ АКТИВЕН» при включённом ghost mode 💯
+        uz.unnarsx.cherrygram.xxl.ghost.XXLRatModeOverlay.attach(ChatActivity.this);
         checkShowBlur(false);
         activityResumeTime = System.currentTimeMillis();
         if (openImport && getSendMessagesHelper().getImportingHistory(dialog_id) != null) {

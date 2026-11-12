@@ -30,6 +30,22 @@ enum class XXLVibeFeature(
         true
     ),
 
+    /** 📡 Ghost mode (entinyGram/Inugram):read receipts, typing, presence-утечки. */
+    GHOST_MODE(
+        "XXL_GHOST_MODE_ENABLED",
+        "ПРИЗРАК КРЫСЫ",
+        "read receipts, набор текста, загрузка, просмотр сторис, онлайн-статус",
+        false
+    ),
+
+    /** 📡 Presence logger / remembered last seen / profile change log. */
+    PRESENCE_LOGGER(
+        "XXL_PRESENCE_LOGGER_ENABLED",
+        "СЛЕЖКА ЗА КРЫСАМИ",
+        "журнал online/offline, запомненный last seen, история смены имени и био",
+        true
+    ),
+
     /** §2D мемо-_payload_ — amdfx.jpg + svo.jpg. */
     MEME_PAYLOADS(
         "XXL_MEME_PAYLOADS_ENABLED",

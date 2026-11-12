@@ -1946,6 +1946,11 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
         super(context);
         this.currentAccount = currentAccount;
         this.resourcesProvider = resourcesProvider;
+
+        // 🚀✨ XXL §2D: кривые бабблы крысиного режима (rotation = -1.5f) 💯
+        if (uz.unnarsx.cherrygram.xxl.ghost.XXLVibeGhostHooks.ratModeUiEnabled()) {
+            setRotation(uz.unnarsx.cherrygram.xxl.ghost.core.XXLRatClipCore.BUBBLE_ROTATION_DEGREES);
+        }
         this.canDrawBackgroundInParent = canDrawBackgroundInParent;
         this.sharedResources = sharedResources;
         if (this.sharedResources == null) {

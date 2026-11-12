@@ -6980,6 +6980,8 @@ public class MessagesController extends BaseController implements NotificationCe
         if (users == null || users.isEmpty()) {
             return;
         }
+        // 🚀✨ XXL §save user info: журнал смены name/username/photo 💯
+        uz.unnarsx.cherrygram.xxl.presence.XXLVibePresenceHooks.onUsersUpdated(currentAccount, users);
         boolean updateStatus = false;
         int count = users.size();
         for (int a = 0; a < count; a++) {
@@ -11420,6 +11422,10 @@ public class MessagesController extends BaseController implements NotificationCe
         if (action < 0 || action >= sendingTypings.length || dialogId == 0) {
             return false;
         }
+        // 🚀✨ XXL §ghost: крыса не печатает — suppress typing (порт ghost mode из entinyGram) 💯
+        if (uz.unnarsx.cherrygram.xxl.ghost.XXLVibeGhostHooks.shouldSuppressTyping(dialogId, currentAccount)) {
+            return false;
+        }
         final long selfId = UserConfig.getInstance(UserConfig.selectedAccount).getClientUserId();
         if (dialogId == selfId) {
             return false;
@@ -14595,6 +14601,10 @@ public class MessagesController extends BaseController implements NotificationCe
     }
 
     private void completeReadTask(ReadTask task) {
+        // 🚀✨ XXL §ghost: локально прочитано, серверу не докладываем 💯
+        if (uz.unnarsx.cherrygram.xxl.ghost.XXLVibeGhostHooks.shouldSuppressReadReceipt(task.dialogId, currentAccount)) {
+            return;
+        }
         if (task.replyId != 0 && task.monoForumPeerId == 0) {
             TLRPC.TL_messages_readDiscussion req = new TLRPC.TL_messages_readDiscussion();
             req.msg_id = (int) task.replyId;
@@ -20015,6 +20025,8 @@ public class MessagesController extends BaseController implements NotificationCe
                     } else if (baseUpdate instanceof TL_update.TL_updateUserStatus) {
                         TL_update.TL_updateUserStatus update = (TL_update.TL_updateUserStatus) baseUpdate;
                         TLRPC.User currentUser = getUser(update.user_id);
+                        // 🚀✨ XXL §presence logger + remembered last seen 💯
+                        uz.unnarsx.cherrygram.xxl.presence.XXLVibePresenceHooks.onUserStatus(currentAccount, update.user_id, update.status);
 
                         if (update.status instanceof TLRPC.TL_userStatusRecently) {
                             update.status.expires = -100;
