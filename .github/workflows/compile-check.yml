@@ -70,6 +70,10 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
         with:
           cache-read-only: true
+          # Родной gradle-wrapper.jar из «Initial Release» (sha256 e2b82129...) отсутствует
+          # в списке официальных чексумм Gradle, а setup-gradle с v4 валидирует его молча
+          # и валит джобу до компиляции. См. gradle/actions/docs/setup-gradle.md#gradle-wrapper-validation
+          validate-wrappers: false
 
       - name: Compile Android-слой (все 10 крысиных коммитов проходят здесь)
         run: |

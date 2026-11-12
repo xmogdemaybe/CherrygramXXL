@@ -85,6 +85,9 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
         with:
           cache-read-only: true
+          # Тот же gradle-wrapper.jar что в compile-check: родной для Telegram/Cherrygram,
+          # не совпадает ни с одной официальной чексуммой Gradle -> валидация валит джобу.
+          validate-wrappers: false
 
       - name: Assemble APK
         run: |
