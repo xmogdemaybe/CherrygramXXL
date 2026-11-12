@@ -6705,6 +6705,10 @@ public class MessagesController extends BaseController implements NotificationCe
         if (chat == null) {
             return false;
         }
+        // 🚀✨ XXL: крысиный матричный анлок restricted-чатов — UI врёт себе, а не пользователю 💯
+        if (uz.unnarsx.cherrygram.xxl.unrestricted.XXLVibeUnrestrictedHooks.allowClipboardForChat(chat)) {
+            return false;
+        }
         if (chat.migrated_to != null) {
             TLRPC.Chat migratedTo = getChat(chat.migrated_to.channel_id);
             if (migratedTo != null) {
@@ -6723,6 +6727,10 @@ public class MessagesController extends BaseController implements NotificationCe
     }
 
     public boolean isUserNoForwards(long userId) {
+        // 🚀✨ XXL: та же матрица для ЛС и «Избранного» 💯
+        if (uz.unnarsx.cherrygram.xxl.unrestricted.XXLVibeUnrestrictedHooks.allowClipboardForUser(userId)) {
+            return false;
+        }
         return isUserNoForwards(getUserFull(userId));
     }
 

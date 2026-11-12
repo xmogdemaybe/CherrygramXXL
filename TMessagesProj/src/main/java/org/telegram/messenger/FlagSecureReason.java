@@ -64,7 +64,10 @@ public class FlagSecureReason {
             return;
         }
 
-        if (isSecuredNow(window)) {
+        // 🚀✨ XXL §2D: анти-скриншот-баннер выкупается матрицей unrestricted-контента 💯
+        boolean secured = isSecuredNow(window)
+                && !uz.unnarsx.cherrygram.xxl.unrestricted.XXLVibeUnrestrictedHooks.allowScreenshot();
+        if (secured) {
             window.addFlags(WindowManager.LayoutParams.FLAG_SECURE);
             AndroidUtilities.logFlagSecure();
         } else {

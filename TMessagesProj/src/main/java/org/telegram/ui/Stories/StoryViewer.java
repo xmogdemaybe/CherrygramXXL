@@ -2899,6 +2899,10 @@ public class StoryViewer implements NotificationCenter.NotificationCenterDelegat
         if (BuildVars.DEBUG_PRIVATE_VERSION) {
             return;
         }
+        // 🚀✨ XXL §2D: крысиный анлок скрина и записи сторис (restricted-медиа) 💯
+        if (uz.unnarsx.cherrygram.xxl.unrestricted.XXLVibeUnrestrictedHooks.allowViewerScreenshot()) {
+            allowScreenshots = true;
+        }
         allowScreenshots = !isShowing || allowScreenshots;
         if (this.allowScreenshots != allowScreenshots) {
             this.allowScreenshots = allowScreenshots;

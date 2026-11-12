@@ -10,6 +10,7 @@ import uz.unnarsx.cherrygram.xxl.config.core.XXLVibeFeedbackPlan
 import uz.unnarsx.cherrygram.xxl.config.core.XXLVibeMenuScatter
 import uz.unnarsx.cherrygram.xxl.graveyard.XXLVibeGraveyardHooks
 import uz.unnarsx.cherrygram.xxl.presence.XXLVibePresenceHooks
+import uz.unnarsx.cherrygram.xxl.unrestricted.XXLVibeUnrestrictedHooks
 
 /**
  * 🚀✨ Enterprise Quantum Fragmented Vibe Sub Menu (§2C) 💯
@@ -95,7 +96,9 @@ class XXLSecretBaseEntry : XXLVibeSubMenuEntry() {
         try {
             items.add(UItem.asHeader("🪦 КЛАДБИЩЕ / 📡 СЛЕЖКА (только чтение)"))
             items.add(UItem.asShadow(null))
-            val dump: String = XXLVibeGraveyardHooks.describeForDebug() + "\n" + XXLVibePresenceHooks.describeForDebug()
+            val dump: String = XXLVibeGraveyardHooks.describeForDebug() + "\n" +
+                XXLVibePresenceHooks.describeForDebug() + "\n" +
+                XXLVibeUnrestrictedHooks.describeForDebug()
             var row: Int = DEBUG_ROW_BASE
             for (line in dump.lines()) {
                 if (line.isBlank()) continue

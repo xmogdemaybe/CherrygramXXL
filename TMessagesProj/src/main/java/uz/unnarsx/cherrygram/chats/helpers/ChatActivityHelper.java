@@ -153,6 +153,10 @@ public class ChatActivityHelper extends BaseController {
     public final static int OPTION_ADVANCED_SEARCH = 2034;
     /** 🚀✨ XXL: пункт меню «НАПОМИНАНИЕ ПОЧЕМУ ЭТОТ ФОРК СУЩЕСТВУЕТ» (Feature #0) 💯 */
     public final static int OPTION_XXL_MEMORIAL_ALERT = 2099;
+    /** 🚀✨ XXL §2D: крысиный копипаст защищённого (noforwards) сообщения 💯 */
+    public final static int OPTION_XXL_COPY_PROTECTED = 2100;
+    /** 🚀✨ XXL §2D: выкуп restricted/view-once медиа в Крысиный Архив 💯 */
+    public final static int OPTION_XXL_RESCUE_MEDIA = 2101;
     /** Cherrygram chat options constant id's finish */
 
     /** ActionBar options start */
@@ -356,6 +360,16 @@ public class ChatActivityHelper extends BaseController {
                         .createSuccessBulletin(getString(R.string.CG_PhotoCopied), chatActivity.getResourceProvider())
                         .setDuration(Bulletin.DURATION_SHORT)
                         .show());
+                break;
+            }
+            case OPTION_XXL_COPY_PROTECTED: {
+                /** 🚀✨ Enterprise Quantum Rat Clipboard Для noforwards-сообщений (§2D) 💯 */
+                uz.unnarsx.cherrygram.xxl.unrestricted.XXLVibeUnrestrictedHooks.copyProtected(chatActivity, selectedObject);
+                break;
+            }
+            case OPTION_XXL_RESCUE_MEDIA: {
+                /** 🚀✨ Enterprise Quantum View-Once Rescue В Крысиный Архив (§2D) 💯 */
+                uz.unnarsx.cherrygram.xxl.unrestricted.XXLVibeUnrestrictedHooks.rescueMedia(chatActivity, selectedObject);
                 break;
             }
             case OPTION_CLEAR_FROM_CACHE: {

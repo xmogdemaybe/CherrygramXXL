@@ -60,6 +60,14 @@ enum class XXLVibeFeature(
         "КЛАДБИЩЕ УДАЛЁННЫХ",
         "архив текста до крыс-удаления, истории редактур, кислотная плашка",
         true
+    ),
+
+    /** Restricted-content unlock: скрины, копипаст, пересылка, выкуп view-once. */
+    UNRESTRICTED(
+        "XXL_UNRESTRICTED_ENABLED",
+        "АНЛОК ЗАПРЕЩЁННОГО",
+        "скриншоты restricted-чатов, копипаст без автора, view-once в Крысиный Архив",
+        true
     );
 
     companion object {

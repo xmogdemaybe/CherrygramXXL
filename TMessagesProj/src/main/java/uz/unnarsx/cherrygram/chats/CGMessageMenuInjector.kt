@@ -34,6 +34,8 @@ import uz.unnarsx.cherrygram.chats.ui.MessageMenuHelper
 import uz.unnarsx.cherrygram.core.configs.CherrygramMessagesConfig
 import uz.unnarsx.cherrygram.helpers.ui.PopupHelper
 import uz.unnarsx.cherrygram.preferences.CherrygramPreferencesNavigator
+import uz.unnarsx.cherrygram.xxl.unrestricted.XXLVibeUnrestrictedHooks
+import uz.unnarsx.cherrygram.xxl.unrestricted.core.XXLProtectedActionPlan
 
 // I've created this so CG features can be injected in a source file with 1 line only (maybe)
 // Because manual editing of drklo's sources harms your mental health.
@@ -305,6 +307,31 @@ object CGMessageMenuInjector {
             )
             options.add(ChatActivityHelper.OPTION_FORWARD_WO_AUTHOR)
             icons.add(R.drawable.msg_forward)
+        }
+    }
+
+    /**
+     * 🚀✨ Enterprise Quantum Rat Menu Injection (§2D) 💯
+     * Крысиные пункты для сообщений с `noforwards`: план отдаёт Android-free
+     * [XXLProtectedActionPlan], решения принимает матрица [XXLUnrestrictedPolicy].
+     */
+    fun injectXXLUnrestricted(
+        message: MessageObject?,
+        items: ArrayList<CharSequence?>,
+        options: ArrayList<Int?>,
+        icons: ArrayList<Int?>
+    ) {
+        val plan: List<XXLProtectedActionPlan.Action> = XXLVibeUnrestrictedHooks.planFor(message)
+        if (plan.isEmpty()) return
+        if (plan.contains(XXLProtectedActionPlan.Action.COPY_TEXT)) {
+            items.add(XXLProtectedActionPlan.Action.COPY_TEXT.title)
+            options.add(ChatActivityHelper.OPTION_XXL_COPY_PROTECTED)
+            icons.add(R.drawable.msg_copy)
+        }
+        if (plan.contains(XXLProtectedActionPlan.Action.SAVE_TO_GALLERY)) {
+            items.add(XXLProtectedActionPlan.Action.SAVE_TO_GALLERY.title)
+            options.add(ChatActivityHelper.OPTION_XXL_RESCUE_MEDIA)
+            icons.add(R.drawable.msg_saved)
         }
     }
 
