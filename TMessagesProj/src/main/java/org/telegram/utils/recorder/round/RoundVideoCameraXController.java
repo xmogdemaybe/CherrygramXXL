@@ -14,9 +14,46 @@ import android.content.Context;
 import android.view.TextureView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import uz.unnarsx.cherrygram.camera.CameraXController;
+import uz.unnarsx.cherrygram.camera.CherryZoomSliderView;
 
 @SuppressLint({"UnsafeOptInUsageError", "RestrictedApi"})
 final class RoundVideoCameraXController extends RoundVideoCameraSource {
+
+    /**
+     * 🚀✨ XXL: RoundVideoSession зовёт getZoomController()/getCameraXController()/focusToPoint(),
+     * а тела движка в опубликованном дереве Арслана пустые. Покрываем контракт заглушкой с
+     * полями: null означает «CameraX-ручки нет», вызывающий сам на аннотирован @Nullable,
+     * так что вместо NPE получается честный сток-путь записи.
+     */
+    @Nullable
+    private CherryZoomSliderView.ZoomController zoomController;
+
+    @Nullable
+    private CameraXController cameraXController;
+
+    @Nullable
+    CherryZoomSliderView.ZoomController getZoomController() {
+        return zoomController;
+    }
+
+    @Nullable
+    CameraXController getCameraXController() {
+        return cameraXController;
+    }
+
+    void focusToPoint(float x, float y) {
+        final CameraXController controller = cameraXController;
+        if (controller == null) {
+            return;
+        }
+        try {
+            controller.focusToPoint(x, y, false);
+        } catch (Throwable ignored) {
+        }
+    }
 
     RoundVideoCameraXController(
             @NonNull Context context,

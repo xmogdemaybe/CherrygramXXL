@@ -21,7 +21,7 @@ import org.telegram.ui.Components.blur3.drawable.color.BlurredBackgroundColorPro
 public class CherryZoomSliderView extends View {
 
     public interface OnPresetSelectedListener {
-
+        void onPresetSelected(float zoom);
     }
 
     public interface ZoomController {
@@ -42,6 +42,34 @@ public class CherryZoomSliderView extends View {
         super(context);
     }
 
+    /**
+     * 🚀✨ XXL: в опубликованном Арсланом дереве этот слайдер — оболочка без тел, а сток
+     *InstantCameraView/InstantCameraView2 зовут setOnPresetSelectedListener. Держим слушателя
+     * и зовём его сами, чтобы подсказка про зум не превращалась в `cannot find symbol`.
+     */
+    private OnPresetSelectedListener presetSelectedListener;
+    private float currentZoomRatio = 1f;
+    private ZoomController boundController;
+
+    public void setOnPresetSelectedListener(OnPresetSelectedListener listener) {
+        presetSelectedListener = listener;
+    }
+
+    public OnPresetSelectedListener getOnPresetSelectedListener() {
+        return presetSelectedListener;
+    }
+
+    private void notifyPresetSelected() {
+        final OnPresetSelectedListener listener = presetSelectedListener;
+        if (listener == null) {
+            return;
+        }
+        try {
+            listener.onPresetSelected(currentZoomRatio);
+        } catch (Throwable ignored) {
+        }
+    }
+
     public void setLiquidGlassBackground(
             BlurredBackgroundDrawableViewFactory factory,
             BlurredBackgroundColorProvider colorProvider
@@ -50,11 +78,22 @@ public class CherryZoomSliderView extends View {
     }
 
     public void setZoom(float newZoom, boolean notify) {
+        currentZoomRatio = newZoom;
+        if (notify) {
+            notifyPresetSelected();
+        }
+    }
 
+    public float getZoom() {
+        return currentZoomRatio;
     }
 
     public void scaleZoom(float factor) {
-
+        if (factor <= 0f || Float.isNaN(factor)) {
+            return;
+        }
+        currentZoomRatio *= factor;
+        notifyPresetSelected();
     }
 
     public void collapse() {
@@ -62,11 +101,15 @@ public class CherryZoomSliderView extends View {
     }
 
     public void bindCamera(ZoomController controller) {
-
+        boundController = controller;
     }
 
     public void unbindCamera() {
+        boundController = null;
+    }
 
+    public ZoomController getBoundCamera() {
+        return boundController;
     }
 
     public void prepareForCameraChange() {

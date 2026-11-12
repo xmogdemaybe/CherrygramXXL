@@ -42,6 +42,7 @@ import java.util.concurrent.Executors;
 
 import uz.unnarsx.cherrygram.core.CherrygramLogger;
 import uz.unnarsx.cherrygram.core.configs.CherrygramCameraConfig;
+import uz.unnarsx.cherrygram.xxl.camera.core.XXLCameraEngineGuardCore;
 
 public class CameraXUtils {
 
@@ -51,12 +52,26 @@ public class CameraXUtils {
 
     private static final ExecutorService CAMERA_EXECUTOR = Executors.newSingleThreadExecutor();
 
+    /**
+     * 🚀✨ XXL: движок CameraX (CameraXController, CameraXView, RoundVideoCameraXController,
+     * CameraXDualSource) приехал из ветки main_Reproducible_Builds голыми оболочками — тел у
+     * методов нет, а самих исходников движка Арслан не публиковал (проверено по всем ref-ам,
+     * AGENTS.md §0.1). Оставить CameraX включённым = молча записывать пустое видеосообщение,
+     * поэтому выбор движка идёт через крысиный гейт, а не через «понравится железу».
+     */
+    private static final boolean XXL_CAMERAX_ENGINE_IMPLEMENTED = false;
+
     public static boolean isCameraXSupported() {
         return SharedConfig.getDevicePerformanceClass() >= SharedConfig.PERFORMANCE_CLASS_AVERAGE;
     }
 
     public static boolean isCurrentCameraCameraX() {
-        return isCameraXSupported() && CherrygramCameraConfig.INSTANCE.getCameraType() == CherrygramCameraConfig.CAMERA_X;
+        return XXLCameraEngineGuardCore.decideEngine(
+                CherrygramCameraConfig.INSTANCE.getCameraType(),
+                XXL_CAMERAX_ENGINE_IMPLEMENTED,
+                Build.VERSION.SDK_INT,
+                isCameraXSupported()
+        ) == XXLCameraEngineGuardCore.ENGINE_CAMERAX;
     }
 
     public static boolean isCurrentCameraCamera2() {

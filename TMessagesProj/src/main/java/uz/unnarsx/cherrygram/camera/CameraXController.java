@@ -11,12 +11,15 @@ package uz.unnarsx.cherrygram.camera;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Range;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.RestrictTo;
+import androidx.camera.core.CameraInfo;
 import androidx.camera.core.MeteringPointFactory;
 import androidx.camera.core.Preview;
+import androidx.camera.core.ZoomState;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LifecycleRegistry;
@@ -26,6 +29,8 @@ import org.telegram.messenger.camera.Size;
 import java.io.File;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+
+import uz.unnarsx.cherrygram.xxl.camera.core.XXLCameraEngineGuardCore;
 
 public class CameraXController implements CherryZoomSliderView.ZoomController {
 
@@ -204,6 +209,29 @@ public class CameraXController implements CherryZoomSliderView.ZoomController {
 
     public void setCaptureRotation(int rotation) {
 
+    }
+
+    /**
+     * Диапазон зума конкретной камеры — им пользуется {@code CameraXUtils.getRoundVideoCameraSelector},
+     * чтобы выбрать самую широкоугольную заднюю камеру. null = камера не отдала ZoomState,
+     * вызывающий тогда берёт нейтральную 1x.
+     */
+    @SuppressLint({"UnsafeOptInUsageError", "RestrictedApi"})
+    public static Range<Float> getZoomRatioRange(CameraInfo info) {
+        if (info == null) {
+            return null;
+        }
+        try {
+            ZoomState state = info.getZoomState().getValue();
+            if (state == null) {
+                return null;
+            }
+            kotlin.Pair<Float, Float> range = XXLCameraEngineGuardCore.normalizeZoomRange(
+                    state.getMinZoomRatio(), state.getMaxZoomRatio());
+            return range == null ? null : new Range<>(range.getFirst(), range.getSecond());
+        } catch (Throwable ignored) {
+            return null;
+        }
     }
 
     @SuppressLint({"UnsafeExperimentalUsageError", "RestrictedApi"})
