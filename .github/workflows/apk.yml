@@ -27,14 +27,14 @@ jobs:
   apk:
     name: afat ${{ github.event.inputs.build_type || 'debug' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 150
+    timeout-minutes: 180
 
     env:
       ANDROID_HOME: /usr/local/lib/android/sdk
       BUILD_TYPE: ${{ github.event.inputs.build_type || 'debug' }}
 
     steps:
-      - name: Освобождаем диск (NDK + Gradle кэш съедают ~12 ГБ)
+      - name: Освобождаем диск (NDK + субмодули + Gradle съедают ~12 ГБ)
         run: |
           sudo rm -rf /usr/share/dotnet /opt/hostedtoolcache/CodeQL || true
           sudo rm -rf "$ANDROID_HOME"/ndk/* "$ANDROID_HOME"/platforms/android-3* || true
@@ -50,6 +50,7 @@ jobs:
           git submodule sync --recursive
           git submodule update --init --recursive --jobs 8
           du -sh TMessagesProj/jni TMessagesProj/lib 2>/dev/null || true
+          df -h /
 
       - name: JDK 17 (ровно как в Dockerfile репозитория)
         uses: actions/setup-java@v4
@@ -71,6 +72,8 @@ jobs:
 
       - name: Файлы, без которых конфигурация Gradle падает
         run: |
+          # gradlew лежит в git как 100644 (без exec-бита) -> "./gradlew: Permission denied", exit 126
+          chmod +x gradlew
           # App*/build.gradle читает secrets_for_ci.env на этапе конфигурации (Files.lines без try/catch)
           cp -f secrets_for_ci.env.example secrets_for_ci.env
           # signingConfigs указывают на ../Your_Key.jks с placeholder-паролями из TMessagesProj_AppStandalone/build.gradle
@@ -89,6 +92,17 @@ jobs:
           # не совпадает ни с одной официальной чексуммой Gradle -> валидация валит джобу.
           validate-wrappers: false
 
+      - name: Tune Gradle
+        run: |
+          mkdir -p ~/.gradle
+          {
+            echo 'org.gradle.caching=true'
+            echo 'kotlin.daemon.jvmargs=-Xmx3g'
+            echo 'android.native.buildOutput=verbose'
+          } >> ~/.gradle/gradle.properties
+          free -m
+          nproc
+
       - name: Assemble APK
         run: |
           if [ "$BUILD_TYPE" = "debug" ]; then
@@ -97,9 +111,16 @@ jobs:
             TASK=assembleAfatStandalone
           fi
           echo "task = :TMessagesProj_AppStandalone:$TASK  (build_type=$BUILD_TYPE)"
-          ./gradlew --parallel --max-workers=3 \
+          # Флейвор afat тащит сразу armeabi-v7a + arm64-v8a (splits.abi в build.gradle модуля),
+          # поэтому ninja гоняет NDK дважды — это самая долгая часть пайплайна.
+          ( while sleep 60; do printf '[mem] %s\n' "$(free -m | awk 'NR==2{printf "%s/%s MB", $3, $2}')"; done ) &
+          MON=$!
+          status=0
+          ./gradlew --no-daemon --parallel --max-workers=3 \
             -Dorg.gradle.jvmargs=-Xmx6g \
-            :TMessagesProj_AppStandalone:"$TASK" --stacktrace
+            :TMessagesProj_AppStandalone:"$TASK" --stacktrace || status=$?
+          kill "$MON" 2>/dev/null || true
+          exit "$status"
 
       - name: Что получилось
         run: |
