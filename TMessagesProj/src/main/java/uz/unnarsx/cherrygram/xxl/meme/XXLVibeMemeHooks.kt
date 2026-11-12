@@ -35,6 +35,7 @@ object XXLVibeMemeHooks {
     fun onChatResumed(anything: Any?) {
         try {
             XXLTrashHudOverlayView.attach(anything)
+            XXLDvdScreensaverOverlay.attach(anything)
             val activity: Activity = XXLVibeActivityResolver.resolve(anything) ?: return
             maybeShowSvo(activity)
         } catch (ignored: Throwable) {
@@ -67,6 +68,7 @@ object XXLVibeMemeHooks {
     fun onChatPaused(anything: Any?) {
         try {
             XXLTrashHudOverlayView.detach(anything)
+            XXLDvdScreensaverOverlay.detach(anything)
         } catch (ignored: Throwable) {
         }
     }

@@ -54,6 +54,14 @@ enum class XXLVibeFeature(
         true
     ),
 
+    /** Коммит 14: летающий DVD-скринсейвер поверх чата. */
+    DVD_SCREENSAVER(
+        "XXL_DVD_SCREENSAVER_ENABLED",
+        "DVD-СКРИНСЕЙВЕР",
+        "летающий блок arslan/svo/amdfx, отскоки, гоида-рикошет в угол",
+        true
+    ),
+
     /** Anti-Delete: кладбище удалённых сообщений + история правок + плашка «УДАЛЕНО КРЫСОЙ». */
     ANTI_DELETE(
         "XXL_ANTI_DELETE_ENABLED",
