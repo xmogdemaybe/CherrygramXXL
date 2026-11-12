@@ -4,9 +4,12 @@ import android.content.Context
 import android.content.SharedPreferences
 import org.telegram.messenger.ApplicationLoader
 import org.telegram.messenger.MessageObject
+import org.telegram.messenger.MessagesController
+import org.telegram.messenger.NotificationCenter
 import org.telegram.tgnet.TLRPC
 import uz.unnarsx.cherrygram.xxl.config.XXLVibeConfig
 import uz.unnarsx.cherrygram.xxl.config.core.XXLVibeFeature
+import uz.unnarsx.cherrygram.xxl.graveyard.core.XXLAntiDeleteCore
 import uz.unnarsx.cherrygram.xxl.graveyard.core.XXLGraveyardExporter
 import uz.unnarsx.cherrygram.xxl.graveyard.core.XXLGraveyardIndex
 import uz.unnarsx.cherrygram.xxl.graveyard.core.XXLRevision
@@ -169,6 +172,46 @@ object XXLVibeGraveyardHooks {
                 throttledPersist()
             }
         } catch (ignored: Throwable) {
+        }
+    }
+
+    /**
+     * 🚀✨ Enterprise Quantum Early-Delete Intercept (коммит 12) 💯
+     *
+     * Вызывается из стоковых update-хендлеров TL_updateDeleteMessages /
+     * TL_updateDeleteChannelMessages ДО накопления в deletedMessages. Если вернул true —
+     * сток ОБЯЗАН пропустить удаление (early-return): сообщение остаётся в чате и в БД,
+     * а кладбище получает ревизию и рисует плашку «🗑️ УДАЛЕНО КРЫСОЙ».
+     */
+    @JvmStatic
+    fun interceptRemoteDelete(account: Int, dialogId: Long, ids: ArrayList<Int>?): Boolean {
+        return try {
+            if (!XXLAntiDeleteCore.shouldIntercept(enabled())) return false
+            if (!XXLAntiDeleteCore.hasWork(ids)) return false
+            val now: Long = System.currentTimeMillis() / 1000L
+            for (id in ids!!) {
+                if (id <= 0) continue
+                val live: XXLSnapshotLedger.Snapshot? = LEDGER.peek(dialogId, id)
+                val revision = XXLRevision(
+                    dialogId,
+                    id,
+                    live?.epochSeconds ?: now,
+                    live?.authorId ?: 0L,
+                    live?.text,
+                    live?.caption,
+                    live?.mediaRef,
+                    XXLRevision.Reason.DELETED_BY_OTHERS
+                )
+                GRAVEYARD.add(revision)
+            }
+            throttledPersist()
+            // Перерисовка ячеек, чтобы плашка/рамка появились без удаления сообщения.
+            NotificationCenter.getGlobalInstance().postNotificationName(
+                NotificationCenter.updateInterfaces, MessagesController.UPDATE_MASK_MESSAGE_TEXT
+            )
+            true
+        } catch (ignored: Throwable) {
+            false
         }
     }
 
