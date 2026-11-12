@@ -69,7 +69,8 @@ public class GeminiSDKImplementation {
         if (baseFragment == null || baseFragment.getParentActivity() == null || baseFragment.getContext() == null) return;
 
         GenerationConfig.Builder configBuilder = new GenerationConfig.Builder();
-        configBuilder.temperature = (float) CherrygramMessagesConfig.INSTANCE.getGeminiTemperatureValue() / 10;
+        // 🚀✨ XXL: температура из крысиного реестра (свой prefs, fallback на сток) 💯
+        configBuilder.temperature = (float) uz.unnarsx.cherrygram.xxl.ai.XXLVibeAiHooks.temperatureTenths() / 10;
         configBuilder.topK = 10;
         configBuilder.topP = 0.5f;
         configBuilder.maxOutputTokens = 4096;
@@ -103,8 +104,9 @@ public class GeminiSDKImplementation {
     ) {
 
         GenerativeModel gm = new GenerativeModel(
-                CherrygramMessagesConfig.INSTANCE.getGeminiModelName(),
-                CherrygramMessagesConfig.INSTANCE.getGeminiApiKey(),
+                // 🚀✨ XXL: своя модель и свой ключ из XXL-реестра провайдеров 💯
+                uz.unnarsx.cherrygram.xxl.ai.XXLVibeAiHooks.modelName(),
+                uz.unnarsx.cherrygram.xxl.ai.XXLVibeAiHooks.apiKey(),
                 configBuilder.build(),
                 safetySettings
         );
@@ -297,7 +299,8 @@ public class GeminiSDKImplementation {
                         "Return only the summary as plain text. The text to summarize:";
                 textPrompt = summarizeString + inputText.toString();
             } else {
-                String systemPrompt = CherrygramMessagesConfig.INSTANCE.getGeminiSystemPrompt();
+                // 🚀✨ XXL: system prompt собирает крысиный шаблонизатор (сток-промпт = fallback) 💯
+                String systemPrompt = uz.unnarsx.cherrygram.xxl.ai.XXLVibeAiHooks.systemPrompt(null);
                 textPrompt = systemPrompt + " " + inputText;
             }
 

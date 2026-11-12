@@ -89,4 +89,8 @@ object CherrygramPreferencesNavigator {
     fun createCherryLegacy(fragment: BaseFragment): BaseFragment =
         uz.unnarsx.cherrygram.xxl.config.XXLCherryLegacyEntry().also(fragment::presentFragment)
 
+    /** 🚀✨ XXL: крысиный ИИ-экран (свой ключ, своя модель, свой prompt-режим) 💯 */
+    fun createVibeAi(fragment: BaseFragment): BaseFragment =
+        uz.unnarsx.cherrygram.xxl.ai.XXLVibeAiSettingsEntry().also(fragment::presentFragment)
+
 }

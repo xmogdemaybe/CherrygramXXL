@@ -65,6 +65,8 @@ public class CGPreferencesEntry extends BaseCGPreferencesEntry {
     private final int ultraExperimentalRow = 402;
     private final int secretBaseRow = 403;
     private final int cherryLegacyRow = 404;
+    /** 🚀✨ XXL: крысиный ИИ со своими ключами (rowId 405) 💯 */
+    private final int vibeAiRow = 405;
 
     @Override
     protected CharSequence getTitle() {
@@ -104,6 +106,8 @@ public class CGPreferencesEntry extends BaseCGPreferencesEntry {
         items.add(UItem.asButton(ultraExperimentalRow, "Ультра-Экспериментальные"));
         items.add(UItem.asButton(secretBaseRow, "Секретная База"));
         items.add(UItem.asButton(cherryLegacyRow, "Наследие Черри"));
+        // 🚀✨ XXL: реестр AI-провайдеров на крысиных ключах 💯
+        items.add(UItem.asButton(vibeAiRow, "🧠 Крыса-ИИ (свои ключи)"));
         items.add(UItem.asShadow(null));
         items.add(
                 SettingsActivity.SettingCell.Factory.of(
@@ -252,6 +256,9 @@ public class CGPreferencesEntry extends BaseCGPreferencesEntry {
             CherrygramPreferencesNavigator.INSTANCE.createSecretBase(this);
         } else if (item.id == cherryLegacyRow) {
             CherrygramPreferencesNavigator.INSTANCE.createCherryLegacy(this);
+        } else if (item.id == vibeAiRow) {
+            /** 🚀✨ XXL: крысиный ИИ-экран на собственных ключах 💯 */
+            CherrygramPreferencesNavigator.INSTANCE.createVibeAi(this);
         }
     }
 

@@ -89,6 +89,10 @@ public class GeminiButtonsLayout {
     }
 
     public static boolean geminiButtonsVisible() {
+        // 🚀✨ XXL: если крысиный провайдер usable со СВОИМ ключом — кнопки тоже живые 💯
+        if (uz.unnarsx.cherrygram.xxl.ai.XXLVibeAiHooks.aiButtonsShouldBeVisible()) {
+            return true;
+        }
         return CherrygramMessagesConfig.INSTANCE.getGeminiApiKey().length() > 10 && CherrygramMessagesConfig.INSTANCE.getGeminiModelName().length() > 5;
     }
 

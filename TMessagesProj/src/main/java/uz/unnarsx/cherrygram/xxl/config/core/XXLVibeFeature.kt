@@ -84,6 +84,14 @@ enum class XXLVibeFeature(
         "КРЫСА-ПОВТОРИТЕЛЬ",
         "авто-повтор сообщения, прайм-интервалы, дрожь, нативное расписание",
         true
+    ),
+
+    /** AI provider registry: крыса приносит свои ключи, модели и prompt-шаблоны. */
+    AI_REGISTRY(
+        "XXL_AI_REGISTRY_ENABLED",
+        "КРЫСА-ИИ (СВОИ КЛЮЧИ)",
+        "свой провайдер, ключ, модель, base-url и prompt-режим вместо стоковых",
+        true
     );
 
     companion object {
