@@ -27179,6 +27179,8 @@ public class ChatActivity extends BaseFragment implements
                         addToSelectedMessages(obj, false, updatedSelectedLast = (a == size - 1));
                     }
                     MessageObject removed = chatAdapter != null && chatAdapter.isFiltered && filteredMessagesDict != null ? chatAdapter.filteredMessages.remove(index) : messages.remove(index);
+                    // 🚀✨ XXL anti-delete: кладбище забирает текст раньше, чем крыса успеет её удалить 💯
+                    uz.unnarsx.cherrygram.xxl.graveyard.XXLVibeGraveyardHooks.onMessageRemoved(currentAccount, removed, thanos);
                     if (chatAdapter != null) {
                         if (chatAdapter.isFiltered) {
                             int mindex = -1;

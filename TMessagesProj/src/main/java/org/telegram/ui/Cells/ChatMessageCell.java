@@ -6919,6 +6919,8 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                 currentMessageObject.richLayout.detach(this);
             }
             currentMessageObject = messageObject;
+            // 🚀✨ XXL anti-delete: live-снапшот содержимого в кладбище (bind, а не кадр — §2A crash-safe) 💯
+            uz.unnarsx.cherrygram.xxl.graveyard.XXLVibeGraveyardHooks.observeRendered(currentAccount, messageObject);
             currentMessagesGroup = groupedMessages;
             wasAllChats = isAllChats;
             lastTime = -2;
@@ -20571,6 +20573,11 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
         if (shouldMakeMessageTransparent()) {
             canvas.restore();
         }
+
+        // 🚀✨ XXL §2D: кислотный пунктир 7dp + плашка «🗑️ УДАЛЕНО КРЫСОЙ» поверх крысиных сообщений 💯
+        uz.unnarsx.cherrygram.xxl.graveyard.XXLRatBadgeRenderer.draw(canvas, this,
+                uz.unnarsx.cherrygram.xxl.graveyard.XXLVibeGraveyardHooks.badgeFor(currentMessageObject),
+                uz.unnarsx.cherrygram.xxl.graveyard.XXLVibeGraveyardHooks.badgeColorFor(currentMessageObject));
     }
 
     public void drawBackgroundInternal(Canvas canvas, boolean fromParent) {

@@ -8,6 +8,8 @@ import uz.unnarsx.cherrygram.preferences.helpers.SettingsHelper
 import uz.unnarsx.cherrygram.xxl.config.core.XXLVibeFeature
 import uz.unnarsx.cherrygram.xxl.config.core.XXLVibeFeedbackPlan
 import uz.unnarsx.cherrygram.xxl.config.core.XXLVibeMenuScatter
+import uz.unnarsx.cherrygram.xxl.graveyard.XXLVibeGraveyardHooks
+import uz.unnarsx.cherrygram.xxl.presence.XXLVibePresenceHooks
 
 /**
  * 🚀✨ Enterprise Quantum Fragmented Vibe Sub Menu (§2C) 💯
@@ -86,6 +88,31 @@ class XXLUltraExperimentalEntry : XXLVibeSubMenuEntry() {
 /** 🚀✨ Подменю №3 — «Секретная База» 💯 */
 class XXLSecretBaseEntry : XXLVibeSubMenuEntry() {
     override fun vibeMenu(): XXLVibeMenuScatter.Menu = XXLVibeMenuScatter.Menu.SECRET_BASE
+
+    /** 🚀✨ Enterprise Quantum Read-Only Surveillance Dump 💯 чтобы вайб можно было пощупать глазами. */
+    override fun fillItems(items: ArrayList<UItem>, adapter: UniversalAdapter?) {
+        super.fillItems(items, adapter)
+        try {
+            items.add(UItem.asHeader("🪦 КЛАДБИЩЕ / 📡 СЛЕЖКА (только чтение)"))
+            items.add(UItem.asShadow(null))
+            val dump: String = XXLVibeGraveyardHooks.describeForDebug() + "\n" + XXLVibePresenceHooks.describeForDebug()
+            var row: Int = DEBUG_ROW_BASE
+            for (line in dump.lines()) {
+                if (line.isBlank()) continue
+                if (row >= DEBUG_ROW_BASE + DEBUG_MAX_ROWS) break
+                items.add(UItem.asButton(row++, line.take(DEBUG_LINE_CHARS)))
+                items.add(UItem.asShadow(null))
+            }
+        } catch (ignored: Throwable) {
+            // §2A: отладочный дамп не имеет права уронить настройки
+        }
+    }
+
+    companion object {
+        private const val DEBUG_ROW_BASE: Int = 90000
+        private const val DEBUG_MAX_ROWS: Int = 13
+        private const val DEBUG_LINE_CHARS: Int = 60
+    }
 }
 
 /** 🚀✨ Подменю №4 — «Наследие Черри» 💯 */
