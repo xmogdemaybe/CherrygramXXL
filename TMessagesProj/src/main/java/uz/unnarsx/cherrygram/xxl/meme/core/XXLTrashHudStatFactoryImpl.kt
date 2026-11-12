@@ -34,7 +34,8 @@ class XXLTrashHudStatFactoryImpl(private val seed: Long = DEFAULT_SEED) {
         val mixed: Long = mix(seed, tick.toLong())
         val fps: Int = FPS_BASE + (mixed % FPS_SPAN).toInt()
         val tempRaw: Long = (mixed / 7L) % TEMP_SPAN
-        val cpuTempC: Int = TEMP_BASE + tempRaw.toInt()
+        // Коммит 15: кнопка «сброс до 36.6» выставляет override; иначе честный псевдослучай 87..104.
+        val cpuTempC: Int = if (tempOverrideC >= 0) tempOverrideC else TEMP_BASE + tempRaw.toInt()
         val ramRaw: Long = (mixed / 31L) % RAM_SPAN_TENTHS
         val ramTenths: Long = RAM_MIN_TENTHS + if (ramRaw < 0) -ramRaw else ramRaw
         val ramGb: Double = Math.round(ramTenths.toDouble() / 10.0 * 10.0) / 10.0
@@ -81,6 +82,10 @@ class XXLTrashHudStatFactoryImpl(private val seed: Long = DEFAULT_SEED) {
 
         const val DEFAULT_SEED: Long = 1488L
         const val UPDATE_PERIOD_MS: Long = 1000L
+
+        /** Коммит 15: глобальный override температуры для кнопки «сброс до 36.6» (-1 = выкл). */
+        @JvmField
+        var tempOverrideC: Int = -1
 
         private const val FPS_BASE: Int = 1337
         private const val FPS_SPAN: Long = 330L          // 1337..1666

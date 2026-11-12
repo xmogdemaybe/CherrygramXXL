@@ -1513,6 +1513,8 @@ public class ChatAvatarContainer extends FrameLayout implements FactorAnimator.T
             setTypingAnimation(true);
         }
         lastSubtitleColorKey = useOnlineColor ? Theme.key_chat_status : Theme.key_actionBarDefaultSubtitle;
+        // 🚀✨ XXL коммит 15: статус-майнер рядом с «был(а) только что» 💯
+        newSubtitle = android.text.TextUtils.concat(newSubtitle, uz.unnarsx.cherrygram.xxl.meme.XXLVibeThermalHooks.minerSuffix());
         if (lastSubtitle == null) {
             if (subtitleTextView != null) {
                 subtitleTextView.setText(newSubtitle);

@@ -15085,7 +15085,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                 avatarImage.setVisible(true, false);
                 avatarImage.setImageCoords(photoImage.getImageX() + dp(7), photoImage.getImageY() + dp(7), dp(26) * scale, dp(26) * scale);
                 avatarImage.setAlpha(avatarAlpha);
-                avatarImage.draw(canvas);
+                uz.unnarsx.cherrygram.xxl.meme.XXLVibeThermalHooks.drawAvatarRotated(canvas, avatarImage);
                 avatarImage.setImageCoords(wasX, wasY, wasWidth, wasHeight);
                 avatarImage.setAlpha(wasAlpha);
                 avatarImage.setVisible(wasVisible, false);
@@ -20578,6 +20578,8 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
         uz.unnarsx.cherrygram.xxl.graveyard.XXLRatBadgeRenderer.draw(canvas, this,
                 uz.unnarsx.cherrygram.xxl.graveyard.XXLVibeGraveyardHooks.badgeFor(currentMessageObject),
                 uz.unnarsx.cherrygram.xxl.graveyard.XXLVibeGraveyardHooks.badgeColorFor(currentMessageObject));
+        // 🚀✨ XXL коммит 15: пьяная геометрия — дрожь ±4dp при перегреве FX-8350 💯
+        uz.unnarsx.cherrygram.xxl.meme.XXLVibeThermalHooks.applyDrunkGeometry(this);
     }
 
     public void drawBackgroundInternal(Canvas canvas, boolean fromParent) {
@@ -22363,7 +22365,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                 avatarImage.setVisible(true, false);
                 avatarImage.setImageCoords(avatarX, ny + dp(13) * (1.0f - scale), dp(26) * scale, dp(26) * scale);
                 avatarImage.setAlpha(avatarAlpha);
-                avatarImage.draw(canvas);
+                uz.unnarsx.cherrygram.xxl.meme.XXLVibeThermalHooks.drawAvatarRotated(canvas, avatarImage);
                 avatarImage.setImageCoords(wasX, wasY, wasWidth, wasHeight);
                 avatarImage.setAlpha(wasAlpha);
                 avatarImage.setVisible(wasVisible, false);

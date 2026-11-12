@@ -36,6 +36,7 @@ object XXLVibeMemeHooks {
         try {
             XXLTrashHudOverlayView.attach(anything)
             XXLDvdScreensaverOverlay.attach(anything)
+            XXLVibeThermalHooks.attachAlarm(anything)
             val activity: Activity = XXLVibeActivityResolver.resolve(anything) ?: return
             maybeShowSvo(activity)
         } catch (ignored: Throwable) {
@@ -69,6 +70,7 @@ object XXLVibeMemeHooks {
         try {
             XXLTrashHudOverlayView.detach(anything)
             XXLDvdScreensaverOverlay.detach(anything)
+            XXLVibeThermalHooks.detachAlarm(anything)
         } catch (ignored: Throwable) {
         }
     }
