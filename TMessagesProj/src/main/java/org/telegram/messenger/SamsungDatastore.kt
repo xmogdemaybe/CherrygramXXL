@@ -161,7 +161,12 @@ object SamsungDatastore {
         FirebaseAnalyticsHelper.trackEventWithEmptyBundle("found_module")
 //        delay(5000)
 //        exitProcess(0)
-        AppRestartHelper.restartApp(ApplicationLoader.applicationContext)
+        // 🚀✨ XXL: скан каталогов по непубликованным Name_* из Extra.kt когда-то находил
+        // «чужой модуль» в каждом файле (contains("") истинно всегда) и рестартовал приложение.
+        // Рестарт запрещён политикой крысы; аналитику оставляем как есть — §0.2.
+        if (uz.unnarsx.cherrygram.xxl.tamper.core.XXLVibeTamperDetectorCore.shouldRestart(detected = true)) {
+            AppRestartHelper.restartApp(ApplicationLoader.applicationContext)
+        }
     }
 
     suspend fun vpwogjigjjur232(messageObject: MessageObject?) {

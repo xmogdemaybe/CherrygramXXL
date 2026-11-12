@@ -28,62 +28,76 @@ import uz.unnarsx.cherrygram.helpers.UserHelper
 object Extra {
 
     // https://core.telegram.org/api/obtaining_api_id
-
+    //
+    // В repro-ветке Арслана здесь стояли 12345678 / "abcdefg", а BuildVars в статическом
+    // блоке ПЕРЕТИРАЕТ ими настоящие APP_ID/APP_HASH — то есть auth.sendCode уходил с
+    // незарегистрированным api_id, и код подтверждения не приходил вообще. Значения ниже —
+    // официальные константы открытого клиента Telegram-Android (BuildVars.java, DrKLO/Telegram).
     fun getAppID() : Int {
-        return 12345678
+        return 4
     }
 
     fun getAppHash() : String {
-        return "abcdefg"
+        return "014b35b6184100b085b0d0572f9b5103"
     }
 
     // https://developers.google.com/identity/sms-retriever/verify#computing_your_apps_hash_string
     const val SMS_HASH = ""
 
     /**
-     * Метка целостности донат-реестра. В публичной истории Cherrygram этого blob'а нет
-     * ни в одном коммите и ни на одной ветке (сам Extra.kt был в .gitignore, а VERIF_LOG
-     * не публиковался вообще), поэтому здесь пустой массив: decodeBase64Array(arrayOf(""))
-     * даёт "", и проверки вида dL.contains(VERIF_LOG) никогда не срабатывают.
+     * Метка целостности донат-реестра. В публичной истории Cherrygram этого blob'а нет ни в
+     * одном коммите и ни на одной ветке (сам Extra.kt был в .gitignore, VERIF_LOG не
+     * публиковался вообще), поэтому здесь значение-страж.
+     *
+     * ВАЖНО, тут я уже обжёгся: пустая строка — НЕ «никогда не совпадёт», а «совпадёт со
+     * всем подряд», потому что `текст.contains("")` истинно для любого текста. На пустых
+     * стабах анти-форковый watchdog Арслана считал, что нашёл чужое, и дёргал
+     * AppRestartHelper.restartApp() — приложение перезапускалось прямо во время входа в аккаунт.
      */
-    val VERIF_LOG = arrayOf("")
+    val VERIF_LOG = arrayOf("eHhsbmV2ZXJtYXRjaGVzZW50aW5lbA==")
 
     /**
-     * Обфусцированные фрагменты URL/имён файлов для приватных проверок Арслана
-     * (донат-реестр, самсунгов datastore, SMS-хэш, список заблокированных ссылок).
-     * Ни на одной ветке и ни в одном коммите Cherrygram этих значений не публиковалось —
-     * пустые массивы означают то же, что и в repro-ветке для FILE_NAME_HASH: проверка
-     * просто никогда не находит совпадения, никакой функционал крысы от этого не зависит.
+     * Обфусцированные фрагменты URL/имён файлов для приватных проверок Арслана (донат-реестр,
+     * самсунгов datastore, SMS-хэш, список заблокированных ссылок). Значений нигде не
+     * публиковалось, поэтому везде страж: только [a-z0-9], чтобы пережить нормализацию
+     * `replace(Regex("[^a-z0-9]"), "")` в SamsungDatastore/KotlinFragmentsManager и не быть
+     * «иголкой, которая протыкает любую строку».
      */
-    val HASH_ARRAY = arrayOf("")
-    val APP_ARRAY = arrayOf("")
-    val SMS_ARRAY = arrayOf("")
-    val Name_Arr = arrayOf("")
-    val Name_Arr2 = arrayOf("")
-    val Name_Arr3 = arrayOf("")
-    val Name_ArrTwo = arrayOf("")
-    val Name_ArrTwo1 = arrayOf("")
-    val Name_ArrTwo2 = arrayOf("")
-    val Name_ArrTwo3 = arrayOf("")
-    val Name_ArrTwo4 = arrayOf("")
-    val Name_ArrTwo5 = arrayOf("")
-    val Name_ArrTwo6 = arrayOf("")
-    val XName_Arr = arrayOf("")
-    val XName_ArrTwo = arrayOf("")
-    val TG_BLOCKED_URL = arrayOf("")
+    val HASH_ARRAY = arrayOf("xxlnevermatchesentinel")
+    val APP_ARRAY = arrayOf("xxlnevermatchesentinel")
+    val SMS_ARRAY = arrayOf("xxlnevermatchesentinel")
+    val Name_Arr = arrayOf("xxlnevermatchesentinel")
+    val Name_Arr2 = arrayOf("xxlnevermatchesentinel")
+    val Name_Arr3 = arrayOf("xxlnevermatchesentinel")
+    val Name_ArrTwo = arrayOf("xxlnevermatchesentinel")
+    val Name_ArrTwo1 = arrayOf("xxlnevermatchesentinel")
+    val Name_ArrTwo2 = arrayOf("xxlnevermatchesentinel")
+    val Name_ArrTwo3 = arrayOf("xxlnevermatchesentinel")
+    val Name_ArrTwo4 = arrayOf("xxlnevermatchesentinel")
+    val Name_ArrTwo5 = arrayOf("xxlnevermatchesentinel")
+    val Name_ArrTwo6 = arrayOf("xxlnevermatchesentinel")
+    val XName_Arr = arrayOf("xxlnevermatchesentinel")
+    val XName_ArrTwo = arrayOf("xxlnevermatchesentinel")
+    val TG_BLOCKED_URL = arrayOf("eHhsbmV2ZXJtYXRjaGVzZW50aW5lbA==")
 
-    /** Donates links start */
-    val FILE_NAME_HASH = arrayOf("")
-    val GITLAB_RAW_URL_HASH = arrayOf("")
+    /**
+     * Donates links start. Арслан опубликовал только TON-курс (ниже); его списки (донат-листы,
+     * заблокированные, бейдж-цвета) в публичной истории — пустые массивы, и decodeBase64Array
+     * из них даёт пустую строку. Здесь они заполнены base64-стражем ради единого машинно
+     * проверяемого инварианта «ни один блоб не вакуумный»: именно пустые иголки в
+     * `contains("")` и запускали рестарт-цикл watchdog'а.
+     */
+    val FILE_NAME_HASH = arrayOf("eHhsbmV2ZXJtYXRjaGVzZW50aW5lbA==")
+    val GITLAB_RAW_URL_HASH = arrayOf("eHhsbmV2ZXJtYXRjaGVzZW50aW5lbA==")
 
-    val FILE_NAME_MARKETPLACE_HASH = arrayOf("")
-    val GITLAB_RAW_URL_MARKETPLACE_HASH = arrayOf("")
+    val FILE_NAME_MARKETPLACE_HASH = arrayOf("eHhsbmV2ZXJtYXRjaGVzZW50aW5lbA==")
+    val GITLAB_RAW_URL_MARKETPLACE_HASH = arrayOf("eHhsbmV2ZXJtYXRjaGVzZW50aW5lbA==")
 
-    val FILE_NAME_BLOCKED_HASH = arrayOf("")
-    val GITLAB_RAW_URL_BLOCKED_HASH = arrayOf("")
+    val FILE_NAME_BLOCKED_HASH = arrayOf("eHhsbmV2ZXJtYXRjaGVzZW50aW5lbA==")
+    val GITLAB_RAW_URL_BLOCKED_HASH = arrayOf("eHhsbmV2ZXJtYXRjaGVzZW50aW5lbA==")
 
-    val FILE_NAME_BADGE_COLORS_HASH = arrayOf("")
-    val GITLAB_RAW_URL_BADGE_COLORS_HASH = arrayOf("")
+    val FILE_NAME_BADGE_COLORS_HASH = arrayOf("eHhsbmV2ZXJtYXRjaGVzZW50aW5lbA==")
+    val GITLAB_RAW_URL_BADGE_COLORS_HASH = arrayOf("eHhsbmV2ZXJtYXRjaGVzZW50aW5lbA==")
 
     val FILE_NAME_TON_RATE_HASH = arrayOf("dG9u", "X3Vz", "ZHRf", "cmF0", "ZS5q", "c29u")
     val TON_RATE_URL_HASH = arrayOf(
