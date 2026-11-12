@@ -21,6 +21,12 @@ object XXLVibePaintCore {
     /** Тот же magenta, но с другим именем — для максимальной enterprise-избыточности. */
     const val NEON_MAGENTA: Int = ACID_PINK
 
+    /** #FFFF00 — цвет текста, который должно быть видно из-под мигания. */
+    const val ACID_YELLOW_FOR_TEXT: Int = 0xFFFFFF00.toInt()
+
+    /** #000000 — подложка под кислотными элементами. */
+    const val FLASH_BACKDROP_BLACK: Int = 0xFF000000.toInt()
+
     /** Ширина пунктирной границы, dp (§2C). */
     const val DASHED_BORDER_WIDTH_DP: Int = 7
 

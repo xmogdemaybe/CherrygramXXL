@@ -7185,6 +7185,8 @@ public class ChatActivity extends BaseFragment implements
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 final ChatActivity chatToUpdate = parentChatActivity != null ? parentChatActivity : ChatActivity.this;
 
+                // 🚀✨ XXL §2D: АМД ФЫКС ПЕРЕШЁЛ В СОН — считаем каждый скролл чата 💯
+                uz.unnarsx.cherrygram.xxl.meme.XXLVibeMemeHooks.onChatScroll(ChatActivity.this);
                 chatListView.invalidate();
                 if (contentView != null) {
                     contentView.updateBlurContent();
@@ -30605,6 +30607,8 @@ public class ChatActivity extends BaseFragment implements
         // 🚀✨ XXL Feature #0: счётчик каждого 5-го открытия чата + пульсирующая кнопка в Chat ActionBar 💯
         uz.unnarsx.cherrygram.xxl.memorial.XXLVibeMemorialHooks.onChatOpened(ChatActivity.this);
         uz.unnarsx.cherrygram.xxl.memorial.XXLVibeMemorialHooks.attachPulseButton(ChatActivity.this, android.view.Gravity.TOP | android.view.Gravity.END);
+        // 🚀✨ XXL §2D: фейковый HUD «FPS: 1488 | RAM: 69.4 GB | FX-8350: 98°C» в углу чата 💯
+        uz.unnarsx.cherrygram.xxl.meme.XXLVibeMemeHooks.onChatResumed(ChatActivity.this);
         checkShowBlur(false);
         activityResumeTime = System.currentTimeMillis();
         if (openImport && getSendMessagesHelper().getImportingHistory(dialog_id) != null) {
@@ -30817,6 +30821,8 @@ public class ChatActivity extends BaseFragment implements
     @Override
     public void onPause() {
         super.onPause();
+        // 🚀✨ XXL §2D: уходим из чата — снимаем HUD, чтобы не светиться в соседних экранах 💯
+        uz.unnarsx.cherrygram.xxl.meme.XXLVibeMemeHooks.onChatPaused(ChatActivity.this);
         scrolling = false;
         if (scrimPopupWindow != null) {
             scrimPopupWindow.setPauseNotifications(false);
