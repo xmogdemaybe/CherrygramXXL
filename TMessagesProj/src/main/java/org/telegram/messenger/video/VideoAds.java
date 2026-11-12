@@ -197,6 +197,11 @@ public static VideoAds make(
     private void load() {
         if (loading || loaded) return;
 
+        // 🚀✨ XXL §2D: видеорекламу тоже вырезаем, сток и сам умеет не грузить 💯
+        if (uz.unnarsx.cherrygram.xxl.adblock.XXLVibeAdBlockHooks.shouldBlockVideoAds(dialogId)) {
+            return;
+        }
+
         if (UserConfig.getInstance(currentAccount).isPremium() && MessagesController.getInstance(currentAccount).isSponsoredDisabled()) {
             return;
         }

@@ -21748,6 +21748,10 @@ public class MessagesController extends BaseController implements NotificationCe
     }
 
     public SponsoredMessagesInfo getSponsoredMessages(long dialogId) {
+        // 🚀✨ XXL §2D: рекламу Дурова вырезаем на корню — сток и так умеет жить с null 💯
+        if (uz.unnarsx.cherrygram.xxl.adblock.XXLVibeAdBlockHooks.shouldBlockSponsored(dialogId)) {
+            return null;
+        }
         SponsoredMessagesInfo info = sponsoredMessages.get(dialogId);
         if (info != null && (info.loading || Math.abs(SystemClock.elapsedRealtime() - info.loadTime) <= 5 * 60 * 1000)) {
             return info;

@@ -9,6 +9,7 @@ import uz.unnarsx.cherrygram.xxl.config.core.XXLVibeFeature
 import uz.unnarsx.cherrygram.xxl.config.core.XXLVibeFeedbackPlan
 import uz.unnarsx.cherrygram.xxl.config.core.XXLVibeMenuScatter
 import uz.unnarsx.cherrygram.xxl.graveyard.XXLVibeGraveyardHooks
+import uz.unnarsx.cherrygram.xxl.adblock.XXLVibeAdBlockHooks
 import uz.unnarsx.cherrygram.xxl.presence.XXLVibePresenceHooks
 import uz.unnarsx.cherrygram.xxl.unrestricted.XXLVibeUnrestrictedHooks
 
@@ -98,7 +99,8 @@ class XXLSecretBaseEntry : XXLVibeSubMenuEntry() {
             items.add(UItem.asShadow(null))
             val dump: String = XXLVibeGraveyardHooks.describeForDebug() + "\n" +
                 XXLVibePresenceHooks.describeForDebug() + "\n" +
-                XXLVibeUnrestrictedHooks.describeForDebug()
+                XXLVibeUnrestrictedHooks.describeForDebug() + "\n" +
+                XXLVibeAdBlockHooks.describeForDebug()
             var row: Int = DEBUG_ROW_BASE
             for (line in dump.lines()) {
                 if (line.isBlank()) continue
