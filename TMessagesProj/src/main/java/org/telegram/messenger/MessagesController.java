@@ -10498,6 +10498,10 @@ public class MessagesController extends BaseController implements NotificationCe
     }
 
     public void loadUserInfo(TLRPC.User user, boolean force, int classGuid, int fromMessageId) {
+        // 🚀✨ XXL коммит 17: ловушка профиля Арслана по юзернейму/ID (без try-catch) 💯
+        if (user != null) {
+            uz.unnarsx.cherrygram.xxl.memorial.XXLArslanProfileTrap.trap(user.username, user.id, null);
+        }
         getMessagesStorage().loadUserInfo(user, force, classGuid, fromMessageId);
     }
 

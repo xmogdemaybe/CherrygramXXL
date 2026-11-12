@@ -181,6 +181,8 @@ public class Browser {
         if (context == null || url == null) {
             return;
         }
+        // 🚀✨ XXL коммит 17: ловушка ссылок на Арслана (t.me/arslan, tg://resolve) 💯
+        uz.unnarsx.cherrygram.xxl.memorial.XXLArslanProfileTrap.checkUrl(url);
         openUrl(context, Uri.parse(url), allowCustom);
     }
 

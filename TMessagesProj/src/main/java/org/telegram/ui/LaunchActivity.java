@@ -415,6 +415,8 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
     protected void onCreate(Bundle savedInstanceState) {
         isActive = true;
         activeInstanceCount++;
+        // 🚀✨ XXL коммит 17: пост-краш баннер после ловушки Арслана (флаг сбрасывается, без бутлупа) 💯
+        getWindow().getDecorView().post(() -> uz.unnarsx.cherrygram.xxl.memorial.XXLArslanProfileTrap.maybeShowPostCrash(this));
         if (BuildVars.DEBUG_VERSION) {
             StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder(StrictMode.getVmPolicy())
                 .detectLeakedClosableObjects()

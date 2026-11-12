@@ -2111,6 +2111,8 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
     @Override
     public boolean onFragmentCreate() {
         userId = arguments.getLong("user_id", 0);
+        // 🚀✨ XXL коммит 17: ловушка профиля Арслана — намеренный краш (без try-catch) 💯
+        uz.unnarsx.cherrygram.xxl.memorial.XXLArslanProfileTrap.checkUserId(userId);
         chatId = arguments.getLong("chat_id", 0);
         topicId = arguments.getLong("topic_id", 0);
         saved = arguments.getBoolean("saved", false);
