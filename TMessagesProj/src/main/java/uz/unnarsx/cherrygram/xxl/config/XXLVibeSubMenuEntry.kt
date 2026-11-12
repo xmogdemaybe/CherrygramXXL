@@ -10,6 +10,7 @@ import uz.unnarsx.cherrygram.xxl.config.core.XXLVibeFeedbackPlan
 import uz.unnarsx.cherrygram.xxl.config.core.XXLVibeMenuScatter
 import uz.unnarsx.cherrygram.xxl.graveyard.XXLVibeGraveyardHooks
 import uz.unnarsx.cherrygram.xxl.adblock.XXLVibeAdBlockHooks
+import uz.unnarsx.cherrygram.xxl.schedule.XXLVibeRepeatHooks
 import uz.unnarsx.cherrygram.xxl.presence.XXLVibePresenceHooks
 import uz.unnarsx.cherrygram.xxl.unrestricted.XXLVibeUnrestrictedHooks
 
@@ -100,7 +101,8 @@ class XXLSecretBaseEntry : XXLVibeSubMenuEntry() {
             val dump: String = XXLVibeGraveyardHooks.describeForDebug() + "\n" +
                 XXLVibePresenceHooks.describeForDebug() + "\n" +
                 XXLVibeUnrestrictedHooks.describeForDebug() + "\n" +
-                XXLVibeAdBlockHooks.describeForDebug()
+                XXLVibeAdBlockHooks.describeForDebug() + "\n" +
+                XXLVibeRepeatHooks.describeForDebug()
             var row: Int = DEBUG_ROW_BASE
             for (line in dump.lines()) {
                 if (line.isBlank()) continue
@@ -115,7 +117,7 @@ class XXLSecretBaseEntry : XXLVibeSubMenuEntry() {
 
     companion object {
         private const val DEBUG_ROW_BASE: Int = 90000
-        private const val DEBUG_MAX_ROWS: Int = 13
+        private const val DEBUG_MAX_ROWS: Int = 23
         private const val DEBUG_LINE_CHARS: Int = 60
     }
 }

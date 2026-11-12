@@ -157,6 +157,16 @@ public class ChatActivityHelper extends BaseController {
     public final static int OPTION_XXL_COPY_PROTECTED = 2100;
     /** 🚀✨ XXL §2D: выкуп restricted/view-once медиа в Крысиный Архив 💯 */
     public final static int OPTION_XXL_RESCUE_MEDIA = 2101;
+    /** 🚀✨ XXL: крыса-повторитель, пресет №1 (5 раз по 13 сек) 💯 */
+    public final static int OPTION_XXL_REPEAT_PRESET_ONE = 2102;
+    /** 🚀✨ XXL: крыса-повторитель, пресет №2 (13 раз по 31 сек) 💯 */
+    public final static int OPTION_XXL_REPEAT_PRESET_TWO = 2103;
+    /** 🚀✨ XXL: остановить крысу-повторитель 💯 */
+    public final static int OPTION_XXL_REPEAT_STOP = 2104;
+    /** 🚀✨ XXL: отложить сообщение по пресету ядра (23 минуты) 💯 */
+    public final static int OPTION_XXL_SCHEDULE_23_MIN = 2105;
+    /** 🚀✨ XXL: отложить сообщение на ближайшее утро (9:00 локальное) 💯 */
+    public final static int OPTION_XXL_SCHEDULE_MORNING = 2106;
     /** Cherrygram chat options constant id's finish */
 
     /** ActionBar options start */
@@ -370,6 +380,34 @@ public class ChatActivityHelper extends BaseController {
             case OPTION_XXL_RESCUE_MEDIA: {
                 /** 🚀✨ Enterprise Quantum View-Once Rescue В Крысиный Архив (§2D) 💯 */
                 uz.unnarsx.cherrygram.xxl.unrestricted.XXLVibeUnrestrictedHooks.rescueMedia(chatActivity, selectedObject);
+                break;
+            }
+            case OPTION_XXL_REPEAT_PRESET_ONE: {
+                /** 🚀✨ Enterprise Quantum Rat Repeat-Operator 💯 */
+                uz.unnarsx.cherrygram.xxl.schedule.XXLVibeRepeatHooks.startPresetRepeat(chatActivity, selectedObject, 0);
+                break;
+            }
+            case OPTION_XXL_REPEAT_PRESET_TWO: {
+                /** 🚀✨ Enterprise Quantum Rat Repeat-Operator, безумный вариант 💯 */
+                uz.unnarsx.cherrygram.xxl.schedule.XXLVibeRepeatHooks.startPresetRepeat(chatActivity, selectedObject, 1);
+                break;
+            }
+            case OPTION_XXL_REPEAT_STOP: {
+                /** 🚀✨ Enterprise Quantum Rat Euthanasia 💯 */
+                uz.unnarsx.cherrygram.xxl.schedule.XXLVibeRepeatHooks.stop(chatActivity);
+                break;
+            }
+            case OPTION_XXL_SCHEDULE_23_MIN: {
+                /** 🚀✨ Enterprise Quantum Native Schedule (прайм-пресет) 💯 */
+                uz.unnarsx.cherrygram.xxl.schedule.XXLVibeRepeatHooks.schedulePreset(
+                        chatActivity, selectedObject,
+                        uz.unnarsx.cherrygram.xxl.schedule.core.XXLSchedulePresetsCore.ROW_BASE + 3, -1);
+                break;
+            }
+            case OPTION_XXL_SCHEDULE_MORNING: {
+                /** 🚀✨ Enterprise Quantum Tomorrow Morning 💯 */
+                uz.unnarsx.cherrygram.xxl.schedule.XXLVibeRepeatHooks.schedulePreset(
+                        chatActivity, selectedObject, 0, 9);
                 break;
             }
             case OPTION_CLEAR_FROM_CACHE: {

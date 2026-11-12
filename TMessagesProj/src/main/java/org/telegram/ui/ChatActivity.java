@@ -47614,6 +47614,8 @@ public class ChatActivity extends BaseFragment implements
                 if (!noforwardsOrPaidMedia) CGMessageMenuInjector.INSTANCE.injectSaveMessage(message, chatMode, currentUser, items, options, icons);
                 // 🚀✨ XXL §2D: крысиные пункты там, где Дуров запретил обычные 💯
                 CGMessageMenuInjector.INSTANCE.injectXXLUnrestricted(selectedObject, items, options, icons);
+                // 🚀✨ XXL: крыса-повторитель + прайм-расписание 💯
+                CGMessageMenuInjector.INSTANCE.injectXXLRepeat(selectedObject, items, options, icons);
                 CGMessageMenuInjector.INSTANCE.injectViewStatistics(this, message, items, options, icons);
 
                 if (allowUnpin) {

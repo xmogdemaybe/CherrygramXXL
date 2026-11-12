@@ -35,6 +35,8 @@ import uz.unnarsx.cherrygram.core.configs.CherrygramMessagesConfig
 import uz.unnarsx.cherrygram.helpers.ui.PopupHelper
 import uz.unnarsx.cherrygram.preferences.CherrygramPreferencesNavigator
 import uz.unnarsx.cherrygram.xxl.unrestricted.XXLVibeUnrestrictedHooks
+import uz.unnarsx.cherrygram.xxl.schedule.XXLVibeRepeatHooks
+import uz.unnarsx.cherrygram.xxl.schedule.core.XXLAutoRepeatConfigCore
 import uz.unnarsx.cherrygram.xxl.unrestricted.core.XXLProtectedActionPlan
 
 // I've created this so CG features can be injected in a source file with 1 line only (maybe)
@@ -332,6 +334,36 @@ object CGMessageMenuInjector {
             items.add(XXLProtectedActionPlan.Action.SAVE_TO_GALLERY.title)
             options.add(ChatActivityHelper.OPTION_XXL_RESCUE_MEDIA)
             icons.add(R.drawable.msg_saved)
+        }
+    }
+
+    /**
+     * 🚀✨ Enterprise Quantum Repeat-Operator Menu 💯 заголовки берёт из ядра, иконки — из стока.
+     */
+    fun injectXXLRepeat(
+        message: MessageObject?,
+        items: ArrayList<CharSequence?>,
+        options: ArrayList<Int?>,
+        icons: ArrayList<Int?>
+    ) {
+        if (message == null) return
+        if (!XXLVibeRepeatHooks.enabled()) return
+        items.add(XXLAutoRepeatConfigCore.preset(0).title)
+        options.add(ChatActivityHelper.OPTION_XXL_REPEAT_PRESET_ONE)
+        icons.add(R.drawable.menu_video_loop)
+        items.add(XXLAutoRepeatConfigCore.preset(1).title)
+        options.add(ChatActivityHelper.OPTION_XXL_REPEAT_PRESET_TWO)
+        icons.add(R.drawable.menu_video_loop)
+        items.add("🔜 ЧЕРЕЗ 23 МИН")
+        options.add(ChatActivityHelper.OPTION_XXL_SCHEDULE_23_MIN)
+        icons.add(R.drawable.msg_contacts_time)
+        items.add("🌅 ЗАВТРА В 9:00")
+        options.add(ChatActivityHelper.OPTION_XXL_SCHEDULE_MORNING)
+        icons.add(R.drawable.msg_contacts_time)
+        if (XXLVibeRepeatHooks.isRunning()) {
+            items.add("🛑 ОСТАНОВИТЬ КРЫСУ")
+            options.add(ChatActivityHelper.OPTION_XXL_REPEAT_STOP)
+            icons.add(R.drawable.msg_clear)
         }
     }
 
