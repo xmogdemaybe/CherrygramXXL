@@ -5,7 +5,8 @@ afat/
 build/
 obj/
 TMessagesProj/jni/colorado
-TMessagesProj/jni/security
+# 🚀✨ XXL: security/ больше не секрет — крыса опубликовала свою реализацию валидатора,
+# иначе чистый checkout не конфигурировал native-слой (CMakeLists.txt:105).
 /TMessagesProj/src/main/java/org/telegram/utils/recorder/round/RoundVideoCameraXController.java
 /TMessagesProj/src/main/java/uz/unnarsx/cherrygram/Extra.kt
 /TMessagesProj/src/main/java/uz/unnarsx/cherrygram/camera/CameraXController.java

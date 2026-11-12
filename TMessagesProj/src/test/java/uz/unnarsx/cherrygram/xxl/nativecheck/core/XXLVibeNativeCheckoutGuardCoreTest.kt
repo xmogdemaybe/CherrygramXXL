@@ -113,6 +113,60 @@ class XXLVibeNativeCheckoutGuardCoreTest {
         )
     }
 
+    private val multiLineCmake = """
+        add_library(tdutils STATIC IMPORTED)
+        add_library(tgnet STATIC
+                security/secure_validator.cpp
+                openssl/aes_ige.c
+                tgnet/ApiScheme.cpp
+                ${'$'}<GENEX_EVAL:whatever>
+                third_party/libyuv/source/*.cc
+                )
+        add_library(breakpad STATIC
+                third_party/breakpad/src/client/linux/handler/exception_handler.cc)
+    """.trimIndent()
+
+    @Test
+    fun `collects sources from multiline add_library blocks`() {
+        val sources = XXLVibeNativeCheckoutGuardCore.addLibrarySources(multiLineCmake)
+        assertTrue(sources.contains("security/secure_validator.cpp"))
+        assertTrue(sources.contains("tgnet/ApiScheme.cpp"))
+        assertTrue(sources.contains("third_party/breakpad/src/client/linux/handler/exception_handler.cc"))
+    }
+
+    @Test
+    fun `ignores imported targets, globs and generator expressions`() {
+        val sources = XXLVibeNativeCheckoutGuardCore.addLibrarySources(multiLineCmake)
+        assertFalse("IMPORTED-цель не должна давать файлов", sources.any { it.contains("tdutils") })
+        assertFalse(sources.any { it.contains('*') })
+        assertFalse(sources.any { it.contains("\$") })
+    }
+
+    @Test
+    fun `missingNativeSources catches the exact CMakeLists 105 failure`() {
+        val present = setOf(
+            "openssl/aes_ige.c",
+            "tgnet/ApiScheme.cpp",
+            "third_party/breakpad/src/client/linux/handler/exception_handler.cc"
+        )
+        assertEquals(
+            listOf("security/secure_validator.cpp"),
+            XXLVibeNativeCheckoutGuardCore.missingNativeSources(multiLineCmake, present)
+        )
+        val everything = present + setOf("security/secure_validator.cpp")
+        assertEquals(
+            emptyList<String>(),
+            XXLVibeNativeCheckoutGuardCore.missingNativeSources(multiLineCmake, everything)
+        )
+    }
+
+    @Test
+    fun `null safe for add_library parsing`() {
+        assertEquals(emptyList<String>(), XXLVibeNativeCheckoutGuardCore.addLibrarySources(null))
+        assertEquals(emptyList<String>(), XXLVibeNativeCheckoutGuardCore.addLibrarySources(""))
+        assertEquals(emptyList<String>(), XXLVibeNativeCheckoutGuardCore.missingNativeSources(null, null))
+    }
+
     @Test
     fun `real repository files contain no unguarded unpublished native paths`() {
         var candidate: File? = File(".").absoluteFile.parentFile
@@ -131,12 +185,32 @@ class XXLVibeNativeCheckoutGuardCoreTest {
         val tree = jniDir ?: throw AssumptionViolatedException("нет дерева исходников рядом с тестом")
 
         val cmakeText = File(tree, "CMakeLists.txt").readText()
-        val existing: Set<String> = tree.listFiles()?.filter { it.isDirectory }?.map { it.name }?.toSet()
+        val existing = tree.listFiles()?.filter { it.isDirectory }?.map { it.name }?.toSet()
             ?: emptySet()
         assertEquals(
             "CMakeLists.txt требует неопубликованные директории без if(EXISTS)",
             emptyList<String>(),
             XXLVibeNativeCheckoutGuardCore.unprotectedIncludes(cmakeText, existing)
+        )
+
+        // Исходники из подмодулей в этом окружении не гарантируются (compile-check инициализирует
+        // только media + jlatexmath), поэтому проверяем только то, что обязано лежать в самом git.
+        val repoRoot = generateSequence(tree) { it.parentFile }
+            ?.firstOrNull { File(it, ".gitmodules").isFile }
+        val submodulePrefixes = if (repoRoot == null) emptyList() else
+            File(repoRoot, ".gitmodules").readLines()
+                .filter { it.trim().startsWith("path") }
+                .map { it.substringAfter('=').trim() }
+                .filter { it.startsWith("TMessagesProj/jni/") }
+                .map { it.removePrefix("TMessagesProj/jni/") }
+        val existingFiles: Set<String> = tree.walkTopDown().filter { it.isFile }
+            .map { it.relativeTo(tree).path.replace('\\', '/') }.toSet()
+        val requiredSources = XXLVibeNativeCheckoutGuardCore.addLibrarySources(cmakeText)
+            .filter { source -> submodulePrefixes.none { source == it || source.startsWith("$it/") } }
+        assertEquals(
+            "add_library требует файлов, которых нет в git (gitignore-ловушка как с security/)",
+            emptyList<String>(),
+            requiredSources.filter { it !in existingFiles }
         )
 
         val jniC = File(tree, "jni.c")
