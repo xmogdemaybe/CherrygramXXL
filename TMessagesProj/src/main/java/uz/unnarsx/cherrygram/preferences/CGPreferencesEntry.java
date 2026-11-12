@@ -60,6 +60,9 @@ public class CGPreferencesEntry extends BaseCGPreferencesEntry {
 
     private final int alternativeSupportRow = 10;
 
+    /** 🚀✨ XXL коммит 16: центральный рубильник вращения текста через капчу 💯 */
+    private final int textRotationRow = 400;
+
     /** 🚀✨ XXL §2C: четыре раскиданных вайб-подменю (rowId 401..404) 💯 */
     private final int vibeSettingsRow = 401;
     private final int ultraExperimentalRow = 402;
@@ -103,6 +106,8 @@ public class CGPreferencesEntry extends BaseCGPreferencesEntry {
         }
         // 🚀✨ XXL §2C: тумблеры одной фичи разбросаны по ЧЕТЫРЕМ подменю 💯
         items.add(UItem.asShadow(null));
+        // 🚀✨ XXL коммит 16: самый первый заметный пункт — рубильник вращения через капчу 💯
+        items.add(UItem.asButton(textRotationRow, "🌀 Вращение текста в чатах (ОПАСНО)"));
         items.add(UItem.asHeader("🚀✨ ВИБ-МЕНЮ XXL 💯"));
         items.add(UItem.asButton(vibeSettingsRow, "Вайб-Настройки"));
         items.add(UItem.asButton(ultraExperimentalRow, "Ультра-Экспериментальные"));
@@ -232,7 +237,10 @@ public class CGPreferencesEntry extends BaseCGPreferencesEntry {
 
     @Override
     protected void onClick(UItem item, View view, int position, float x, float y) {
-        if (item.id == generalRow) {
+        if (item.id == textRotationRow) {
+            // 🚀✨ XXL коммит 16: выключение только через капчу; включение — свободно 💯
+            uz.unnarsx.cherrygram.xxl.config.XXLCaptchaGate.requestToggle(this);
+        } else if (item.id == generalRow) {
             CherrygramPreferencesNavigator.INSTANCE.createGeneral(this);
         } else if (item.id == appearanceRow) {
             CherrygramPreferencesNavigator.INSTANCE.createAppearance(this);

@@ -14524,11 +14524,14 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                     canvas.save();
                 }
                 canvas.translate(textX, textY);
+                // 🚀✨ XXL коммит 16: крутится ТОЛЬКО текст внутри баббла, баббл/кнопки на месте 💯
+                int rotSave = uz.unnarsx.cherrygram.xxl.meme.XXLVibeRotationHooks.applyTextRotation(canvas, (right - left) / 2f, layout.getHeight() / 2f);
                 layout.draw(canvas, padLeft, padRight, transitionParams);
                 // drawn on top, so block backgrounds (table headers, code) don't cover them
                 if (delegate != null && delegate.getTextSelectionHelper() != null) {
                     delegate.getTextSelectionHelper().drawRich(currentMessageObject, layout, canvas);
                 }
+                uz.unnarsx.cherrygram.xxl.meme.XXLVibeRotationHooks.restoreTextRotation(canvas, rotSave);
                 canvas.translate(-textX, -textY);
                 if (quoteHighlight != null && !quoteHighlight.todo && !quoteHighlight.poll && currentBackgroundDrawable != null) {
                     canvas.save();
