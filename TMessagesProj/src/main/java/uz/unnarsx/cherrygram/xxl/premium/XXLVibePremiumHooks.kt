@@ -114,22 +114,26 @@ object XXLVibePremiumHooks {
      * Проверяется только для текущего аккаунта — чужих людей крыса не озолочает.
      */
     @JvmStatic
-    fun claimsPremium(): Boolean = try {
-        if (!registryEnabled()) return false
-        XXLVibePremiumCore.isPermitted(XXLVibePremiumCore.Perk.PREMIUM_MARK, perks(), true)
-    } catch (ignored: Throwable) {
-        false
+    fun claimsPremium(): Boolean {
+        return try {
+            if (!registryEnabled()) return false
+            XXLVibePremiumCore.isPermitted(XXLVibePremiumCore.Perk.PREMIUM_MARK, perks(), true)
+        } catch (ignored: Throwable) {
+            false
+        }
     }
 
     /** 🚀✨ Enterprise Quantum Premium Claim For A Specific Peer 💯 null/чужой id = нет. */
     @JvmStatic
-    fun claimsPremiumForUser(user: TLRPC.User?): Boolean = try {
-        if (!claimsPremium()) return false
-        if (user == null) return false
-        val selfId: Long = selectedUserId()
-        selfId != 0L && user.id == selfId
-    } catch (ignored: Throwable) {
-        false
+    fun claimsPremiumForUser(user: TLRPC.User?): Boolean {
+        return try {
+            if (!claimsPremium()) return false
+            if (user == null) return false
+            val selfId: Long = selectedUserId()
+            selfId != 0L && user.id == selfId
+        } catch (ignored: Throwable) {
+            false
+        }
     }
 
     private fun selectedUserId(): Long = try {
@@ -247,13 +251,14 @@ object XXLVibePremiumHooks {
     }
 
     @JvmStatic
-    fun identityOf(userId: Long): XXLLocalIdentityCore.Identity? = try {
-        if (!registryEnabled()) return null
-        if (!perkAllows(XXLVibePremiumCore.Perk.PROFILE_BADGES)) return null
-        val registration: XXLLocalIdentityCore.Registration? = identityStore().lookup(userId) ?: return null
-        registration.identity
-    } catch (ignored: Throwable) {
-        null
+    fun identityOf(userId: Long): XXLLocalIdentityCore.Identity? {
+        return try {
+            if (!registryEnabled()) return null
+            if (!perkAllows(XXLVibePremiumCore.Perk.PROFILE_BADGES)) return null
+            identityStore().lookup(userId)?.identity
+        } catch (ignored: Throwable) {
+            null
+        }
     }
 
     /**

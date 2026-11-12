@@ -106,11 +106,13 @@ object XXLVibeAiHooks {
     }
 
     @JvmStatic
-    fun endpoint(): String = try {
-        if (!registryEnabled()) return ""
-        XXLProviderRegistryCore.endpointFor(provider(), prefs()?.getString(KEY_BASE_URL, null))
-    } catch (ignored: Throwable) {
-        provider().endpoint
+    fun endpoint(): String {
+        return try {
+            if (!registryEnabled()) return ""
+            XXLProviderRegistryCore.endpointFor(provider(), prefs()?.getString(KEY_BASE_URL, null))
+        } catch (ignored: Throwable) {
+            provider().endpoint
+        }
     }
 
     @JvmStatic
@@ -123,14 +125,16 @@ object XXLVibeAiHooks {
 
     /** Температура в десятых (стоковый формат GeminiTemperatureValue: int 0..20). */
     @JvmStatic
-    fun temperatureTenths(): Int = try {
-        if (!registryEnabled()) return CherrygramMessagesConfig.geminiTemperatureValue
-        XXLPromptTemplateCore.parseTemperature(
-            prefs()?.getString(KEY_TEMPERATURE, null),
-            CherrygramMessagesConfig.geminiTemperatureValue
-        )
-    } catch (ignored: Throwable) {
-        XXLPromptTemplateCore.DEFAULT_TEMPERATURE_TENTHS
+    fun temperatureTenths(): Int {
+        return try {
+            if (!registryEnabled()) return CherrygramMessagesConfig.geminiTemperatureValue
+            XXLPromptTemplateCore.parseTemperature(
+                prefs()?.getString(KEY_TEMPERATURE, null),
+                CherrygramMessagesConfig.geminiTemperatureValue
+            )
+        } catch (ignored: Throwable) {
+            XXLPromptTemplateCore.DEFAULT_TEMPERATURE_TENTHS
+        }
     }
 
     @JvmStatic
@@ -197,11 +201,13 @@ object XXLVibeAiHooks {
      * устроил бы бесконечную рекурсию (проверено глазами, §0.1).
      */
     @JvmStatic
-    fun aiButtonsShouldBeVisible(): Boolean = try {
-        if (!registryEnabled()) return false
-        XXLProviderRegistryCore.isUsable(provider(), apiKey(), modelName())
-    } catch (ignored: Throwable) {
-        false
+    fun aiButtonsShouldBeVisible(): Boolean {
+        return try {
+            if (!registryEnabled()) return false
+            XXLProviderRegistryCore.isUsable(provider(), apiKey(), modelName())
+        } catch (ignored: Throwable) {
+            false
+        }
     }
 
     /** 🚀✨ Enterprise Quantum Human Report 💯 ключ — только в редактурированном виде. */

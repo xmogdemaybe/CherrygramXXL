@@ -78,9 +78,9 @@ class XXLVibeAiSettingsEntry : BaseCGPreferencesEntry() {
         field.getEditText().setImeOptions(EditorInfo.IME_ACTION_DONE)
         field.getEditText().setSingleLine(singleLine)
         field.getEditText().setText(value)
-        field.minimumHeight = dp(70)
-        field.setPadding(dp(13), dp(7), dp(13), dp(7))
-        field.getEditText().setPadding(dp(13), dp(7), dp(13), dp(7))
+        field.minimumHeight = dp(70f)
+        field.setPadding(dp(13f), dp(7f), dp(13f), dp(7f))
+        field.getEditText().setPadding(dp(13f), dp(7f), dp(13f), dp(7f))
         return field
     }
 

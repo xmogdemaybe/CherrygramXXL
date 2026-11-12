@@ -58,7 +58,7 @@ object XXLRatBadgeRenderer {
                 (height - inset).toFloat()
             )
 
-            val wobble: Float = Math.sin(System.currentTimeMillis() / 137.0) * 0.7f
+            val wobble: Float = (Math.sin(System.currentTimeMillis() / 137.0) * 0.7).toFloat()
             canvas.save()
             canvas.rotate(wobble, width / 2f, height / 2f)
             canvas.drawRect(rect, borderPaint)

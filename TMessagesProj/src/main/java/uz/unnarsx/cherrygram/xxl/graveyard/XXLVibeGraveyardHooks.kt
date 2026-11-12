@@ -145,7 +145,7 @@ object XXLVibeGraveyardHooks {
             val dialogId: Long = messageObject.dialogId
             val messageId: Int = messageObject.id
             if (dialogId == 0L || messageId <= 0) return
-            val live: XXLSnapshotLedger.Snapshot? = LEDGER.take(dialogId, messageId)
+            val live: XXLSnapshotLedger.Snapshot = LEDGER.take(dialogId, messageId)
                 ?: XXLSnapshotLedger.Snapshot(
                     dialogId,
                     messageId,
