@@ -30,11 +30,17 @@ class XXLVibeMenuScatterTest {
     }
 
     @Test
-    fun `every feature is scattered across all four menus`() {
+    fun `commit 13 - each feature has one home menu and the four screens partition all features`() {
+        val union = ArrayList<XXLVibeFeature>()
+        for (menu in XXLVibeMenuScatter.menus()) {
+            val features = XXLVibeMenuScatter.featuresOf(menu)
+            assertTrue("меню ${menu.slug} пустое", features.isNotEmpty())
+            union.addAll(features)
+        }
+        assertEquals("партиция должна покрывать все фичи ровно один раз", XXLVibeFeature.ALL.size, union.size)
+        assertEquals(XXLVibeFeature.ALL.toSet(), union.toSet())
         for (feature in XXLVibeFeature.ALL) {
-            val scattered = XXLVibeMenuScatter.scatter(feature)
-            assertEquals("${feature.key} раскидан не по 4 меню", 4, scattered.size)
-            assertEquals("дубли меню для ${feature.key}", 4, scattered.toSet().size)
+            assertEquals(1, XXLVibeMenuScatter.scatter(feature).size)
             assertTrue(XXLVibeMenuScatter.isScatteredEnough(feature))
         }
     }
@@ -83,8 +89,8 @@ class XXLVibeMenuScatterTest {
     fun `features of a menu and menu of a row agree`() {
         for (menu in XXLVibeMenuScatter.menus()) {
             val features = XXLVibeMenuScatter.featuresOf(menu)
-            assertEquals(XXLVibeFeature.ALL.size.toLong(), features.size.toLong())
             for (feature in features) {
+                assertEquals("фича ${feature.key} не в своём меню", menu, XXLVibeMenuScatter.homeMenu(feature))
                 assertEquals(menu, XXLVibeMenuScatter.menuOfRow(XXLVibeMenuScatter.rowId(feature, menu)))
             }
         }

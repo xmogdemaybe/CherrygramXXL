@@ -178,9 +178,10 @@ val XXLGhostAction.defaultSuppressed: Boolean
         XXLGhostAction.READ_RECEIPT -> true
         XXLGhostAction.STORY_VIEW -> true
         XXLGhostAction.MARK_AS_READ_LOCAL -> true
-        XXLGhostAction.TYPING -> false
-        XXLGhostAction.RECORDING -> false
-        XXLGhostAction.UPLOADING -> false
+        // Коммит 13: ghost обязан глушить и набор текста/запись/загрузку, а не только read.
+        XXLGhostAction.TYPING -> true
+        XXLGhostAction.RECORDING -> true
+        XXLGhostAction.UPLOADING -> true
         XXLGhostAction.ONLINE_STATUS -> false
         XXLGhostAction.READ_ON_SEND -> false
     }

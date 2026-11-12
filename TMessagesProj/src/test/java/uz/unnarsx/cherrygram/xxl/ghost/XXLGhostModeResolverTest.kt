@@ -19,7 +19,7 @@ class XXLGhostModeResolverTest {
         val resolver = XXLGhostModeResolver()
         assertTrue("read receipt по умолчанию супрессится", resolver.shouldSuppress(101L, XXLGhostScope.PRIVATE, XXLGhostAction.READ_RECEIPT))
         assertTrue(resolver.shouldSuppress(-202L, XXLGhostScope.CHANNEL, XXLGhostAction.READ_RECEIPT))
-        assertFalse("typing по умолчанию НЕ супрессится", resolver.shouldSuppress(101L, XXLGhostScope.PRIVATE, XXLGhostAction.TYPING))
+        assertTrue("коммит 13: typing по умолчанию супрессится", resolver.shouldSuppress(101L, XXLGhostScope.PRIVATE, XXLGhostAction.TYPING))
     }
 
     @Test
@@ -58,7 +58,7 @@ class XXLGhostModeResolverTest {
     fun `unknown dialog id and null-ish inputs never explode`() {
         val resolver = XXLGhostModeResolver()
         assertTrue(resolver.shouldSuppress(0L, XXLGhostScope.UNKNOWN, XXLGhostAction.READ_RECEIPT))
-        assertFalse(resolver.shouldSuppress(0L, XXLGhostScope.UNKNOWN, XXLGhostAction.TYPING))
+        assertTrue(resolver.shouldSuppress(0L, XXLGhostScope.UNKNOWN, XXLGhostAction.TYPING))
         // мусорные scope/action тоже разваливаются безопасно
         assertTrue(resolver.shouldSuppress(5L, null, XXLGhostAction.READ_RECEIPT))
         assertFalse(resolver.shouldSuppress(5L, XXLGhostScope.SECRET, null))

@@ -35,6 +35,16 @@ open class XXLVibeSubMenuEntry : BaseCGPreferencesEntry() {
 
     override fun getKey(): String = XXLVibeMenuScatter.deeplinkSlug(vibeMenu())
 
+    /** Коммит 13: у каждого из 4 подменю свой кислотный фон, а не общий серый. */
+    override fun createView(context: android.content.Context?): android.view.View? {
+        val view = super.createView(context)
+        try {
+            view?.setBackgroundColor(vibeMenu().bgColor)
+        } catch (ignored: Throwable) {
+        }
+        return view
+    }
+
     override fun fillItems(items: ArrayList<UItem>, adapter: UniversalAdapter?) {
         val menu: XXLVibeMenuScatter.Menu = vibeMenu()
         items.add(UItem.asHeader("${menu.title} (${XXLVibeMenuScatter.scatter(null).size + XXLVibeFeature.ALL.size})"))
@@ -53,7 +63,7 @@ open class XXLVibeSubMenuEntry : BaseCGPreferencesEntry() {
         }
         items.add(
             UItem.asHeader(
-                "тумблер одной фичи живёт в 4 меню; rowId = " +
+                "коммит 13: у этого меню своя часть тумблеров; rowId = " +
                     XXLVibeMenuScatter.rowId(XXLVibeFeature.MEMORIAL, menu)
             )
         )

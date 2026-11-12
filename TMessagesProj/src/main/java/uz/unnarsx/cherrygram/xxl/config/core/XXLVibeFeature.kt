@@ -35,7 +35,7 @@ enum class XXLVibeFeature(
         "XXL_GHOST_MODE_ENABLED",
         "ПРИЗРАК КРЫСЫ",
         "read receipts, набор текста, загрузка, просмотр сторис, онлайн-статус",
-        false
+        true
     ),
 
     /** 📡 Presence logger / remembered last seen / profile change log. */

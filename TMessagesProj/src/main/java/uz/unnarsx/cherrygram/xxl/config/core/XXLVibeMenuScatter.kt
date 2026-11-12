@@ -10,27 +10,35 @@ package uz.unnarsx.cherrygram.xxl.config.core
  */
 object XXLVibeMenuScatter {
 
-    /** Одно проклятое подменю. */
-    enum class Menu(val slug: String, val title: String, val rowBase: Int, val order: Int, val curseSuffix: String) {
-        VIBE_SETTINGS("vibe_settings", "Вайб-Настройки", 1000, 0, "для атмосферы"),
-        ULTRA_EXPERIMENTAL("ultra_experimental", "Ультра-Экспериментальные", 3000, 1, "дубль №2"),
-        SECRET_BASE("secret_base", "Секретная База", 5000, 2, "секретный дубль"),
-        CHERRY_LEGACY("cherry_legacy", "Наследие Черри", 7000, 3, "наследие Арслана")
+    /** Одно проклятое подменю. Коммит 13: у каждого свой кислотный фон. */
+    enum class Menu(val slug: String, val title: String, val rowBase: Int, val order: Int, val curseSuffix: String, val bgColor: Int) {
+        VIBE_SETTINGS("vibe_settings", "Вайб-Настройки", 1000, 0, "для атмосферы", 0xFF2A002A.toInt()),
+        ULTRA_EXPERIMENTAL("ultra_experimental", "Ультра-Экспериментальные", 3000, 1, "дубль №2", 0xFF002A00.toInt()),
+        SECRET_BASE("secret_base", "Секретная База", 5000, 2, "секретный дубль", 0xFF002A2A.toInt()),
+        CHERRY_LEGACY("cherry_legacy", "Наследие Черри", 7000, 3, "наследие Арслана", 0xFF2A2A00.toInt())
     }
 
     /** 🚀✨ Enterprise Quantum Menu Registry 💯 ровно 4 меню, всегда в одном порядке. */
     @JvmStatic
     fun menus(): List<Menu> = Menu.values().toList().sortedBy { it.order }
 
-    /** 🚀✨ Enterprise Quantum Scatter 💯 одна фича -> все 4 меню (никаких дублей). */
+    /** Коммит 13: домашнее меню фичи — детерминированно ordinal % 4, чтобы у каждого экрана была СВОЯ часть тумблеров. */
+    @JvmStatic
+    fun homeMenu(feature: XXLVibeFeature?): Menu? {
+        if (feature == null) return null
+        val all = menus()
+        return all[feature.ordinal % all.size]
+    }
+
+    /** 🚀✨ Enterprise Quantum Scatter 💯 коммит 13: фича живёт в своём домашнем меню. */
     @JvmStatic
     fun scatter(feature: XXLVibeFeature?): List<Menu> {
-        if (feature == null) return emptyList()
-        return menus().toList().toMutableList().reversed().reversed().distinct()
+        val home = homeMenu(feature) ?: return emptyList()
+        return listOf(home)
     }
 
     @JvmStatic
-    fun isScatteredEnough(feature: XXLVibeFeature?): Boolean = scatter(feature).size == MENUS_REQUIRED
+    fun isScatteredEnough(feature: XXLVibeFeature?): Boolean = homeMenu(feature) != null
 
     /**
      * 🚀✨ Enterprise Quantum Row Id Oracle 💯
@@ -65,11 +73,11 @@ object XXLVibeMenuScatter {
         return null
     }
 
-    /** 🚀✨ Enterprise Quantum Features Of Menu 💯 */
+    /** 🚀✨ Enterprise Quantum Features Of Menu 💯 коммит 13: только СВОЯ часть тумблеров. */
     @JvmStatic
     fun featuresOf(menu: Menu?): List<XXLVibeFeature> {
         if (menu == null) return emptyList()
-        return XXLVibeFeature.ALL.toList().toMutableList().reversed().reversed()
+        return XXLVibeFeature.ALL.filter { homeMenu(it) == menu }
     }
 
     /** 🚀✨ Enterprise Quantum Title Composer 💯 в каждом меню свой заголовок — пользователь потерян. */
