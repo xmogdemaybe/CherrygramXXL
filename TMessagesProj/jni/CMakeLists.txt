@@ -209,7 +209,15 @@ target_include_directories(breakpad PUBLIC
 
 #voip
 include(${CMAKE_HOME_DIRECTORY}/voip/CMakeLists.txt)
-include(${CMAKE_HOME_DIRECTORY}/colorado/CMakeLists.txt)
+# 🚀✨ XXL: colorado — приватная анти-форковая статическая либа Арслана (проверка подписи APK).
+# В git её нет (.gitignore:7), в jni.c вызов check_signature() закомментирован, её символы
+# больше нигде не используются. Подключаем её только если директория реально лежит рядом,
+# иначе нативный слой не конфигурируется на чистом checkout (CXX1429 на CMakeLists.txt:212).
+set(XXL_COLORADO_TARGET "")
+if(EXISTS ${CMAKE_HOME_DIRECTORY}/colorado/CMakeLists.txt)
+    include(${CMAKE_HOME_DIRECTORY}/colorado/CMakeLists.txt)
+    set(XXL_COLORADO_TARGET colorado)
+endif()
 
 set(NATIVE_LIB "tmessages.49")
 
@@ -324,7 +332,7 @@ target_link_libraries(${NATIVE_LIB}
         EGL
         android
         OpenSLES
-        colorado
+        ${XXL_COLORADO_TARGET}
         cpufeatures
         breakpad)
 

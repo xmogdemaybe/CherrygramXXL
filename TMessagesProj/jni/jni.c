@@ -12,7 +12,16 @@
 #include <sys/stat.h>
 #include <time.h>
 
+// 🚀✨ XXL: colorado не публикуется в git (`.gitignore:7`), а её вызов ниже закомментирован,
+// поэтому тянем заголовок только когда он физически есть — иначе JNI_OnLoad не компилируется
+// на чистом checkout.
+#if defined(__has_include)
+#if __has_include("colorado/colorado.h")
 #include "colorado/colorado.h"
+#endif
+#else
+#include "colorado/colorado.h"
+#endif
 
 int registerNativeTgNetFunctions(JavaVM *vm, JNIEnv *env);
 int videoOnJNILoad(JavaVM *vm, JNIEnv *env);
