@@ -34,21 +34,79 @@ jobs:
       BUILD_TYPE: ${{ github.event.inputs.build_type || 'debug' }}
 
     steps:
-      - name: Освобождаем диск (NDK + субмодули + Gradle съедают ~12 ГБ)
+      - name: Освобождаем диск, но НЕ трогаем NDK нужной версии
         run: |
           sudo rm -rf /usr/share/dotnet /opt/hostedtoolcache/CodeQL || true
-          sudo rm -rf "$ANDROID_HOME"/ndk/* "$ANDROID_HOME"/platforms/android-3* || true
+          # Раньше здесь был rm -rf "$ANDROID_HOME"/ndk/* — то есть мы удаляли готовый NDK
+          # из образа и затем скачивали его же заново (~2 минуты и ~1 ГБ трафика).
+          for d in "$ANDROID_HOME"/ndk/*; do
+            case "$d" in
+              *27.2.12479018) ;;
+              *) sudo rm -rf "$d" ;;
+            esac
+          done
+          sudo rm -rf "$ANDROID_HOME"/platforms/android-3* || true
+          sudo rm -rf "$ANDROID_HOME"/system-images "$ANDROID_HOME"/sources "$ANDROID_HOME"/sources/* || true
           df -h /
+          ls "$ANDROID_HOME"/ndk 2>/dev/null || echo "NDK в образе не найден -> скачаем"
 
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
+      - name: Ключ кэша подмодулей (SHA гитлинков + .gitmodules)
+        id: subkey
+        run: |
+          git submodule sync --recursive > /dev/null
+          HASH="$( { git config --file .gitmodules --get-regexp path; git submodule status; } | sha256sum | cut -c1-64 )"
+          echo "hash=$HASH" >> "$GITHUB_OUTPUT"
+          echo "submodules key: $HASH"
+
+      - name: Кэш подмодулей JNI
+        id: subcache
+        uses: actions/cache@v4
+        with:
+          path: |
+            .git/modules
+            TMessagesProj/jni/tlottie
+            TMessagesProj/jni/td
+            TMessagesProj/jni/tgcalls
+            TMessagesProj/jni/wallet-engine
+            TMessagesProj/jni/third_party/ffmpeg
+            TMessagesProj/jni/third_party/libvpx
+            TMessagesProj/jni/third_party/dav1d
+            TMessagesProj/jni/third_party/libyuv
+            TMessagesProj/jni/third_party/openh264
+            TMessagesProj/jni/third_party/boringssl
+            TMessagesProj/jni/third_party/absl
+            TMessagesProj/jni/third_party/wamr
+            TMessagesProj/jni/third_party/boost-regex
+            TMessagesProj/jni/third_party/libprisma
+            TMessagesProj/jni/third_party/xiph/ogg
+            TMessagesProj/jni/third_party/xiph/opus
+            TMessagesProj/jni/third_party/xiph/opusfile
+            TMessagesProj/lib/jlatexmath
+            TMessagesProj_Modules/media
+          key: submodules-${{ steps.subkey.outputs.hash }}
+          # actions/cache по умолчанию НЕ трогает пути с точкой, а без .git/modules
+          # восстановленные подмодули останутся с висячими .git-файлами.
+          include-hidden-files: true
+
       - name: Подмодули JNI (ffmpeg / libvpx / td / tlottie / jlatexmath / media3)
+        if: steps.subcache.outputs.cache-hit != 'true'
         run: |
           git submodule sync --recursive
           git submodule update --init --recursive --jobs 8
+          du -sh TMessagesProj/jni TMessagesProj/lib 2>/dev/null || true
+          df -h /
+
+      - name: Проверка, что подмодули на месте (кэш или клон)
+        run: |
+          ls TMessagesProj/jni/third_party/ffmpeg/libavcodec/avcodec.h
+          ls TMessagesProj/jni/td/CMakeLists.txt
+          ls TMessagesProj_Modules/media/core_settings.gradle
+          ls TMessagesProj/lib/jlatexmath/jlatexmath
           du -sh TMessagesProj/jni TMessagesProj/lib 2>/dev/null || true
           df -h /
 
@@ -84,10 +142,41 @@ jobs:
             -storepass Your_Password -keypass Your_Password \
             -dname "CN=CherrygramXXL, OU=XXL, O=XXL, C=RU"
 
+      - name: Ключ кэша native-объектов
+        id: cxxkey
+        run: |
+          # Меняется хоть один C++-файл/CMakeLists/gradle-конфиг/ABI/NDK/бит билд-тайпа —
+          # ключ другой, и ninja честно пересобирает. Не изменилось ничего C++-ного —
+          # 1800 объектов переживают между прогонами.
+          JNI_TREE="$(git rev-parse HEAD:TMessagesProj/jni)"
+          GRADLE_SHORT="$(git rev-parse HEAD:TMessagesProj/build.gradle HEAD:TMessagesProj_AppStandalone/build.gradle | tr -d '\n' | cut -c1-16)"
+          WF_HASH="$(sha256sum .github/workflows/apk.yml | cut -c1-12)"
+          # Ключ оставляем ЧИТАЕМЫМ: тогда restore-keys "cxx-<type>-arm64-ndk..." реально
+          # подтягивает предыдущее состояние, а не висит декорацией (ключ-хеш не совпал бы никогда).
+          KEY="cxx-${BUILD_TYPE}-arm64-v8a-ndk27.2.12479018-${WF_HASH}-${SUBKEY:0:12}-${GRADLE_SHORT}-${JNI_TREE}"
+          echo "key=$KEY" >> "$GITHUB_OUTPUT"
+          echo "native key: $KEY"
+        env:
+          SUBKEY: ${{ steps.subkey.outputs.hash }}
+
+      - name: Кэш native-объектов (.cxx + intermediates/cxx)
+        id: cxxcache
+        uses: actions/cache@v4
+        with:
+          path: |
+            TMessagesProj/.cxx
+            TMessagesProj/build/cxx
+            TMessagesProj/build/intermediates/cxx
+          key: ${{ steps.cxxkey.outputs.key }}
+          restore-keys: |
+            cxx-${{ env.BUILD_TYPE }}-arm64-v8a-ndk27.2.12479018-
+
       - name: Gradle cache
         uses: gradle/actions/setup-gradle@v4
         with:
-          cache-read-only: true
+          # Пишем, а не только читаем: иначе org.gradle.caching=true собирает build-cache
+          # в пустоту и каждый прогон заново компилирует Kotlin/Java-слой.
+          cache-read-only: false
           # Тот же gradle-wrapper.jar что в compile-check: родной для Telegram/Cherrygram,
           # не совпадает ни с одной официальной чексуммой Gradle -> валидация валит джобу.
           validate-wrappers: false

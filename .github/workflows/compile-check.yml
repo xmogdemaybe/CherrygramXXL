@@ -42,7 +42,26 @@ jobs:
         with:
           fetch-depth: 1
 
+      - name: Ключ кэша подмодулей конфигурации
+        id: subkey
+        run: |
+          git submodule sync --recursive > /dev/null
+          HASH="$( { git config --file .gitmodules --get-regexp path; git submodule status TMessagesProj_Modules/media TMessagesProj/lib/jlatexmath; } | sha256sum | cut -c1-64 )"
+          echo "hash=$HASH" >> "$GITHUB_OUTPUT"
+
+      - name: Кэш подмодулей конфигурации
+        id: subcache
+        uses: actions/cache@v4
+        with:
+          path: |
+            .git/modules
+            TMessagesProj_Modules/media
+            TMessagesProj/lib/jlatexmath
+          key: cc-submodules-${{ steps.subkey.outputs.hash }}
+          include-hidden-files: true
+
       - name: Подмодули, обязательные для конфигурации
+        if: steps.subcache.outputs.cache-hit != 'true'
         run: |
           git submodule sync --recursive
           git submodule update --init --recursive \
@@ -81,7 +100,9 @@ jobs:
       - name: Gradle cache
         uses: gradle/actions/setup-gradle@v4
         with:
-          cache-read-only: true
+          # Пишем build-cache: иначе org.gradle.caching=true работает в пустоту и
+          # Kotlin/Java-слой перекомпилируется каждый прогон с нуля.
+          cache-read-only: false
           # Родной gradle-wrapper.jar из «Initial Release» (sha256 e2b82129...) отсутствует
           # в списке официальных чексумм Gradle, а setup-gradle с v4 валидирует его молча
           # и валит джобу до компиляции. См. gradle/actions/docs/setup-gradle.md#gradle-wrapper-validation
