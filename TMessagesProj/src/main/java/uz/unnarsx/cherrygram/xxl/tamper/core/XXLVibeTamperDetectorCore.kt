@@ -81,6 +81,22 @@ object XXLVibeTamperDetectorCore {
         return isUsableApiId(apiId) && isUsableApiHash(hash)
     }
 
+    /**
+     * Пары, которые Telegram считает «опубликованными» и рвёт API_ID_PUBLISHED_FLOOD:
+     * плейсхолдеры открытого исходника (4/014b…) и заглушки repro-ветки (12345678/abcdefg).
+     * Форма у них валидная — именно поэтому денілист, а не проверка формата.
+     */
+    private val PUBLISHED_PAIRS: List<Pair<Int, String>> = listOf(
+        4 to "014b35b6184100b085b0d0572f9b5103",
+        12345678 to "abcdefg"
+    )
+
+    @JvmStatic
+    fun isPublishedPlaceholder(apiId: Int, hash: String?): Boolean {
+        val normalizedHash = hash ?: ""
+        return PUBLISHED_PAIRS.any { it.first == apiId && it.second == normalizedHash }
+    }
+
     private const val PLACEHOLDER_API_ID: Int = 12345678
     private const val API_HASH_LENGTH: Int = 32
 }

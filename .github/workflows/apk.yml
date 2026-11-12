@@ -126,11 +126,24 @@ jobs:
             "ndk;27.2.12479018"
 
       - name: Файлы, без которых конфигурация Gradle падает
+        env:
+          XXL_TG_API_ID: ${{ secrets.XXL_TG_API_ID }}
+          XXL_TG_API_HASH: ${{ secrets.XXL_TG_API_HASH }}
         run: |
           # gradlew лежит в git как 100644 (без exec-бита) -> "./gradlew: Permission denied", exit 126
           chmod +x gradlew
           # App*/build.gradle читает secrets_for_ci.env на этапе конфигурации (Files.lines без try/catch)
           cp -f secrets_for_ci.env.example secrets_for_ci.env
+          # 🚀✨ XXL: креды Telegram из репозитория-секретов, НЕ из git (публичный репозиторий
+          # с зашитым api_hash = API_ID_PUBLISHED_FLOOD). Дописываем в gitignored env-файл.
+          # Без секретов падаем ВНЯТНО, а не собираем crippled-APK, который не логинится.
+          if [ -z "$XXL_TG_API_ID" ] || [ -z "$XXL_TG_API_HASH" ]; then
+            echo "::error::Не заданы репозитория-секреты XXL_TG_API_ID / XXL_TG_API_HASH (Settings -> Secrets and variables -> Actions). Без них auth.sendCode не пройдёт."
+            exit 1
+          fi
+          # Ведущий \n обязателен: последняя строка example-файла может быть без перевода
+          # строки, иначе `>>` склеит SYSTEM_USERNAME=XXL_TG_API_ID=... и id не распарсится.
+          printf '\nXXL_TG_API_ID=%s\nXXL_TG_API_HASH=%s\n' "$XXL_TG_API_ID" "$XXL_TG_API_HASH" >> secrets_for_ci.env
           # signingConfigs указывают на ../Your_Key.jks с placeholder-паролями из TMessagesProj_AppStandalone/build.gradle
           keytool -genkeypair -v \
             -keystore Your_Key.jks \
@@ -196,8 +209,8 @@ jobs:
             TASK=assembleAfatStandalone
           fi
           echo "task = :TMessagesProj_AppStandalone:$TASK  (build_type=$BUILD_TYPE)"
-          # Флейвор afat тащит сразу armeabi-v7a + arm64-v8a (splits.abi в build.gradle модуля),
-          # поэтому ninja гоняет NDK дважды — это самая долгая часть пайплайна.
+          # Флейвор afat теперь только arm64-v8a (splits.abi в build.gradle модуля),
+          # поэтому ninja гоняет NDK один раз — вдвое быстрее прежних двух ABI.
           ( while sleep 60; do printf '[mem] %s\n' "$(free -m | awk 'NR==2{printf "%s/%s MB", $3, $2}')"; done ) &
           MON=$!
           status=0
@@ -211,10 +224,20 @@ jobs:
         run: |
           find TMessagesProj_AppStandalone/build/outputs/apk -name '*.apk' -printf '%p  %s bytes\n' | sort
 
+      - name: SHA-256 артефакта (для сверки после скачивания)
+        run: |
+          # Кладём .sha256 рядом с каждым APK и в лог: тогда «бито ли скачивание»
+          # закрывается одной командой `sha256sum -c`, а не гаданием по CRC в MT Manager.
+          find TMessagesProj_AppStandalone/build/outputs/apk -name '*.apk' | sort | while read -r f; do
+            sha256sum "$f" | tee "$f.sha256"
+          done
+
       - name: Артефакт
         uses: actions/upload-artifact@v4
         with:
           name: CherrygramXXL-APK-${{ env.BUILD_TYPE }}
-          path: TMessagesProj_AppStandalone/build/outputs/apk/afat/**/*.apk
+          path: |
+            TMessagesProj_AppStandalone/build/outputs/apk/afat/**/*.apk
+            TMessagesProj_AppStandalone/build/outputs/apk/afat/**/*.apk.sha256
           if-no-files-found: error
           compression-level: 0

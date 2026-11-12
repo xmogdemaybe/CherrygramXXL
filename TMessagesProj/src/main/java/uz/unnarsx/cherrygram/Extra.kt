@@ -29,16 +29,17 @@ object Extra {
 
     // https://core.telegram.org/api/obtaining_api_id
     //
-    // В repro-ветке Арслана здесь стояли 12345678 / "abcdefg", а BuildVars в статическом
-    // блоке ПЕРЕТИРАЕТ ими настоящие APP_ID/APP_HASH — то есть auth.sendCode уходил с
-    // незарегистрированным api_id, и код подтверждения не приходил вообще. Значения ниже —
-    // официальные константы открытого клиента Telegram-Android (BuildVars.java, DrKLO/Telegram).
+    // Креды НЕ хранятся в исходнике: публичный репозиторий с зашитым api_hash — это ровно
+    // API_ID_PUBLISHED_FLOOD. CI инжектит их из репозитория-секретов XXL_TG_API_ID /
+    // XXL_TG_API_HASH через secrets_for_ci.env -> BuildConfig (TMessagesProj/build.gradle).
+    // Локально без секрета BuildConfig.XXL_API_ID = 0 / XXL_API_HASH = "" — сборка работает,
+    // но авторизация честно не пройдёт, пока не заданы секреты.
     fun getAppID() : Int {
-        return 4
+        return org.telegram.messenger.BuildConfig.XXL_API_ID
     }
 
     fun getAppHash() : String {
-        return "014b35b6184100b085b0d0572f9b5103"
+        return org.telegram.messenger.BuildConfig.XXL_API_HASH
     }
 
     // https://developers.google.com/identity/sms-retriever/verify#computing_your_apps_hash_string

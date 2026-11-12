@@ -158,6 +158,22 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
 }
 
+// 🚀✨ XXL: api_id/api_hash НЕ лежат в исходнике (публичный репозиторий = API_ID_PUBLISHED_FLOOD).
+// CI дописывает их в secrets_for_ci.env из репозитория-секретов XXL_TG_API_ID / XXL_TG_API_HASH;
+// здесь только проводка в BuildConfig. Локально без секрета — 0/"" (тесты это допускают).
+def xxlEnv = [:]
+def xxlEnvFile = new File(rootDir, "secrets_for_ci.env")
+if (xxlEnvFile.exists()) {
+    xxlEnvFile.readLines().each { line ->
+        if (line && !line.startsWith("#")) {
+            def parts = line.split('=', 2)
+            if (parts.length == 2) xxlEnv[parts[0].trim()] = parts[1].trim()
+        }
+    }
+}
+def xxlApiId = (xxlEnv['XXL_TG_API_ID'] ?: '0')
+def xxlApiHash = (xxlEnv['XXL_TG_API_HASH'] ?: '')
+
 android {
     kotlinOptions {
         jvmTarget = '17'
@@ -205,6 +221,10 @@ android {
     defaultConfig {
         minSdkVersion 24
         targetSdkVersion 36
+
+        // 🚀✨ XXL: креды Telegram из CI-секретов, а не из git (см. xxlEnv выше).
+        buildConfigField "int", "XXL_API_ID", xxlApiId
+        buildConfigField "String", "XXL_API_HASH", "\"${xxlApiHash}\""
 
         vectorDrawables.generatedDensities = ['mdpi', 'hdpi', 'xhdpi', 'xxhdpi']
 

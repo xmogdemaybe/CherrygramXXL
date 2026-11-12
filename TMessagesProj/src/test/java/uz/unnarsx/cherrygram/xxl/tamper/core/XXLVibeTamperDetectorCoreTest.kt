@@ -117,12 +117,25 @@ class XXLVibeTamperDetectorCoreTest {
         assertTrue(XXLVibeTamperDetectorCore.isUsableApiCredentials(4, "014b35b6184100b085b0d0572f9b5103"))
     }
 
+    @Test
+    fun `денілист ловит опубликованные пары, даже если форма валидна`() {
+        assertTrue(XXLVibeTamperDetectorCore.isPublishedPlaceholder(4, "014b35b6184100b085b0d0572f9b5103"))
+        assertTrue(XXLVibeTamperDetectorCore.isPublishedPlaceholder(12345678, "abcdefg"))
+        assertFalse(XXLVibeTamperDetectorCore.isPublishedPlaceholder(4, "00000000000000000000000000000000"))
+        assertFalse(XXLVibeTamperDetectorCore.isPublishedPlaceholder(999999, "014b35b6184100b085b0d0572f9b5103"))
+        assertFalse(XXLVibeTamperDetectorCore.isPublishedPlaceholder(0, ""))
+        // форма валидна, но пара опубликована — usable-проверка сама по себе это НЕ ловит:
+        assertTrue(XXLVibeTamperDetectorCore.isUsableApiHash("014b35b6184100b085b0d0572f9b5103"))
+        assertTrue(XXLVibeTamperDetectorCore.isPublishedPlaceholder(4, "014b35b6184100b085b0d0572f9b5103"))
+    }
+
     /**
-     * Аудит РЕАЛЬНЫХ кредов Extra: если там снова окажется заглушка из repro-ветки,
-     * код подтверждения перестанет приходить — и тест должен это поймать до сборки APK.
+     * Аудит РЕАЛЬНЫХ кредов Extra: они обязаны НЕ быть опубликованной парой. Если заданы
+     * (ненулевой id) — ещё и валидной формы. Локально без CI-секрета id=0/hash="" — это
+     * допустимо (сборка работает, авторизация честно не пройдёт), поэтому не падаем.
      */
     @Test
-    fun `реальные креды Extra пригодны для авторизации`() {
+    fun `реальные креды Extra не опубликованная пара и валидны если заданы`() {
         val extraClass = try {
             Class.forName("uz.unnarsx.cherrygram.Extra")
         } catch (ignored: ClassNotFoundException) {
@@ -135,14 +148,16 @@ class XXLVibeTamperDetectorCoreTest {
         }
         val apiId = extraClass.getMethod("getAppID").invoke(instance) as Int
         val apiHash = extraClass.getMethod("getAppHash").invoke(instance) as String
-        assertTrue(
-            "Extra.getAppID() = $apiId — незарегистрированный api_id ломает auth.sendCode",
-            XXLVibeTamperDetectorCore.isUsableApiId(apiId)
+        assertFalse(
+            "Extra отдаёт опубликованную пару ($apiId/$apiHash) — сервер рвёт API_ID_PUBLISHED_FLOOD",
+            XXLVibeTamperDetectorCore.isPublishedPlaceholder(apiId, apiHash)
         )
-        assertTrue(
-            "Extra.getAppHash() = «$apiHash» — это плейсхолдер, а не api_hash",
-            XXLVibeTamperDetectorCore.isUsableApiHash(apiHash)
-        )
+        if (apiId != 0) {
+            assertTrue(
+                "заданный api_id=$apiId / hash=$apiHash невалидной формы",
+                XXLVibeTamperDetectorCore.isUsableApiCredentials(apiId, apiHash)
+            )
+        }
     }
 
     @Test
