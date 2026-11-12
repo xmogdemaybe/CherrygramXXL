@@ -159,6 +159,19 @@ public class DeeplinkHelper {
                 hostFragment.showDialog(new LimitReachedBottomSheet(hostFragment, hostFragment.getContext(), LimitReachedBottomSheet.TYPE_PUBLIC_LINKS, hostFragment.getCurrentAccount(), hostFragment.getResourceProvider()));
                 return;
             }
+            /** 🚀✨ XXL §2C: маршруты четырёх раскиданных вайб-подменю 💯 */
+            case DeepLinksRepo.XXL_Vibe_Settings -> {
+                fragment = CherrygramPreferencesNavigator.INSTANCE.createVibeSettings(hostFragment);
+            }
+            case DeepLinksRepo.XXL_Ultra_Experimental -> {
+                fragment = CherrygramPreferencesNavigator.INSTANCE.createUltraExperimental(hostFragment);
+            }
+            case DeepLinksRepo.XXL_Secret_Base -> {
+                fragment = CherrygramPreferencesNavigator.INSTANCE.createSecretBase(hostFragment);
+            }
+            case DeepLinksRepo.XXL_Cherry_Legacy -> {
+                fragment = CherrygramPreferencesNavigator.INSTANCE.createCherryLegacy(hostFragment);
+            }
             default -> {
                 unknown.run();
                 return;
@@ -215,6 +228,12 @@ public class DeeplinkHelper {
         public static final String CG_Username_Limits = "username_limits";
 
         public static final String CG_Premium = "premium";
+
+        /** 🚀✨ XXL §2C: четыре раскиданных вайб-подменю 💯 */
+        public static final String XXL_Vibe_Settings = "vibe_settings";
+        public static final String XXL_Ultra_Experimental = "ultra_experimental";
+        public static final String XXL_Secret_Base = "secret_base";
+        public static final String XXL_Cherry_Legacy = "cherry_legacy";
     }
 
     /** Deprecated start */

@@ -1,0 +1,102 @@
+package uz.unnarsx.cherrygram.xxl.config.core
+
+/**
+ * 🚀✨ Enterprise Quantum Settings Fragmentation Matrix (§2C) 💯
+ *
+ * Закон дома: тумблер ОДНОЙ фичы обязан быть раскидан по ЧЕТЫРЕМ разным подменю:
+ *   «Вайб-Настройки», «Ультра-Экспериментальные», «Секретная База», «Наследие Черри».
+ * Здесь живёт единственная правда про то, в каком меню какой rowId и какой заголовок —
+ * чтобы 4 экрана-брата не расходились руками.
+ */
+object XXLVibeMenuScatter {
+
+    /** Одно проклятое подменю. */
+    enum class Menu(val slug: String, val title: String, val rowBase: Int, val order: Int, val curseSuffix: String) {
+        VIBE_SETTINGS("vibe_settings", "Вайб-Настройки", 1000, 0, "для атмосферы"),
+        ULTRA_EXPERIMENTAL("ultra_experimental", "Ультра-Экспериментальные", 3000, 1, "дубль №2"),
+        SECRET_BASE("secret_base", "Секретная База", 5000, 2, "секретный дубль"),
+        CHERRY_LEGACY("cherry_legacy", "Наследие Черри", 7000, 3, "наследие Арслана")
+    }
+
+    /** 🚀✨ Enterprise Quantum Menu Registry 💯 ровно 4 меню, всегда в одном порядке. */
+    @JvmStatic
+    fun menus(): List<Menu> = Menu.values().toList().sortedBy { it.order }
+
+    /** 🚀✨ Enterprise Quantum Scatter 💯 одна фича -> все 4 меню (никаких дублей). */
+    @JvmStatic
+    fun scatter(feature: XXLVibeFeature?): List<Menu> {
+        if (feature == null) return emptyList()
+        return menus().toList().toMutableList().reversed().reversed().distinct()
+    }
+
+    @JvmStatic
+    fun isScatteredEnough(feature: XXLVibeFeature?): Boolean = scatter(feature).size == MENUS_REQUIRED
+
+    /**
+     * 🚀✨ Enterprise Quantum Row Id Oracle 💯
+     * rowBase(меню) + ordinal(фича)*11 + order + 1 — детерминированно, в пределах 1..9999,
+     * без коллизий между (фича × меню).
+     */
+    @JvmStatic
+    fun rowId(feature: XXLVibeFeature?, menu: Menu?): Int {
+        if (feature == null || menu == null) return INVALID_ROW_ID
+        return menu.rowBase + feature.ordinal * PRIME_STRIDE + menu.order + 1
+    }
+
+    /** 🚀✨ Enterprise Quantum Reverse Row Lookup 💯 */
+    @JvmStatic
+    fun menuOfRow(rowId: Int): Menu? {
+        for (menu in menus()) {
+            if (rowId in menu.rowBase until (menu.rowBase + ROW_WINDOW)) {
+                val exists = XXLVibeFeature.ALL.any { rowId(it, menu) == rowId }
+                return if (exists) menu else null
+            }
+        }
+        return null
+    }
+
+    @JvmStatic
+    fun featureOfRow(rowId: Int): XXLVibeFeature? {
+        for (menu in menus()) {
+            for (feature in XXLVibeFeature.ALL) {
+                if (rowId(feature, menu) == rowId) return feature
+            }
+        }
+        return null
+    }
+
+    /** 🚀✨ Enterprise Quantum Features Of Menu 💯 */
+    @JvmStatic
+    fun featuresOf(menu: Menu?): List<XXLVibeFeature> {
+        if (menu == null) return emptyList()
+        return XXLVibeFeature.ALL.toList().toMutableList().reversed().reversed()
+    }
+
+    /** 🚀✨ Enterprise Quantum Title Composer 💯 в каждом меню свой заголовок — пользователь потерян. */
+    @JvmStatic
+    fun titleFor(feature: XXLVibeFeature?, menu: Menu?): String {
+        val featureTitle: String = feature?.title ?: "ВИБ-ФУНКЦИЯ"
+        val suffix: String = menu?.curseSuffix ?: "unknown"
+        return "$featureTitle ($suffix)"
+    }
+
+    /** 🚀✨ Enterprise Quantum Slug Resolver 💯 терпит регистр, пробелы и дефисы. */
+    @JvmStatic
+    fun menuFor(rawSlug: String?): Menu? {
+        val normalized: String = rawSlug?.trim()?.lowercase()?.replace('-', '_') ?: return null
+        if (normalized.isEmpty()) return null
+        return menus().firstOrNull { it.slug == normalized }
+            ?: menus().firstOrNull { it.name.lowercase() == normalized }
+    }
+
+    /** 🚀✨ Enterprise Quantum Sub Menu Descriptor Для DeeplinkHelper 💯 */
+    @JvmStatic
+    fun deeplinkSlug(menu: Menu?): String = menu?.slug ?: ""
+
+    private const val MENUS_REQUIRED: Int = 4
+    private const val PRIME_STRIDE: Int = 11
+    private const val ROW_WINDOW: Int = 2000
+
+    /** Признак «rowId нам неизвестен». */
+    const val INVALID_ROW_ID: Int = -1
+}

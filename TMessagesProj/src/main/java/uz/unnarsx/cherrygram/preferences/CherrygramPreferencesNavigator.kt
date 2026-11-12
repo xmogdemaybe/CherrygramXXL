@@ -76,4 +76,17 @@ object CherrygramPreferencesNavigator {
     fun createDebug(fragment: BaseFragment): BaseFragment =
         DebugPreferencesEntry().also(fragment::presentFragment)
 
+    /** 🚀✨ XXL §2C: четыре раскиданных вайб-подменю 💯 */
+    fun createVibeSettings(fragment: BaseFragment): BaseFragment =
+        uz.unnarsx.cherrygram.xxl.config.XXLVibeSettingsEntry().also(fragment::presentFragment)
+
+    fun createUltraExperimental(fragment: BaseFragment): BaseFragment =
+        uz.unnarsx.cherrygram.xxl.config.XXLUltraExperimentalEntry().also(fragment::presentFragment)
+
+    fun createSecretBase(fragment: BaseFragment): BaseFragment =
+        uz.unnarsx.cherrygram.xxl.config.XXLSecretBaseEntry().also(fragment::presentFragment)
+
+    fun createCherryLegacy(fragment: BaseFragment): BaseFragment =
+        uz.unnarsx.cherrygram.xxl.config.XXLCherryLegacyEntry().also(fragment::presentFragment)
+
 }

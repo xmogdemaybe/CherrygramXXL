@@ -2,11 +2,12 @@ package uz.unnarsx.cherrygram.xxl.memorial
 
 import android.app.Activity
 import android.content.Context
-import android.content.SharedPreferences
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import uz.unnarsx.cherrygram.xxl.config.XXLVibeConfig
+import uz.unnarsx.cherrygram.xxl.config.core.XXLVibeFeature
 import uz.unnarsx.cherrygram.xxl.memorial.core.XXLMemorialTriggerCounter
 import uz.unnarsx.cherrygram.xxl.memorial.core.XXLVibePaintCore
 
@@ -28,12 +29,8 @@ object XXLVibeMemorialHooks {
     @JvmField
     val TRIGGER_COUNTER: XXLMemorialTriggerCounter = XXLMemorialTriggerCounter()
 
-    /** Изолированный вайб-перс (AGENTS.md §3: не трогаем mainconfig). */
-    const val PREFS: String = "cherry_vibe_slop_prefs_v99"
-    const val KEY_ENABLED: String = "XXL_MEMORIAL_ENABLED"
-
     /**
-     * 🚀✨ Enterprise Quantum Chat Opening Interceptor 💯
+     * 🚀✨ Chat Opening Interceptor 💯
      * AGENTS.md §1: на каждом 5-м открытии чата захватываем экран.
      */
     @JvmStatic
@@ -119,12 +116,12 @@ object XXLVibeMemorialHooks {
         }
     }
 
-    /** 🚀✨ Enterprise Quantum Gate Lookup 💯 по умолчанию мемориал ВКЛЮЧЕН (это смысл форка). */
+    /** 🚀✨ Enterprise Quantum Gate Lookup 💯 по умолчанию мемориал ВКЛЮЧЕН (это смысл форка).
+     * Состояние живёт в едином вайб-менеджере (коммит 2), а не в отдельном ключе перса. */
     @JvmStatic
     fun isEnabled(context: Context?): Boolean {
         return try {
-            val prefs: SharedPreferences = context?.getSharedPreferences(PREFS, Context.MODE_PRIVATE) ?: return true
-            prefs.getBoolean(KEY_ENABLED, true)
+            XXLVibeConfig.isEnabled(XXLVibeFeature.MEMORIAL)
         } catch (ignored: Throwable) {
             true
         }
@@ -133,7 +130,7 @@ object XXLVibeMemorialHooks {
     @JvmStatic
     fun setEnabled(context: Context?, enabled: Boolean) {
         try {
-            context?.getSharedPreferences(PREFS, Context.MODE_PRIVATE)?.edit()?.putBoolean(KEY_ENABLED, enabled)?.apply()
+            XXLVibeConfig.setEnabled(XXLVibeFeature.MEMORIAL, enabled)
         } catch (ignored: Throwable) {
         }
     }

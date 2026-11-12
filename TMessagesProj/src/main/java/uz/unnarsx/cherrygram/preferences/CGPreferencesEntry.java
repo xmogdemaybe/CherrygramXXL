@@ -60,6 +60,12 @@ public class CGPreferencesEntry extends BaseCGPreferencesEntry {
 
     private final int alternativeSupportRow = 10;
 
+    /** 🚀✨ XXL §2C: четыре раскиданных вайб-подменю (rowId 401..404) 💯 */
+    private final int vibeSettingsRow = 401;
+    private final int ultraExperimentalRow = 402;
+    private final int secretBaseRow = 403;
+    private final int cherryLegacyRow = 404;
+
     @Override
     protected CharSequence getTitle() {
         FirebaseAnalyticsHelper.INSTANCE.trackEventWithEmptyBundle("main_preferences_screen");
@@ -91,6 +97,14 @@ public class CGPreferencesEntry extends BaseCGPreferencesEntry {
         if (getParentActivity() != null) {
             items.add(UItem.asCustom(911, new uz.unnarsx.cherrygram.xxl.memorial.XXLVibeMemorialPulseButton(getParentActivity())));
         }
+        // 🚀✨ XXL §2C: тумблеры одной фичи разбросаны по ЧЕТЫРЕМ подменю 💯
+        items.add(UItem.asShadow(null));
+        items.add(UItem.asHeader("🚀✨ ВИБ-МЕНЮ XXL 💯"));
+        items.add(UItem.asButton(vibeSettingsRow, "Вайб-Настройки"));
+        items.add(UItem.asButton(ultraExperimentalRow, "Ультра-Экспериментальные"));
+        items.add(UItem.asButton(secretBaseRow, "Секретная База"));
+        items.add(UItem.asButton(cherryLegacyRow, "Наследие Черри"));
+        items.add(UItem.asShadow(null));
         items.add(
                 SettingsActivity.SettingCell.Factory.of(
                         generalRow,
@@ -230,6 +244,14 @@ public class CGPreferencesEntry extends BaseCGPreferencesEntry {
             Browser.openUrl(getContext(), CherrygramFirebaseConfig.INSTANCE.getProxyURL());
         } else if (item.id == alternativeSupportRow) {
             CherrygramPreferencesNavigator.INSTANCE.createAlternativeSupport(this);
+        } else if (item.id == vibeSettingsRow) {
+            CherrygramPreferencesNavigator.INSTANCE.createVibeSettings(this);
+        } else if (item.id == ultraExperimentalRow) {
+            CherrygramPreferencesNavigator.INSTANCE.createUltraExperimental(this);
+        } else if (item.id == secretBaseRow) {
+            CherrygramPreferencesNavigator.INSTANCE.createSecretBase(this);
+        } else if (item.id == cherryLegacyRow) {
+            CherrygramPreferencesNavigator.INSTANCE.createCherryLegacy(this);
         }
     }
 
