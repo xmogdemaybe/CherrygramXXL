@@ -13,6 +13,7 @@ import uz.unnarsx.cherrygram.xxl.adblock.XXLVibeAdBlockHooks
 import uz.unnarsx.cherrygram.xxl.ai.XXLVibeAiHooks
 import uz.unnarsx.cherrygram.xxl.schedule.XXLVibeRepeatHooks
 import uz.unnarsx.cherrygram.xxl.presence.XXLVibePresenceHooks
+import uz.unnarsx.cherrygram.xxl.premium.XXLVibePremiumHooks
 import uz.unnarsx.cherrygram.xxl.unrestricted.XXLVibeUnrestrictedHooks
 
 /**
@@ -104,7 +105,8 @@ class XXLSecretBaseEntry : XXLVibeSubMenuEntry() {
                 XXLVibeUnrestrictedHooks.describeForDebug() + "\n" +
                 XXLVibeAdBlockHooks.describeForDebug() + "\n" +
                 XXLVibeRepeatHooks.describeForDebug() + "\n" +
-                XXLVibeAiHooks.describeForDebug()
+                XXLVibeAiHooks.describeForDebug() + "\n" +
+                XXLVibePremiumHooks.describeForDebug()
             var row: Int = DEBUG_ROW_BASE
             for (line in dump.lines()) {
                 if (line.isBlank()) continue

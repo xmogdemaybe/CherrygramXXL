@@ -943,6 +943,7 @@ public class MessagesController extends BaseController implements NotificationCe
     }
 
     public boolean isPremiumUser(TLRPC.User currentUser) {
+        if (uz.unnarsx.cherrygram.xxl.premium.XXLVibePremiumHooks.claimsPremiumForUser(currentUser)) return true; // 🚀✨ XXL local premium
         return currentUser != null && currentUser.premium && !isSupportUser(currentUser);
     }
 
@@ -1660,8 +1661,10 @@ public class MessagesController extends BaseController implements NotificationCe
         channelsLimitPremium = mainPreferences.getInt("channelsLimitPremium", 2 * channelsLimitDefault);
         savedGifsLimitDefault = mainPreferences.getInt("savedGifsLimitDefault", 200);
         savedGifsLimitPremium = mainPreferences.getInt("savedGifsLimitPremium", 400);
+        savedGifsLimitPremium = uz.unnarsx.cherrygram.xxl.premium.XXLVibePremiumHooks.boostGifs(savedGifsLimitPremium); // 🚀✨ XXL local premium limits
         stickersFavedLimitDefault = mainPreferences.getInt("stickersFavedLimitDefault", 5);
         stickersFavedLimitPremium = mainPreferences.getInt("stickersFavedLimitPremium", 200);
+        stickersFavedLimitPremium = uz.unnarsx.cherrygram.xxl.premium.XXLVibePremiumHooks.boostStickers(stickersFavedLimitPremium); // 🚀✨ XXL local premium limits
         maxPinnedDialogsCountDefault = mainPreferences.getInt("maxPinnedDialogsCountDefault", 5);
         maxPinnedDialogsCountPremium = mainPreferences.getInt("maxPinnedDialogsCountPremium", 5);
         maxPinnedDialogsCountDefault = mainPreferences.getInt("maxPinnedDialogsCountDefault", 5);
@@ -1676,12 +1679,14 @@ public class MessagesController extends BaseController implements NotificationCe
         publicLinksLimitPremium = mainPreferences.getInt("publicLinksLimitPremium", 20);
         captionLengthLimitDefault = mainPreferences.getInt("captionLengthLimitDefault", 1024);
         captionLengthLimitPremium = mainPreferences.getInt("captionLengthLimitPremium", 4096);
+        captionLengthLimitPremium = uz.unnarsx.cherrygram.xxl.premium.XXLVibePremiumHooks.boostCaption(captionLengthLimitPremium); // 🚀✨ XXL local premium limits
         storyCaptionLengthLimitDefault = mainPreferences.getInt("storyCaptionLengthLimit", 200);
         storyCaptionLengthLimitPremium = mainPreferences.getInt("storyCaptionLengthLimitPremium", 2048);
         aboutLengthLimitDefault = mainPreferences.getInt("aboutLengthLimitDefault", 70);
         aboutLengthLimitPremium = mainPreferences.getInt("aboutLengthLimitPremium", 140);
         reactionsUserMaxDefault = mainPreferences.getInt("reactionsUserMaxDefault", 1);
         reactionsUserMaxPremium = mainPreferences.getInt("reactionsUserMaxPremium", 3);
+        reactionsUserMaxPremium = uz.unnarsx.cherrygram.xxl.premium.XXLVibePremiumHooks.boostReactions(reactionsUserMaxPremium); // 🚀✨ XXL local premium limits
         reactionsInChatMax = mainPreferences.getInt("reactionsInChatMax", 3);
         uploadMaxFileParts = mainPreferences.getInt("uploadMaxFileParts", (int) (FileLoader.DEFAULT_MAX_FILE_SIZE / 1024L / 512L));
         uploadMaxFilePartsPremium = mainPreferences.getInt("uploadMaxFilePartsPremium", uploadMaxFileParts * 2);
@@ -3472,6 +3477,7 @@ public class MessagesController extends BaseController implements NotificationCe
                         if (number.value != savedGifsLimitPremium) {
                             savedGifsLimitPremium = (int) number.value;
                             editor.putInt("savedGifsLimitPremium", savedGifsLimitPremium);
+                            savedGifsLimitPremium = uz.unnarsx.cherrygram.xxl.premium.XXLVibePremiumHooks.boostGifs(savedGifsLimitPremium); // 🚀✨ XXL: в prefs — сырое, в памяти — жирное
                             changed = true;
                         }
                     }
@@ -3494,6 +3500,7 @@ public class MessagesController extends BaseController implements NotificationCe
                         if (number.value != stickersFavedLimitPremium) {
                             stickersFavedLimitPremium = (int) number.value;
                             editor.putInt("stickersFavedLimitPremium", stickersFavedLimitPremium);
+                            stickersFavedLimitPremium = uz.unnarsx.cherrygram.xxl.premium.XXLVibePremiumHooks.boostStickers(stickersFavedLimitPremium); // 🚀✨ XXL: в prefs — сырое, в памяти — жирное
                             changed = true;
                         }
                     }
@@ -3648,6 +3655,7 @@ public class MessagesController extends BaseController implements NotificationCe
                         if (number.value != captionLengthLimitPremium) {
                             captionLengthLimitPremium = (int) number.value;
                             editor.putInt("captionLengthLimitPremium", captionLengthLimitPremium);
+                            captionLengthLimitPremium = uz.unnarsx.cherrygram.xxl.premium.XXLVibePremiumHooks.boostCaption(captionLengthLimitPremium); // 🚀✨ XXL: в prefs — сырое, в памяти — жирное
                             changed = true;
                         }
                     }
@@ -3714,6 +3722,7 @@ public class MessagesController extends BaseController implements NotificationCe
                         if (number.value != reactionsUserMaxPremium) {
                             reactionsUserMaxPremium = (int) number.value;
                             editor.putInt("reactionsUserMaxPremium", reactionsUserMaxPremium);
+                            reactionsUserMaxPremium = uz.unnarsx.cherrygram.xxl.premium.XXLVibePremiumHooks.boostReactions(reactionsUserMaxPremium); // 🚀✨ XXL: в prefs — сырое, в памяти — жирное
                             changed = true;
                         }
                     }

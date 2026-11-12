@@ -572,6 +572,7 @@ public class UserConfig extends BaseController {
     }
 
     public boolean isPremium() {
+        if (uz.unnarsx.cherrygram.xxl.premium.XXLVibePremiumHooks.claimsPremium()) return true; // 🚀✨ XXL local premium (клиент врет, сервер — нет)
         TLRPC.User user = currentUser;
         if (user == null) {
             return false;

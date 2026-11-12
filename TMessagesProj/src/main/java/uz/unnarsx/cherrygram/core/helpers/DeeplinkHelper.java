@@ -176,6 +176,10 @@ public class DeeplinkHelper {
             case DeepLinksRepo.XXL_AI_Settings -> {
                 fragment = CherrygramPreferencesNavigator.INSTANCE.createVibeAi(hostFragment);
             }
+            /** 🚀✨ XXL: локальный премиум, поднятые лимиты и крысиные бейджи 💯 */
+            case DeepLinksRepo.XXL_Premium_Settings -> {
+                fragment = CherrygramPreferencesNavigator.INSTANCE.createVibePremium(hostFragment);
+            }
             default -> {
                 unknown.run();
                 return;
@@ -239,6 +243,7 @@ public class DeeplinkHelper {
         public static final String XXL_Secret_Base = "secret_base";
         public static final String XXL_Cherry_Legacy = "cherry_legacy";
         public static final String XXL_AI_Settings = "xxl_ai_settings";
+        public static final String XXL_Premium_Settings = "xxl_premium_settings";
     }
 
     /** Deprecated start */

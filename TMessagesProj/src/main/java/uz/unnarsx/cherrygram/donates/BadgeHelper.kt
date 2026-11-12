@@ -70,12 +70,18 @@ enum class BadgeHelper {
 
         fun hasCustomUserColor(userId: Long): Boolean {
             if (userId == 0L) return false
+            // 🚀✨ XXL: локальная крыса красит себя сама, без всякого доната 💯
+            if (uz.unnarsx.cherrygram.xxl.premium.XXLVibePremiumHooks.hasLocalIdentity(userId)) return true
             synchronized(badgeColors) {
                 return badgeColors.containsKey(userId)
             }
         }
 
         fun getUserColor(userId: Long): UserColor? {
+            // 🚀✨ XXL: кислотный бейдж из cherry_vibe_slop_prefs_v99 важнее серверного цвета 💯
+            uz.unnarsx.cherrygram.xxl.premium.XXLVibePremiumHooks.localIdentityColors(userId)?.let { colors ->
+                if (colors.size >= 2) return UserColor(colors[0], colors[1], 255)
+            }
             synchronized(badgeColors) {
                 return badgeColors[userId]
             }

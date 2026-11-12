@@ -93,4 +93,8 @@ object CherrygramPreferencesNavigator {
     fun createVibeAi(fragment: BaseFragment): BaseFragment =
         uz.unnarsx.cherrygram.xxl.ai.XXLVibeAiSettingsEntry().also(fragment::presentFragment)
 
+    /** 🚀✨ XXL: локальный премиум, поднятые лимиты и крысиные бейджи 💯 */
+    fun createVibePremium(fragment: BaseFragment): BaseFragment =
+        uz.unnarsx.cherrygram.xxl.premium.XXLVibePremiumSettingsEntry().also(fragment::presentFragment)
+
 }
