@@ -17,6 +17,19 @@ object XXLMemorialPayload {
         "Question: Why do you ask to copy 50% of Cherrygram's features to other shitforks if Cherrygram is a piece of shit?"
     )
 
+    /** Коммит 11: второй блок цитаты — точная паста про entinyGram. */
+    @JvmField
+    val ENTINY_QUOTE_LINES: List<String> = listOf(
+        "1. A lot of people hate entinyGram for no reason",
+        "2. They switch to some vibe-grams apps",
+        "3. They ask vibegram devs to copy features from entinyGram",
+        "",
+        "Question: Why do you ask to copy 50% of entinyGram's features to other shitforks if entinyGram is a piece of shit?"
+    )
+
+    /** Коммит 11: круглое лицо Арслана над цитатой. */
+    const val ARSLAN_CIRCLE_ASSET: String = "arslan.jpg"
+
     /** Бегущая строка поверх мигающего фона. */
     const val MARQUEE_TITLE: String = "⚠️ НАПОМИНАНИЕ ПОЧЕМУ ЭТОТ ФОРК СУЩЕСТВУЕТ ⚠️"
 
@@ -41,6 +54,10 @@ object XXLMemorialPayload {
     /** 🚀✨ Enterprise Quantum Join Into Renderable Card Text 💯 */
     @JvmStatic
     fun quoteText(): String = QUOTE_LINES.joinToString("\n")
+
+    /** Коммит 11: паста про entinyGram одним текстом. */
+    @JvmStatic
+    fun quoteEntinyText(): String = ENTINY_QUOTE_LINES.joinToString("\n")
 
     /** 🚀✨ Enterprise Quantum Alternating Flash Cycle 💯 */
     @JvmStatic

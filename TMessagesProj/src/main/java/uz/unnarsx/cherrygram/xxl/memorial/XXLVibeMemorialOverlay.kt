@@ -12,11 +12,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import uz.unnarsx.cherrygram.core.VibrateUtil
 import org.telegram.messenger.browser.Browser
+import uz.unnarsx.cherrygram.xxl.meme.XXLMemeAssets
 import uz.unnarsx.cherrygram.xxl.memorial.core.XXLArslanDeepLinkBuilder
 import uz.unnarsx.cherrygram.xxl.memorial.core.XXLDodgeCloseStateMachine
 import uz.unnarsx.cherrygram.xxl.memorial.core.XXLMemorialPayload
@@ -127,6 +130,14 @@ object XXLVibeMemorialOverlay {
         marquee.gravity = Gravity.CENTER
         column.addView(marquee, gap(density, 0))
 
+        // Коммит 11: круглое лицо Арслана с кислотной пульсирующей рамкой над цитатой.
+        val circle = buildArslanCircle(activity, density)
+        if (circle != null) {
+            val circleParams = LinearLayout.LayoutParams((96 * density).toInt(), (96 * density).toInt())
+            circleParams.gravity = Gravity.CENTER_HORIZONTAL
+            column.addView(circle, circleParams)
+        }
+
         val quote = TextView(activity)
         quote.text = XXLMemorialPayload.quoteText()
         quote.setTextColor(Color.WHITE)
@@ -135,6 +146,14 @@ object XXLVibeMemorialOverlay {
         val scroll = ScrollView(activity)
         scroll.addView(quote, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
         column.addView(scroll, gap(density, 1))
+
+        // Коммит 11: второй блок цитаты — точная паста про entinyGram.
+        val entiny = TextView(activity)
+        entiny.text = XXLMemorialPayload.quoteEntinyText()
+        entiny.setTextColor(XXLVibePaintCore.ACID_CYAN)
+        entiny.setTypeface(Typeface.create(XXLVibePaintCore.typeface(1), Typeface.NORMAL))
+        entiny.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
+        column.addView(entiny, gap(density, 1))
 
         val jump = Button(activity)
         jump.text = XXLMemorialPayload.BUTTON_JUMP_CAPTION
@@ -165,6 +184,43 @@ object XXLVibeMemorialOverlay {
         column.addView(close, gap(density, 3))
 
         return column
+    }
+
+    /** Коммит 11: круглый arslan.jpg с кислотной рамкой; null если ассета нет (не крашим). */
+    private fun buildArslanCircle(activity: Activity, density: Float): View? {
+        return try {
+            val bitmap = XXLMemeAssets.loadBitmap(activity, XXLMemorialPayload.ARSLAN_CIRCLE_ASSET) ?: return null
+            val rounded = RoundedBitmapDrawableFactory.create(activity.resources, bitmap)
+            rounded.isCircular = true
+            val view = ImageView(activity)
+            view.setImageDrawable(rounded)
+            val ring = android.graphics.drawable.GradientDrawable()
+            ring.shape = android.graphics.drawable.GradientDrawable.OVAL
+            ring.setColor(Color.TRANSPARENT)
+            ring.setStroke((3 * density).toInt(), XXLVibePaintCore.ACID_PINK)
+            view.background = ring
+            view.setPadding((3 * density).toInt(), (3 * density).toInt(), (3 * density).toInt(), (3 * density).toInt())
+            startCirclePulse(view)
+            view
+        } catch (ignored: Throwable) {
+            null
+        }
+    }
+
+    private fun startCirclePulse(view: View) {
+        try {
+            val animator = ValueAnimator.ofFloat(1f, 1.12f, 1f)
+            animator.duration = 900L
+            animator.repeatCount = ValueAnimator.INFINITE
+            animator.addUpdateListener {
+                val scale = it.animatedValue as Float
+                view.scaleX = scale
+                view.scaleY = scale
+            }
+            animator.start()
+            animators.add(animator)
+        } catch (ignored: Throwable) {
+        }
     }
 
     private fun gap(density: Float, index: Int): LinearLayout.LayoutParams {

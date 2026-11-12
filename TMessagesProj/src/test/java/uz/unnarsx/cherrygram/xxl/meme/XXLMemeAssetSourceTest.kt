@@ -34,12 +34,14 @@ class XXLMemeAssetSourceTest {
     private val pngish = byteArrayOf(-1, -48, -1, -32, 13, 10, 26, 7)
 
     @Test
-    fun `the two mandated meme assets are known`() {
+    fun `the mandated meme assets are known`() {
         assertEquals("amdfx.jpg", XXLMemeAssetSource.AMD_FX_ASSET)
         assertEquals("svo.jpg", XXLMemeAssetSource.SVO_ASSET)
-        assertEquals(listOf("amdfx.jpg", "svo.jpg"), XXLMemeAssetSource.knownAssets())
+        assertEquals("arslan.jpg", XXLMemeAssetSource.ARSLAN_ASSET)
+        assertEquals(listOf("amdfx.jpg", "svo.jpg", "arslan.jpg"), XXLMemeAssetSource.knownAssets())
         assertTrue(XXLMemeAssetSource.isKnown("amdfx.jpg"))
         assertTrue(XXLMemeAssetSource.isKnown("svo.jpg"))
+        assertTrue(XXLMemeAssetSource.isKnown("arslan.jpg"))
         assertFalse(XXLMemeAssetSource.isKnown("nope.jpg"))
         assertFalse(XXLMemeAssetSource.isKnown(null))
         assertFalse(XXLMemeAssetSource.isKnown(""))

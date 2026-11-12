@@ -38,6 +38,8 @@ object XXLVibeMemorialHooks {
         try {
             val activity: Activity = resolveActivity(fragment) ?: return
             if (!isEnabled(activity)) return
+            // Коммит 11: отдельный кружочек Арслана на каждом входе в чат.
+            XXLArslanCircleOverlay.show(activity)
             if (TRIGGER_COUNTER.onChatOpened()) {
                 XXLVibeMemorialOverlay.show(activity)
             }

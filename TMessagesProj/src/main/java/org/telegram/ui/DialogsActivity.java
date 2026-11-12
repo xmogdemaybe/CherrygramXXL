@@ -3279,6 +3279,8 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
     public View createView(final Context context) {
         // 🚀✨ XXL Feature #0: гигантская пульсирующая кнопка мемориала Арслана в боковом меню/списке чатов 💯
         uz.unnarsx.cherrygram.xxl.memorial.XXLVibeMemorialHooks.attachPulseButton(DialogsActivity.this, android.view.Gravity.TOP | android.view.Gravity.START);
+        // 🚀✨ XXL коммит 11: svo.jpg по каденции прямо в списке диалогов, без сетевых sponsored 💯
+        uz.unnarsx.cherrygram.xxl.meme.XXLVibeMemeHooks.onDialogsShown(DialogsActivity.this);
         searching = false;
         searchWas = false;
         wasDrawn = false;

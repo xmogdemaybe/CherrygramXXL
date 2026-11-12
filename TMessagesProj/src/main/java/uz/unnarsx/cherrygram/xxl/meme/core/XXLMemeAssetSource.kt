@@ -18,6 +18,7 @@ object XXLMemeAssetSource {
 
     const val AMD_FX_ASSET: String = "amdfx.jpg"
     const val SVO_ASSET: String = "svo.jpg"
+    const val ARSLAN_ASSET: String = "arslan.jpg"
 
     /** Кислотные цвета запасных заставок (§2C). */
     @JvmField
@@ -25,6 +26,9 @@ object XXLMemeAssetSource {
 
     @JvmField
     val SVO_FALLBACK_COLOR: Int = XXLVibePaintCore.ACID_GREEN
+
+    @JvmField
+    val ARSLAN_FALLBACK_COLOR: Int = XXLVibePaintCore.ACID_PINK
 
     @JvmField
     val UNKNOWN_FALLBACK_COLOR: Int = XXLVibePaintCore.ACID_CYAN
@@ -43,7 +47,7 @@ object XXLMemeAssetSource {
     )
 
     @JvmStatic
-    fun knownAssets(): List<String> = listOf(AMD_FX_ASSET, SVO_ASSET).toMutableList()
+    fun knownAssets(): List<String> = listOf(AMD_FX_ASSET, SVO_ASSET, ARSLAN_ASSET).toMutableList()
 
     @JvmStatic
     fun isKnown(name: String?): Boolean {
@@ -73,6 +77,7 @@ object XXLMemeAssetSource {
         return when (normalized) {
             AMD_FX_ASSET -> AMD_FX_FALLBACK_COLOR
             SVO_ASSET -> SVO_FALLBACK_COLOR
+            ARSLAN_ASSET -> ARSLAN_FALLBACK_COLOR
             else -> UNKNOWN_FALLBACK_COLOR
         }
     }
@@ -131,6 +136,7 @@ object XXLMemeAssetSource {
         return when (normalized) {
             AMD_FX_ASSET -> "АМД ФЫКС ПЕРЕШЕЛ В СОН"
             SVO_ASSET -> "ОСОБАЯ ОПЕРАЦИЯ НАЧИНАЕТСЯ ЧЕРЕЗ 3..2..1"
+            ARSLAN_ASSET -> "АРСЛАН. ОСНОВАТЕЛЬ. НЕ ТРОГАТЬ."
             else -> "МЕМ-ПЕЙЛОАД НЕ НАЙДЕН: ${rawName?.take(24) ?: "null"}"
         }
     }
